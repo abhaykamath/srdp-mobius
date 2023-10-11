@@ -1,0 +1,29 @@
+.cards-grid {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.horizontal-chart-container {
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.horizontal-chart-canvas-container {
+  box-sizing: border-box;
+  height: 40vh;
+}
+
+.pie-chart-container {
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

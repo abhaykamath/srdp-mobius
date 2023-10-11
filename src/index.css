@@ -7,7 +7,7 @@
 body {
   /* background-color: #0e21a0; */
   /* background-color: #dfccfb; */
-  background-color: rgb(29, 29, 29);
+  /* background-color: rgb(29, 29, 29); */
 }
 
 .custom-navbar {
@@ -24,8 +24,10 @@ body {
 
 .project-name {
   font-size: 1rem;
-  font-weight: bold;
   color: white;
+  box-sizing: border-box;
+  display: flex;
+  gap: 1rem;
 }
 
 .project-name span {
@@ -42,6 +44,7 @@ body {
 
 main {
   box-sizing: border-box;
+  width: 100%;
   display: flex;
   flex-direction: row;
   border-bottom: 1px solid #ccc;
@@ -71,7 +74,14 @@ main {
   width: 30%;
   border-right: 1px solid #ccc;
   overflow: auto;
-  color: white;
+  /* color: white; */
+}
+
+#right-pane {
+  box-sizing: border-box;
+  width: 70%;
+  overflow: auto;
+  padding: 1rem;
 }
 
 .story-pill {
@@ -124,3 +134,11 @@ main {
   background-color: white;
   color: black;
 }
+
+/* .pie-chart-container {
+  box-sizing: border-box;
+  display: flex;
+  padding: 1rem;
+  justify-content: center;
+  width: fit-content;
+} */
