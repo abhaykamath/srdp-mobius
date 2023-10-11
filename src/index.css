@@ -1,0 +1,126 @@
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  /* background-color: #0e21a0; */
+  /* background-color: #dfccfb; */
+  background-color: rgb(29, 29, 29);
+}
+
+.custom-navbar {
+  box-sizing: border-box;
+  /* border-bottom: 1px solid #ccc; */
+  background-color: #ec53b0;
+  background-color: #9d44c0;
+  height: 10vh;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.project-name {
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+}
+
+.project-name span {
+  font-size: 0.75rem;
+  /* opacity: 0.75; */
+}
+
+.dashboard-name {
+  font-size: 1rem;
+  /* opacity: 0.75; */
+  color: white;
+  text-align: center;
+}
+
+main {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #ccc;
+  height: 90vh;
+}
+
+.sprint-name {
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  width: fit-content;
+  font-size: 0.9rem;
+  font-weight: bold;
+  opacity: 0.75;
+  background-color: #9d44c0;
+  color: white;
+  font-style: italic;
+}
+
+#left-pane {
+  box-sizing: border-box;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 30%;
+  border-right: 1px solid #ccc;
+  overflow: auto;
+  color: white;
+}
+
+.story-pill {
+  box-sizing: border-box;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: fit-content;
+  font-size: 0.75rem;
+  width: 100%;
+}
+
+.story-name {
+  box-sizing: border-box;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.story-name i {
+  color: #36b37e;
+}
+
+.story-pill:hover {
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  background-color: #36b37e;
+  color: white;
+}
+
+.story-pill:hover i {
+  color: white;
+}
+
+.story-status-label {
+  box-sizing: border-box;
+  padding: 0.2rem 0.25rem;
+  border-radius: 0.25rem;
+  background-color: #4285f4;
+  color: white;
+  font-size: 0.65rem;
+  /* font-weight: bold; */
+  width: fit-content;
+}
+
+.story-pill:hover .story-status-label {
+  background-color: white;
+  color: black;
+}
