@@ -4,17 +4,11 @@
   padding: 0;
 }
 
-body {
-  /* background-color: #0e21a0; */
-  /* background-color: #dfccfb; */
-  /* background-color: rgb(29, 29, 29); */
-}
-
 .custom-navbar {
   box-sizing: border-box;
-  /* border-bottom: 1px solid #ccc; */
   background-color: #ec53b0;
   background-color: #9d44c0;
+  background-color: #252f5c;
   height: 10vh;
   padding: 0 1rem;
   display: flex;
@@ -65,80 +59,12 @@ main {
   font-style: italic;
 }
 
-#left-pane {
-  box-sizing: border-box;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  width: 30%;
-  border-right: 1px solid #ccc;
-  overflow: auto;
-  /* color: white; */
-}
-
 #right-pane {
   box-sizing: border-box;
   width: 70%;
   overflow: auto;
   padding: 1rem;
-}
-
-.story-pill {
-  box-sizing: border-box;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 0.5rem;
-  width: fit-content;
-  font-size: 0.75rem;
-  width: 100%;
+  flex-direction: column;
+  gap: 1rem;
 }
-
-.story-name {
-  box-sizing: border-box;
-  display: flex;
-  gap: 0.75rem;
-}
-
-.story-name i {
-  color: #36b37e;
-}
-
-.story-pill:hover {
-  cursor: pointer;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  background-color: #36b37e;
-  color: white;
-}
-
-.story-pill:hover i {
-  color: white;
-}
-
-.story-status-label {
-  box-sizing: border-box;
-  padding: 0.2rem 0.25rem;
-  border-radius: 0.25rem;
-  background-color: #4285f4;
-  color: white;
-  font-size: 0.65rem;
-  /* font-weight: bold; */
-  width: fit-content;
-}
-
-.story-pill:hover .story-status-label {
-  background-color: white;
-  color: black;
-}
-
-/* .pie-chart-container {
-  box-sizing: border-box;
-  display: flex;
-  padding: 1rem;
-  justify-content: center;
-  width: fit-content;
-} */

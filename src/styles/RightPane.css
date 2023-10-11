@@ -1,9 +1,9 @@
 .cards-grid {
   box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
-  margin-top: 1rem;
+  gap: 1rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .horizontal-chart-container {
@@ -11,11 +11,15 @@
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   padding: 1rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .horizontal-chart-canvas-container {
   box-sizing: border-box;
   height: 40vh;
+  display: flex;
+  gap: 1rem;
 }
 
 .pie-chart-container {
@@ -26,4 +30,37 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 40%;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.story-ac-card {
+  box-sizing: border-box;
+  font-size: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.story-ac-card table,
+tr,
+td {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  padding: 0.5rem;
+}
+
+.other-cards {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  grid-auto-rows: max-content;
+  gap: 1rem;
 }

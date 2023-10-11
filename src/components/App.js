@@ -10,12 +10,14 @@ import PieChart from "./PieChart";
 import stories_data from "../data/stories";
 import pie_data from "../data/pie_data";
 import horz_data from "../data/horz_chart";
+import Navbar from "./Navbar";
+import StoriesPane from "./StoriesPane";
+import Members from "./Members";
 
 function App() {
   const [project, setProject] = useState("10235");
   const [stories, setStories] = useState([]);
   const [sprint, setSprint] = useState("");
-  const [storyToView, setStoryToView] = useState("");
   const [pieData, setPieData] = useState([]);
 
   const [horizontalBarChartData, setHorizontalBarChartData] = useState({
@@ -36,14 +38,14 @@ function App() {
   const [storyPieData, setStoryPieData] = useState({
     labels: pieData
       .filter((d) => d.project_id.includes(project))
-      .filter((d) => d.story_id.includes(storyToView))
+      .filter((d) => d.story_id.includes(""))
       .map((d) => d.status_category),
     datasets: [
       {
-        label: "Progress Percentage",
+        label: "Subtask Count",
         data: pieData
           .filter((d) => d.project_id.includes(project))
-          .filter((d) => d.story_id.includes(storyToView))
+          .filter((d) => d.story_id.includes(""))
           .map((d) => d.issue_count),
         backgroundColor: ["#4285F4", "#34A853", "#FBBC05", "#EA4335"],
       },
@@ -74,148 +76,96 @@ function App() {
 
   return (
     <>
-      <nav className="custom-navbar">
-        <div className="dashboard-name">SPRINT REVIEW DASHBOARD</div>
-        <div className="project-name">
-          <div className="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault1"
-              value="10235"
-              onClick={(e) => {
-                setProject(e.target.value);
-                setHorizontalBarChartData({
-                  labels: horz_data
-                    .filter((d) => d.project_id.includes(e.target.value))
-                    .map((d) => d.story_name.substring(0, 25) + "..."),
-                  datasets: [
-                    {
-                      label: "Progress Percentage",
-                      data: horz_data
-                        .filter((d) => d.project_id.includes(e.target.value))
-                        .map((d) => d.progress_percentage),
-                      backgroundColor: [
-                        "#4285F4",
-                        "#34A853",
-                        "#FBBC05",
-                        "#EA4335",
-                      ],
-                    },
-                  ],
-                });
-              }}
-            />
-            <label className="form-check-label" for="flexRadioDefault1">
-              Monet 2.0
-            </label>
-          </div>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault2"
-              value="10234"
-              onClick={(e) => {
-                setProject(e.target.value);
-                setHorizontalBarChartData({
-                  labels: horz_data
-                    .filter((d) => d.project_id.includes(e.target.value))
-                    .map((d) => d.story_name.substring(0, 25) + "..."),
-                  datasets: [
-                    {
-                      label: "Progress Percentage",
-                      data: horz_data
-                        .filter((d) => d.project_id.includes(e.target.value))
-                        .map((d) => d.progress_percentage),
-                      backgroundColor: [
-                        "#4285F4",
-                        "#34A853",
-                        "#FBBC05",
-                        "#EA4335",
-                      ],
-                    },
-                  ],
-                });
-              }}
-            />
-            <label className="form-check-label" for="flexRadioDefault2">
-              Vinci-Bob
-            </label>
-          </div>
-        </div>
-      </nav>
+      <Navbar
+        setProject={setProject}
+        setHorizontalBarChartData={setHorizontalBarChartData}
+      />
       <main>
-        {/* <div className="sprint-name">Sprint : {sprint}</div> */}
-        <section id="left-pane">
-          <div
-            style={{
-              backgroundColor: "#36b37e",
-              width: "fit-content",
-              padding: "0.25rem 0.5rem",
-              borderRadius: "0.5rem",
-            }}
-          >
-            STORIES
-          </div>
-          {stories
-            .filter((story) => {
-              return story.project_id === project;
-            })
-            .map((story, index) => {
-              return (
-                <div
-                  key={index}
-                  className="story-pill"
-                  onClick={(e) => {
-                    setStoryToView(story.story_id);
-                    setStoryPieData({
-                      labels: pieData
-                        .filter((d) => d.project_id.includes(project))
-                        .filter((d) => d.story_id.includes(story.story_id))
-                        .map((d) => d.status_category),
-                      datasets: [
-                        {
-                          label: "Progress Percentage",
-                          data: pieData
-                            .filter((d) => d.project_id.includes(project))
-                            .filter((d) => d.story_id.includes(story.story_id))
-                            .map((d) => d.issue_count),
-                          backgroundColor: [
-                            "#4285F4",
-                            "#34A853",
-                            "#FBBC05",
-                            "#EA4335",
-                          ],
-                        },
-                      ],
-                    });
-                  }}
-                >
-                  <div className="story-name">
-                    <div>
-                      <i className="fa-solid fa-bookmark"></i>
-                    </div>
-                    {story.story_name}
-                  </div>
-                  <div className="story-status-label">{story.story_status}</div>
-                </div>
-              );
-            })}
-        </section>
+        <StoriesPane
+          stories={stories}
+          project={project}
+          setStoryPieData={setStoryPieData}
+          pieData={pieData}
+        />
         <section id="right-pane">
           <div className="horizontal-chart-container">
-            <div>Progress of stories</div>
+            <div
+              style={{
+                boxSizing: "border-box",
+                display: "flex",
+                paddingBottom: "0.5rem",
+                justifyContent: "space-between",
+              }}
+            >
+              <div>Progress of stories</div>
+              <div>Project Memebers</div>
+            </div>
             <div className="horizontal-chart-canvas-container">
               <BarChart chartData={horizontalBarChartData} />
+              <Members project={project} />
             </div>
           </div>
-
           <div className="cards-grid">
+            <div className="other-cards">
+              <div className="story-ac-card">
+                <div>Story AC Hygiene</div>
+                <table>
+                  <tr>
+                    <td>AC Added ?</td>
+                    <td>NO</td>
+                  </tr>
+                </table>
+              </div>
+              <div className="story-ac-card">
+                <div>Effort Estimate</div>
+                <table>
+                  <tr>
+                    <td>Story points</td>
+                    <td>NO</td>
+                  </tr>
+                </table>
+              </div>
+              <div className="story-ac-card">
+                <div>On-Time Predictability</div>
+                <table>
+                  <tr>
+                    <td>Total Subtasks</td>
+                    <td>NO</td>
+                  </tr>
+                  <tr>
+                    <td>Completed Subtasks</td>
+                    <td>NO</td>
+                  </tr>
+                  <tr>
+                    <td>Sprint Start</td>
+                    <td>NO</td>
+                  </tr>
+                  <tr>
+                    <td>Sprint End</td>
+                    <td>NO</td>
+                  </tr>
+                </table>
+              </div>
+              <div className="story-ac-card">
+                <div>Time log info</div>
+                <table>
+                  <tr>
+                    <td>Original Estimate</td>
+                    <td>NO</td>
+                  </tr>
+                  <tr>
+                    <td>Remaining Estimate</td>
+                    <td>NO</td>
+                  </tr>
+                  <tr>
+                    <td>Time spent</td>
+                    <td>NO</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
             <div className="pie-chart-container">
-              <div>Sub-task Progress</div>
+              <div>Subtasks status</div>
               <PieChart chartData={storyPieData} />
             </div>
           </div>
