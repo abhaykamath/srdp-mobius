@@ -10,6 +10,10 @@ import PieChart from "./PieChart";
 import stories_data from "../data/stories";
 import pie_data from "../data/pie_data";
 import horz_data from "../data/horz_chart";
+import points_data from "../data/points";
+import onTimePredictability from "../data/on_time_pred";
+import time_log from "../data/time_log_data";
+import reviewers from "../data/story_reviewers";
 import Navbar from "./Navbar";
 import StoriesPane from "./StoriesPane";
 import Members from "./Members";
@@ -19,6 +23,7 @@ function App() {
   const [stories, setStories] = useState([]);
   const [sprint, setSprint] = useState("");
   const [pieData, setPieData] = useState([]);
+  const [storyId, setStoryId] = useState("");
 
   const [horizontalBarChartData, setHorizontalBarChartData] = useState({
     labels: horz_data
@@ -30,7 +35,13 @@ function App() {
         data: horz_data
           .filter((d) => d.project_id.includes(project))
           .map((d) => d.progress_percentage),
-        backgroundColor: ["#4285F4", "#34A853", "#FBBC05", "#EA4335"],
+        backgroundColor: [
+          "#4285F4",
+          "#34A853",
+          "#FBBC05",
+          "#EA4335",
+          "#DA0C81",
+        ],
       },
     ],
   });
@@ -47,7 +58,13 @@ function App() {
           .filter((d) => d.project_id.includes(project))
           .filter((d) => d.story_id.includes(""))
           .map((d) => d.issue_count),
-        backgroundColor: ["#4285F4", "#34A853", "#FBBC05", "#EA4335"],
+        backgroundColor: [
+          "#4285F4",
+          "#34A853",
+          "#FBBC05",
+          "#EA4335",
+          "#DA0C81",
+        ],
       },
     ],
   });
@@ -86,6 +103,7 @@ function App() {
           project={project}
           setStoryPieData={setStoryPieData}
           pieData={pieData}
+          setStoryId={setStoryId}
         />
         <section id="right-pane">
           <div className="horizontal-chart-container">
@@ -121,7 +139,13 @@ function App() {
                 <table>
                   <tr>
                     <td>Story points</td>
-                    <td>NO</td>
+                    <td>
+                      {
+                        points_data.filter((s) =>
+                          s.story_id.includes(storyId)
+                        )[0].story_total_points
+                      }
+                    </td>
                   </tr>
                 </table>
               </div>
@@ -130,19 +154,39 @@ function App() {
                 <table>
                   <tr>
                     <td>Total Subtasks</td>
-                    <td>NO</td>
+                    <td>
+                      {
+                        onTimePredictability.filter((o) =>
+                          o.story_id.includes(storyId)
+                        )[0].number_of_sub_tasks
+                      }
+                    </td>
                   </tr>
                   <tr>
                     <td>Completed Subtasks</td>
-                    <td>NO</td>
+                    <td>
+                      {
+                        onTimePredictability.filter((o) =>
+                          o.story_id.includes(storyId)
+                        )[0].completed_sub_tasks
+                      }
+                    </td>
                   </tr>
                   <tr>
                     <td>Sprint Start</td>
-                    <td>NO</td>
+                    <td>
+                      {onTimePredictability
+                        .filter((o) => o.story_id.includes(storyId))[0]
+                        .sprint_start_date.substring(0, 10)}
+                    </td>
                   </tr>
                   <tr>
                     <td>Sprint End</td>
-                    <td>NO</td>
+                    <td>
+                      {onTimePredictability
+                        .filter((o) => o.story_id.includes(storyId))[0]
+                        .sprint_end_date.substring(0, 10)}
+                    </td>
                   </tr>
                 </table>
               </div>
@@ -151,15 +195,44 @@ function App() {
                 <table>
                   <tr>
                     <td>Original Estimate</td>
-                    <td>NO</td>
+                    <td>
+                      {
+                        time_log.filter((t) => t.story_id.includes(storyId))[0]
+                          .original_estimate
+                      }
+                    </td>
                   </tr>
                   <tr>
                     <td>Remaining Estimate</td>
-                    <td>NO</td>
+                    <td>
+                      {
+                        time_log.filter((t) => t.story_id.includes(storyId))[0]
+                          .remaining_estimate
+                      }
+                    </td>
                   </tr>
                   <tr>
                     <td>Time spent</td>
-                    <td>NO</td>
+                    <td>
+                      {
+                        time_log.filter((t) => t.story_id.includes(storyId))[0]
+                          .time_spent
+                      }
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div className="story-ac-card">
+                <div>Peer review info</div>
+                <table>
+                  <tr>
+                    <td>Reviewers</td>
+                    <td>
+                      {
+                        reviewers.filter((t) => t.story_id.includes(storyId))[0]
+                          .story_reviewers
+                      }
+                    </td>
                   </tr>
                 </table>
               </div>

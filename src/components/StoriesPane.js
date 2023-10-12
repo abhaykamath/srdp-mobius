@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import "../styles/StoriesPane.css";
 
-function StoriesPane({ stories, project, pieData, setStoryPieData }) {
+function StoriesPane({
+  stories,
+  project,
+  pieData,
+  setStoryPieData,
+  setStoryId,
+}) {
   const [selectedStory, setSelectedStory] = useState("");
   return (
     <section id="left-pane">
@@ -22,6 +28,7 @@ function StoriesPane({ stories, project, pieData, setStoryPieData }) {
               }}
               onClick={(e) => {
                 setSelectedStory(story.story_id);
+                setStoryId(story.story_id);
                 setStoryPieData({
                   labels: pieData
                     .filter((d) => d.project_id.includes(project))
@@ -39,6 +46,7 @@ function StoriesPane({ stories, project, pieData, setStoryPieData }) {
                         "#34A853",
                         "#FBBC05",
                         "#EA4335",
+                        "#DA0C81",
                       ],
                     },
                   ],
