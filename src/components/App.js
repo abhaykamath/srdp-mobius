@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../styles/RightPane.css";
 import axios from "axios";
-import {
-  get_sprint_stories_2,
-  get_status_category_data_for_stories_4,
-} from "../aqs/aq_urls";
 import BarChart from "./BarChart";
 import PieChart from "./PieChart";
-import stories_data from "../data/stories";
+// import stories_data from "../data/stories";
 import pie_data from "../data/pie_data";
 import horz_data from "../data/horz_chart";
 import points_data from "../data/points";
@@ -24,6 +20,7 @@ function App() {
   const [sprint, setSprint] = useState("");
   const [pieData, setPieData] = useState([]);
   const [storyId, setStoryId] = useState("");
+  const [storyAC, setStoryAC] = useState("Nil");
 
   const [horizontalBarChartData, setHorizontalBarChartData] = useState({
     labels: horz_data
@@ -34,7 +31,15 @@ function App() {
         label: "Progress Percentage",
         data: horz_data
           .filter((d) => d.project_id.includes(project))
-          .map((d) => d.progress_percentage),
+          .map((d) => {
+            if (d.number_of_sub_tasks !== 0) {
+              return parseInt(
+                (d.completed_sub_tasks / d.number_of_sub_tasks) * 100
+              );
+            } else {
+              return 0;
+            }
+          }),
         backgroundColor: [
           "#4285F4",
           "#34A853",
@@ -47,14 +52,14 @@ function App() {
   });
 
   const [storyPieData, setStoryPieData] = useState({
-    labels: pieData
+    labels: pie_data
       .filter((d) => d.project_id.includes(project))
       .filter((d) => d.story_id.includes(""))
       .map((d) => d.status_category),
     datasets: [
       {
         label: "Subtask Count",
-        data: pieData
+        data: pie_data
           .filter((d) => d.project_id.includes(project))
           .filter((d) => d.story_id.includes(""))
           .map((d) => d.issue_count),
@@ -69,40 +74,104 @@ function App() {
     ],
   });
 
-  function getStories() {
-    // axios.get(get_sprint_stories_2).then((res) => {
-    //   let entities = res.data.model.entities;
-    //   setStories(entities);
-    // });
-    setStories(stories_data);
+  async function getStories() {
+    if (sprint !== "") {
+      const response = await axios.get(
+        `http://localhost:4000/sprint/${sprint}/stories`
+      );
+      const sprint_stories = response.data.issues;
+      setStories(sprint_stories);
+    }
   }
 
-  function getStatusCategoryData() {
-    // axios.get(get_status_category_data_for_stories_4).then((res) => {
-    //   let entities = res.data.model.entities;
-    //   setPieData(entities);
-    // });
-    // This is for for pie chart
-    setPieData(pie_data);
+  async function getHorzChartData() {
+    if (sprint !== "") {
+      const response = await axios.get(
+        `http://localhost:4000/sprint/${sprint}/progress`
+      );
+      const h_chart_data = response.data.sprint_progress;
+      setHorizontalBarChartData({
+        labels: h_chart_data.map((d) => d.story_name.substring(0, 25) + "..."),
+        datasets: [
+          {
+            label: "Progress Percentage",
+            data: h_chart_data.map((d) => {
+              if (d.number_of_sub_tasks !== 0) {
+                return parseInt(
+                  (d.completed_sub_tasks / d.number_of_sub_tasks) * 100
+                );
+              } else {
+                return 0;
+              }
+            }),
+            backgroundColor: [
+              "#4285F4",
+              "#34A853",
+              "#FBBC05",
+              "#EA4335",
+              "#DA0C81",
+            ],
+          },
+        ],
+      });
+    }
+  }
+
+  async function getPieChartData() {
+    if (sprint !== "") {
+      const response = await axios.get(
+        `http://localhost:4000/sprint/${sprint}/subtasks/progress`
+      );
+      const pie_chart_data = response.data.values;
+      setPieData(pie_chart_data);
+    }
+  }
+
+  function updateStoryAC() {
+    if (sprint !== "") {
+      const AC = stories.filter((s) => s.story_id === storyId)[0]
+        .story_ac_hygiene;
+      setStoryAC(AC);
+    }
   }
 
   useEffect(() => {
     getStories();
-    getStatusCategoryData();
-  }, []);
+    getHorzChartData();
+    getPieChartData();
+  }, [sprint]);
+
+  useEffect(() => {
+    setStoryPieData({
+      labels: pieData
+        .filter((d) => d.story_id.includes(storyId))
+        .map((d) => d.status_category_name),
+      datasets: [
+        {
+          label: "Subtask Count",
+          data: pieData
+            .filter((d) => d.story_id.includes(storyId))
+            .map((d) => d.issue_count),
+          backgroundColor: [
+            "#4285F4",
+            "#34A853",
+            "#FBBC05",
+            "#EA4335",
+            "#DA0C81",
+          ],
+        },
+      ],
+    });
+    updateStoryAC();
+  }, [storyId]);
 
   return (
     <>
-      <Navbar
-        setProject={setProject}
-        setHorizontalBarChartData={setHorizontalBarChartData}
-      />
+      <Navbar setProject={setProject} setSprint={setSprint} />
       <main>
         <StoriesPane
           stories={stories}
           project={project}
-          setStoryPieData={setStoryPieData}
-          pieData={pieData}
           setStoryId={setStoryId}
         />
         <section id="right-pane">
@@ -130,11 +199,11 @@ function App() {
                 <table>
                   <tr>
                     <td>AC Added ?</td>
-                    <td>NO</td>
+                    <td>{storyAC}</td>
                   </tr>
                 </table>
               </div>
-              <div className="story-ac-card">
+              {/* <div className="story-ac-card">
                 <div>Effort Estimate</div>
                 <table>
                   <tr>
@@ -148,8 +217,8 @@ function App() {
                     </td>
                   </tr>
                 </table>
-              </div>
-              <div className="story-ac-card">
+              </div> */}
+              {/* <div className="story-ac-card">
                 <div>On-Time Predictability</div>
                 <table>
                   <tr>
@@ -189,8 +258,8 @@ function App() {
                     </td>
                   </tr>
                 </table>
-              </div>
-              <div className="story-ac-card">
+              </div> */}
+              {/* <div className="story-ac-card">
                 <div>Time log info</div>
                 <table>
                   <tr>
@@ -221,8 +290,8 @@ function App() {
                     </td>
                   </tr>
                 </table>
-              </div>
-              <div className="story-ac-card">
+              </div> */}
+              {/* <div className="story-ac-card">
                 <div>Peer review info</div>
                 <table>
                   <tr>
@@ -235,7 +304,7 @@ function App() {
                     </td>
                   </tr>
                 </table>
-              </div>
+              </div> */}
             </div>
             <div className="pie-chart-container">
               <div>Subtasks status</div>

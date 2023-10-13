@@ -68,3 +68,7 @@ main {
   flex-direction: column;
   gap: 1rem;
 }
+
+input[type="radio"]:hover {
+  cursor: pointer;
+}
