@@ -15,7 +15,10 @@ const projects = [
   ["SUHAaaS", "10241"],
 ];
 
-function Navbar({ setProject, setSprint }) {
+const local_base_url = "http://localhost:4000";
+const live_base_url = "https://srdp-mobius-apis.onrender.com";
+
+function Navbar({ setProject, setSprint, setSprintStart, setSprintEnd }) {
   return (
     <nav className="custom-navbar">
       <div className="dashboard-name">SPRINT REVIEW DASHBOARD</div>
@@ -34,9 +37,11 @@ function Navbar({ setProject, setSprint }) {
                   setProject(e.target.value);
                   const board_id = project_board_map[e.target.value];
                   const response = await axios.get(
-                    "http://localhost:4000/" + board_id + "/activeSprint"
+                    live_base_url + "/" + board_id + "/activeSprint"
                   );
                   const active_sprint = response.data.active_sprint;
+                  setSprintStart(active_sprint.startDate);
+                  setSprintEnd(active_sprint.endDate);
                   if (active_sprint !== null) {
                     setSprint(active_sprint.id.toString());
                   }
