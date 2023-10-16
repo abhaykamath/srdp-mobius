@@ -18,7 +18,13 @@ const projects = [
 const local_base_url = "http://localhost:4000";
 const live_base_url = "https://srdp-mobius-apis.onrender.com";
 
-function Navbar({ setProject, setSprint, setSprintStart, setSprintEnd }) {
+function Navbar({
+  setProject,
+  setSprint,
+  setSprintStart,
+  setSprintEnd,
+  setStoriesLoading,
+}) {
   return (
     <nav className="custom-navbar">
       <div className="dashboard-name">SPRINT REVIEW DASHBOARD</div>
@@ -36,6 +42,7 @@ function Navbar({ setProject, setSprint, setSprintStart, setSprintEnd }) {
                 onClick={async (e) => {
                   setProject(e.target.value);
                   const board_id = project_board_map[e.target.value];
+                  setStoriesLoading(true);
                   const response = await axios.get(
                     live_base_url + "/" + board_id + "/activeSprint"
                   );

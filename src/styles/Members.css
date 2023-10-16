@@ -1,11 +1,9 @@
 .members-container {
   box-sizing: border-box;
-  /* border: 1px solid #ccc; */
-  /* border-radius: 0.5rem; */
-  /* padding: 1rem; */
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  overflow: auto;
 }
 
 .member {
@@ -13,6 +11,6 @@
   font-size: 0.75rem;
   height: fit-content;
   border: 1px solid #ccc;
-  border-radius: 0.5rem;
+  /* border-radius: 0.5rem; */
   padding: 0.25rem;
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import members_list from "../data/members";
+import members_list from "../stub-data/members";
 import "../styles/Members.css";
 
 function Members({ sprintMembers }) {

@@ -3,11 +3,14 @@ import "../styles/RightPane.css";
 import axios from "axios";
 import BarChart from "./BarChart";
 import PieChart from "./PieChart";
-import pie_data from "../data/pie_data";
-import horz_data from "../data/horz_chart";
 import Navbar from "./Navbar";
 import StoriesPane from "./StoriesPane";
 import Members from "./Members";
+import StoryAC from "./Cards/StoryAC";
+import EffortEstimate from "./Cards/EffortEstimate";
+import OnTimePredictability from "./Cards/OnTimePredictability";
+import TimeLogInfo from "./Cards/TimeLogInfo";
+import PeerReviewInfo from "./Cards/PeerReviewInfo";
 
 const local_base_url = "http://localhost:4000";
 const live_base_url = "https://srdp-mobius-apis.onrender.com";
@@ -15,6 +18,7 @@ const live_base_url = "https://srdp-mobius-apis.onrender.com";
 function App() {
   const [project, setProject] = useState("10235");
   const [stories, setStories] = useState([]);
+  const [storiesLoading, setStoriesLoading] = useState(false);
   const [sprint, setSprint] = useState("");
   const [sprintMembers, setSprintMembers] = useState([]);
   const [sprintStart, setSprintStart] = useState("");
@@ -35,57 +39,9 @@ function App() {
   });
   const [storyReviewers, setStoryReviewers] = useState("Nil");
 
-  const [horizontalBarChartData, setHorizontalBarChartData] = useState({
-    labels: horz_data
-      .filter((d) => d.project_id.includes(project))
-      .map((d) => d.story_name.substring(0, 25) + "..."),
-    datasets: [
-      {
-        label: "Progress Percentage",
-        data: horz_data
-          .filter((d) => d.project_id.includes(project))
-          .map((d) => {
-            if (d.number_of_sub_tasks !== 0) {
-              return parseInt(
-                (d.completed_sub_tasks / d.number_of_sub_tasks) * 100
-              );
-            } else {
-              return 0;
-            }
-          }),
-        backgroundColor: [
-          "#4285F4",
-          "#34A853",
-          "#FBBC05",
-          "#EA4335",
-          "#DA0C81",
-        ],
-      },
-    ],
-  });
+  const [horizontalBarChartData, setHorizontalBarChartData] = useState({});
 
-  const [storyPieData, setStoryPieData] = useState({
-    labels: pie_data
-      .filter((d) => d.project_id.includes(project))
-      .filter((d) => d.story_id.includes(""))
-      .map((d) => d.status_category),
-    datasets: [
-      {
-        label: "Subtask Count",
-        data: pie_data
-          .filter((d) => d.project_id.includes(project))
-          .filter((d) => d.story_id.includes(""))
-          .map((d) => d.issue_count),
-        backgroundColor: [
-          "#4285F4",
-          "#34A853",
-          "#FBBC05",
-          "#EA4335",
-          "#DA0C81",
-        ],
-      },
-    ],
-  });
+  const [storyPieData, setStoryPieData] = useState({});
 
   async function getStories() {
     if (sprint !== "") {
@@ -93,6 +49,7 @@ function App() {
         `${live_base_url}/sprint/${sprint}/stories`
       );
       const sprint_stories = response.data.issues;
+      setStoriesLoading(false);
       setStories(sprint_stories);
     }
   }
@@ -238,105 +195,41 @@ function App() {
         setSprint={setSprint}
         setSprintStart={setSprintStart}
         setSprintEnd={setSprintEnd}
+        setStoriesLoading={setStoriesLoading}
       />
       <main>
         <StoriesPane
           stories={stories}
-          project={project}
           setStoryId={setStoryId}
+          storiesLoading={storiesLoading}
         />
         <section id="right-pane">
-          <div className="horizontal-chart-container">
-            <div
-              style={{
-                boxSizing: "border-box",
-                display: "flex",
-                paddingBottom: "0.5rem",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>Progress of stories</div>
-              <div>Project Memebers</div>
-            </div>
+          <div className="horizontal-chart-container grid-item grid-item-1">
+            <div className="header">Sprint progress</div>
             <div className="horizontal-chart-canvas-container">
-              <BarChart chartData={horizontalBarChartData} />
-              <Members sprintMembers={sprintMembers} />
+              {hChartData.length !== 0 ? (
+                <BarChart chartData={horizontalBarChartData} />
+              ) : (
+                ""
+              )}
             </div>
           </div>
-          <div className="cards-grid">
-            <div className="other-cards">
-              <div className="story-ac-card">
-                <div>Story AC Hygiene</div>
-                <table>
-                  <tr>
-                    <td>AC Added ?</td>
-                    <td>{storyAC}</td>
-                  </tr>
-                </table>
-              </div>
-              <div className="story-ac-card">
-                <div>Effort Estimate</div>
-                <table>
-                  <tr>
-                    <td>Story points</td>
-                    <td>
-                      {storyPoints !== 0 ? storyPoints : "Points not added"}
-                    </td>
-                  </tr>
-                </table>
-              </div>
-              <div className="story-ac-card">
-                <div>On-Time Predictability</div>
-                <table>
-                  <tr>
-                    <td>Total Subtasks</td>
-                    <td>{otp.number_of_sub_tasks}</td>
-                  </tr>
-                  <tr>
-                    <td>Completed Subtasks</td>
-                    <td>{otp.completed_sub_tasks}</td>
-                  </tr>
-                  <tr>
-                    <td>Sprint Start</td>
-                    <td>{sprintStart.substring(0, 10)}</td>
-                  </tr>
-                  <tr>
-                    <td>Sprint End</td>
-                    <td>{sprintEnd.substring(0, 10)}</td>
-                  </tr>
-                </table>
-              </div>
-              <div className="story-ac-card">
-                <div>Time log info</div>
-                <table>
-                  <tr>
-                    <td>Original Estimate</td>
-                    <td>{timeLogData.original_estimate}</td>
-                  </tr>
-                  <tr>
-                    <td>Remaining Estimate</td>
-                    <td>{timeLogData.remaining_estimate}</td>
-                  </tr>
-                  <tr>
-                    <td>Time spent</td>
-                    <td>{timeLogData.time_spent}</td>
-                  </tr>
-                </table>
-              </div>
-              <div className="story-ac-card">
-                <div>Peer review info</div>
-                <table>
-                  <tr>
-                    <td>Reviewers</td>
-                    <td>{storyReviewers}</td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-            <div className="pie-chart-container">
-              <div>Subtasks status</div>
-              <PieChart chartData={storyPieData} />
-            </div>
+          <div className="pie-chart-container grid-item grid-item-2">
+            <div className="header">Subtasks status</div>
+            {pieData.length !== 0 ? <PieChart chartData={storyPieData} /> : ""}
+          </div>
+          <StoryAC storyAC={storyAC} />
+          <EffortEstimate storyPoints={storyPoints} />
+          <PeerReviewInfo storyReviewers={storyReviewers} />
+          <OnTimePredictability
+            otp={otp}
+            sprintStart={sprintStart}
+            sprintEnd={sprintEnd}
+          />
+          <TimeLogInfo timeLogData={timeLogData} />
+          <div className="sprint-members-container grid-item grid-item-8">
+            <div className="header">Members</div>
+            <Members sprintMembers={sprintMembers} />
           </div>
         </section>
       </main>

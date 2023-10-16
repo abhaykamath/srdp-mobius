@@ -19,6 +19,12 @@
   font-weight: bold;
 }
 
+.story-loader {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+
 .story-pill {
   box-sizing: border-box;
   padding: 0.5rem;

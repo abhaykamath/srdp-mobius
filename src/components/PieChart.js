@@ -3,7 +3,7 @@ import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
 
 function PieChart({ chartData }) {
-  return <Doughnut data={chartData} />;
+  return <Doughnut data={chartData} options={{ color: "" }} />;
 }
 
 export default PieChart;
