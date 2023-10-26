@@ -24,7 +24,7 @@
 
 .horizontal-chart-canvas-container {
   box-sizing: border-box;
-  height: 35vh;
+  height: 95%;
   display: flex;
   gap: 1rem;
 }
@@ -57,5 +57,5 @@ tr,
 td {
   border: 1px solid #ccc;
   border-collapse: collapse;
-  padding: 0.5rem;
+  padding: 0.25rem;
 }

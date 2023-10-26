@@ -12,47 +12,53 @@ function StoriesPane({ stories, setStoryId, storiesLoading }) {
         <div className="story-loader">
           <Loader />
         </div>
+      ) : stories.length === 0 ? (
+        <div className="story-pane-message">Stories not added</div>
       ) : (
-        stories.map((story, index) => {
-          return (
-            <div
-              key={index}
-              className="story-pill"
-              style={{
-                backgroundColor:
-                  selectedStory === story.story_id ? "#36b37e" : "white",
-                color: selectedStory === story.story_id ? "white" : "black",
-              }}
-              onClick={(e) => {
-                setSelectedStory(story.story_id);
-                setStoryId(story.story_id.toString());
-              }}
-            >
-              <div className="story-name">
-                <div>
-                  <i
-                    style={{
-                      color:
-                        selectedStory === story.story_id ? "white" : "#36b37e",
-                    }}
-                    className="fa-solid fa-bookmark"
-                  ></i>
-                </div>
-                {story.story_name}
-              </div>
+        <div className="stories-list">
+          {stories.map((story, index) => {
+            return (
               <div
+                key={index}
+                className="story-pill"
                 style={{
-                  color: selectedStory === story.story_id ? "black" : "white",
                   backgroundColor:
-                    selectedStory === story.story_id ? "white" : "#4285f4",
+                    selectedStory === story.story_id ? "#36b37e" : "white",
+                  color: selectedStory === story.story_id ? "white" : "black",
                 }}
-                className="story-status-label"
+                onClick={(e) => {
+                  setSelectedStory(story.story_id);
+                  setStoryId(story.story_id.toString());
+                }}
               >
-                {story.story_status}
+                <div className="story-name">
+                  <div>
+                    <i
+                      style={{
+                        color:
+                          selectedStory === story.story_id
+                            ? "white"
+                            : "#36b37e",
+                      }}
+                      className="fa-solid fa-bookmark"
+                    ></i>
+                  </div>
+                  {story.story_name}
+                </div>
+                <div
+                  style={{
+                    color: selectedStory === story.story_id ? "black" : "white",
+                    backgroundColor:
+                      selectedStory === story.story_id ? "white" : "#4285f4",
+                  }}
+                  className="story-status-label"
+                >
+                  {story.story_status}
+                </div>
               </div>
-            </div>
-          );
-        })
+            );
+          })}
+        </div>
       )}
     </section>
   );

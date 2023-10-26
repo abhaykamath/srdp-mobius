@@ -8,15 +8,7 @@ function BarChart({ chartData }) {
       data={chartData}
       options={{
         indexAxis: "y",
-        // color: "#fff",
-        // scales: {
-        //   y: {
-        //     ticks: { color: "white", beginAtZero: true },
-        //   },
-        //   x: {
-        //     ticks: { color: "white", beginAtZero: true },
-        //   },
-        // },
+        maintainAspectRatio: false,
       }}
     />
   );
