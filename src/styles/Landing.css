@@ -1,0 +1,47 @@
+.landing-page-header {
+  box-sizing: border-box;
+  padding: 1rem 0.5rem;
+  text-align: center;
+  color: white;
+  background-color: #061621;
+}
+
+.boards-header {
+  box-sizing: border-box;
+  padding: 0.5rem 1rem;
+  color: white;
+  font-size: 1.1rem;
+}
+
+.boards-container {
+  box-sizing: border-box;
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.board-card {
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  background-color: #fff;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board-card:hover {
+  cursor: pointer;
+  background-color: #940b92;
+  color: white;
+}
+
+.board-card:active {
+    opacity: 0.75;
+}

@@ -24,10 +24,13 @@ const live_base_url = "https://srdp-mobius-apis.onrender.com";
 
 function Navbar({
   setProject,
+  sprint,
   setSprint,
   setSprintStart,
   setSprintEnd,
   setStoriesLoading,
+  setView,
+  boardId,
 }) {
   const [options, setOptions] = useState([]);
   const [sprintsLoading, setSprintsLoading] = useState(false);
@@ -35,7 +38,7 @@ function Navbar({
   async function getSprints() {
     setSprintsLoading(true);
     const response = await axios.get(
-      live_base_url + "/" + "269" + "/allSprints"
+      live_base_url + "/" + boardId + "/allSprints"
     );
     const all_sprints = response.data.filter(
       (sprint) => sprint.state !== "future"
@@ -46,13 +49,21 @@ function Navbar({
         sprint_end: sprint.endDate.substring(0, 10),
       };
     }
-    console.log(sprint_data_map);
-    const active_sprint_id = all_sprints.filter(
+    let default_sprint;
+    const active_sprint = all_sprints.filter(
       (sprint) => sprint.state === "active"
-    )[0].id;
-    setSprint(active_sprint_id.toString());
-    setSprintStart(sprint_data_map[active_sprint_id.toString()].sprint_start);
-    setSprintEnd(sprint_data_map[active_sprint_id.toString()].sprint_end);
+    );
+    if (active_sprint.length === 0) {
+      let closed_sprints = all_sprints.filter(
+        (sprint) => sprint.state === "closed"
+      );
+      default_sprint = closed_sprints[closed_sprints.length - 1];
+    } else {
+      default_sprint = active_sprint[0];
+    }
+    setSprint(default_sprint.id.toString());
+    setSprintStart(sprint_data_map[default_sprint.id.toString()].sprint_start);
+    setSprintEnd(sprint_data_map[default_sprint.id.toString()].sprint_end);
     setOptions(all_sprints);
     setSprintsLoading(false);
   }
@@ -98,38 +109,48 @@ function Navbar({
         })}
       </div> */}
       <div className="sprint-select-container">
-        <div>Sprints</div>
-        {sprintsLoading ? (
-          <Loader />
-        ) : (
-          <select
-            name="sprints"
-            id="sprints"
-            onChange={(e) => {
-              setSprint(e.target.value.toString());
-              setSprintStart(
-                sprint_data_map[e.target.value.toString()].sprint_start
-              );
-              setSprintEnd(
-                sprint_data_map[e.target.value.toString()].sprint_end
-              );
-            }}
-          >
-            {options.map((opt, index) => {
-              return (
-                <option
-                  key={index}
-                  selected={opt.state === "active"}
-                  value={opt.id}
-                >
-                  <div>{opt.state.toUpperCase()}</div>
-                  {" - "}
-                  <div>{opt.name}</div>
-                </option>
-              );
-            })}
-          </select>
-        )}
+        <div id="selector">
+          <div>Sprints</div>
+          {sprintsLoading ? (
+            <Loader />
+          ) : (
+            <select
+              name="sprints"
+              id="sprints"
+              onChange={(e) => {
+                setSprint(e.target.value.toString());
+                setSprintStart(
+                  sprint_data_map[e.target.value.toString()].sprint_start
+                );
+                setSprintEnd(
+                  sprint_data_map[e.target.value.toString()].sprint_end
+                );
+              }}
+            >
+              {options.map((opt, index) => {
+                return (
+                  <option
+                    key={index}
+                    selected={opt.id.toString() === sprint}
+                    value={opt.id}
+                  >
+                    <div>{opt.state.toUpperCase()}</div>
+                    {" - "}
+                    <div>{opt.name}</div>
+                  </option>
+                );
+              })}
+            </select>
+          )}
+        </div>
+        <button
+          className="btn btn-danger"
+          onClick={() => {
+            setView("landing");
+          }}
+        >
+          go back
+        </button>
       </div>
     </nav>
   );
