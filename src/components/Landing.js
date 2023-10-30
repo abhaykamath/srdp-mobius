@@ -2,12 +2,12 @@ import React from "react";
 import "../styles/Landing.css";
 
 const boards = [
-  { board_name: "MONET2.0", board_id: "269" },
-  { board_name: "VINCI BOB", board_id: "268" },
+  { board_name: "MONET-2.0", board_id: "269" },
+  { board_name: "Vinci-BoB", board_id: "268" },
   { board_name: "MSUHAaaS", board_id: "275" },
 ];
 
-function Landing({ setBoardId, setView }) {
+function Landing({ setBoardId, setView, setBoardName }) {
   return (
     <>
       <div className="landing-page-header">Sprint Review Dashboards</div>
@@ -20,6 +20,7 @@ function Landing({ setBoardId, setView }) {
               className="board-card"
               onClick={(e) => {
                 setBoardId(board.board_id);
+                setBoardName(board.board_name);
                 setView("dashboard");
               }}
             >

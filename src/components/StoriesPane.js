@@ -25,6 +25,9 @@ function StoriesPane({ stories, setStoryId, storiesLoading }) {
                   backgroundColor:
                     selectedStory === story.story_id ? "#36b37e" : "white",
                   color: selectedStory === story.story_id ? "white" : "black",
+                  animation: `fadeInAndSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) ${
+                    0.5 + index * 0.1
+                  }s 1 forwards`,
                 }}
                 onClick={(e) => {
                   setSelectedStory(story.story_id);

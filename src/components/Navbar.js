@@ -3,34 +3,19 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "./Loader";
 
-// Project board map
-const project_board_map = {
-  10235: 269,
-  10234: 268,
-  10241: 275,
-};
-
-const projects = [
-  ["Monet 2.0", "10235"],
-  ["Vinci-Bob", "10234"],
-  ["SUHAaaS", "10241"],
-];
-
 let sprint_data_map = {};
 
-const local_base_url = "http://localhost:4000";
 const live_base_url = "https://srdp-mobius-apis.onrender.com";
 // const live_base_url = "http://localhost:4000";
 
 function Navbar({
-  setProject,
   sprint,
   setSprint,
   setSprintStart,
   setSprintEnd,
-  setStoriesLoading,
   setView,
   boardId,
+  boardName,
 }) {
   const [options, setOptions] = useState([]);
   const [sprintsLoading, setSprintsLoading] = useState(false);
@@ -74,40 +59,9 @@ function Navbar({
 
   return (
     <nav className="custom-navbar">
-      <div className="dashboard-name">MONET 2.0 - SPRINT REVIEW DASHBOARD</div>
-      {/* <div className="project-name">
-        <div>Projects</div>
-        {projects.map((p) => {
-          return (
-            <div className="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault1"
-                value={p[1]}
-                onClick={async (e) => {
-                  setProject(e.target.value);
-                  const board_id = project_board_map[e.target.value];
-                  setStoriesLoading(true);
-                  const response = await axios.get(
-                    live_base_url + "/" + board_id + "/activeSprint"
-                  );
-                  const active_sprint = response.data.active_sprint;
-                  setSprintStart(active_sprint.startDate);
-                  setSprintEnd(active_sprint.endDate);
-                  if (active_sprint !== null) {
-                    setSprint(active_sprint.id.toString());
-                  }
-                }}
-              />
-              <label className="form-check-label" for="flexRadioDefault1">
-                {p[0]}
-              </label>
-            </div>
-          );
-        })}
-      </div> */}
+      <div className="dashboard-name">
+        {boardName} - SPRINT REVIEW DASHBOARD
+      </div>
       <div className="sprint-select-container">
         <div id="selector">
           <div>Sprints</div>

@@ -10,7 +10,9 @@
   box-sizing: border-box;
   font-size: 0.75rem;
   height: fit-content;
-  border: 1px solid #ccc;
-  /* border-radius: 0.5rem; */
-  padding: 0.25rem;
+  /* border: 1px solid #ccc; */
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background-color: #36b37e;
+  color: white;
 }

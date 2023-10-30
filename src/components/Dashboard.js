@@ -12,11 +12,10 @@ import TimeLogInfo from "./Cards/TimeLogInfo";
 import Members from "./Members";
 import "../styles/RightPane.css";
 
-const local_base_url = "http://localhost:4000";
 const live_base_url = "https://srdp-mobius-apis.onrender.com";
 // const live_base_url = "http://localhost:4000";
 
-function Dashboard({ boardId, setView }) {
+function Dashboard({ boardName, boardId, setView }) {
   const [project, setProject] = useState("10235");
   const [stories, setStories] = useState([]);
   const [storiesLoading, setStoriesLoading] = useState(false);
@@ -51,8 +50,8 @@ function Dashboard({ boardId, setView }) {
         `${live_base_url}/sprint/${sprint}/stories`
       );
       const sprint_stories = response.data.issues;
-      setStoriesLoading(false);
       setStories(sprint_stories);
+      setStoriesLoading(false);
     }
   }
 
@@ -200,6 +199,7 @@ function Dashboard({ boardId, setView }) {
         setStoriesLoading={setStoriesLoading}
         setView={setView}
         boardId={boardId}
+        boardName={boardName}
       />
       <main>
         <StoriesPane

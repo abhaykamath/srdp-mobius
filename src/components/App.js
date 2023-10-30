@@ -4,13 +4,18 @@ import Landing from "./Landing";
 
 function App() {
   const [boardId, setBoardId] = useState("269");
+  const [boardName, setBoardName] = useState("");
   const [view, setView] = useState("landing");
   return (
     <>
       {view === "landing" ? (
-        <Landing setBoardId={setBoardId} setView={setView} />
+        <Landing
+          setBoardName={setBoardName}
+          setBoardId={setBoardId}
+          setView={setView}
+        />
       ) : (
-        <Dashboard boardId={boardId} setView={setView} />
+        <Dashboard boardName={boardName} boardId={boardId} setView={setView} />
       )}
     </>
   );
