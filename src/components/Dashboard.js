@@ -28,6 +28,7 @@ function Dashboard({ boardName, boardId, setView }) {
   const [storyId, setStoryId] = useState("");
   const [storyAC, setStoryAC] = useState("Nil");
   const [storyPoints, setStoryPoints] = useState(0);
+  const [apiCount,setApiCount]=useState(0)
   const [otp, setOtp] = useState({
     number_of_sub_tasks: 0,
     completed_sub_tasks: 0,
@@ -52,6 +53,7 @@ function Dashboard({ boardName, boardId, setView }) {
       const sprint_stories = response.data.issues;
       setStories(sprint_stories);
       setStoriesLoading(false);
+      setApiCount(prev=>prev+1)
     }
   }
 
@@ -62,6 +64,7 @@ function Dashboard({ boardName, boardId, setView }) {
       );
       const sprint_members = response.data.members;
       setSprintMembers(sprint_members);
+      setApiCount(prev=>prev+1)
     }
   }
 
@@ -96,6 +99,7 @@ function Dashboard({ boardName, boardId, setView }) {
           },
         ],
       });
+      setApiCount(prev=>prev+1)
     }
   }
 
@@ -106,6 +110,7 @@ function Dashboard({ boardName, boardId, setView }) {
       );
       const pie_chart_data = response.data.values;
       setPieData(pie_chart_data);
+      setApiCount(prev=>prev+1)
     }
   }
 
@@ -153,7 +158,10 @@ function Dashboard({ boardName, boardId, setView }) {
       setStoryReviewers(reviewers);
     }
   }
-
+if(apiCount==4){
+  setStoryId(stories[0].story_id)
+  setApiCount(0)
+}
   useEffect(() => {
     getStories();
     getHorzChartData();
@@ -206,6 +214,7 @@ function Dashboard({ boardName, boardId, setView }) {
           stories={stories}
           setStoryId={setStoryId}
           storiesLoading={storiesLoading}
+          storyId={storyId}
         />
         <section id="right-pane">
           <div className="horizontal-chart-container grid-item grid-item-1">
