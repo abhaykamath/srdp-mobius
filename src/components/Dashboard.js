@@ -220,7 +220,13 @@ function Dashboard({ boardName, boardId, setView }) {
           </div>
           <div className="pie-chart-container grid-item grid-item-2">
             <div className="header">Subtasks status</div>
-            {pieData.length !== 0 ? <PieChart chartData={storyPieData} /> : ""}
+            <div className="horizontal-chart-canvas-container">
+              {pieData.length !== 0 ? (
+                <PieChart chartData={storyPieData} />
+              ) : (
+                ""
+              )}
+            </div>
           </div>
           <StoryAC storyAC={storyAC} />
           <EffortEstimate storyPoints={storyPoints} />

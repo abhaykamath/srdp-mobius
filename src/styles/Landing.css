@@ -34,14 +34,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: transform 0.2s;
 }
 
 .board-card:hover {
   cursor: pointer;
   background-color: #940b92;
   color: white;
+  transform: scale(1.05);
 }
 
 .board-card:active {
-    opacity: 0.75;
+  opacity: 0.75;
 }

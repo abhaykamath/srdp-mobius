@@ -5,13 +5,14 @@ const boards = [
   { board_name: "MONET-2.0", board_id: "269" },
   { board_name: "Vinci-BoB", board_id: "268" },
   { board_name: "MSUHAaaS", board_id: "275" },
+  { board_name: "BoB-UI", board_id: "280" },
 ];
 
 function Landing({ setBoardId, setView, setBoardName }) {
   return (
     <>
       <div className="landing-page-header">Sprint Review Dashboards</div>
-      <div className="boards-header">Boards</div>
+      <div className="boards-header">Boards ({boards.length})</div>
       <div className="boards-container">
         {boards.map((board, index) => {
           return (
