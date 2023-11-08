@@ -195,6 +195,7 @@ if(apiCount==4){
     updateOtp();
     updateTimeLogData();
     updateStoryReviewers();
+    console.log(pieData.filter((d) => d.story_id.includes(storyId)))
   }, [storyId]);
   return (
     <>
@@ -233,7 +234,7 @@ if(apiCount==4){
               {pieData.length !== 0 ? (
                 <PieChart chartData={storyPieData} />
               ) : (
-                ""
+                "NO Subtask"
               )}
             </div>
           </div>

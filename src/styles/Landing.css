@@ -4,6 +4,19 @@
   text-align: center;
   color: white;
   background-color: #061621;
+  font-size: 2rem;
+}
+
+.searc_div {
+  padding: 0.8rem;
+}
+
+.search_bar {
+  box-sizing: border-box;
+  border-radius: 0.4rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.3rem;
+  outline: none;
 }
 
 .boards-header {
