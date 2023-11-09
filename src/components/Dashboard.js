@@ -27,6 +27,7 @@ function Dashboard({ boardName, boardId, setView }) {
   const [pieData, setPieData] = useState([]);
   const [storyId, setStoryId] = useState("");
   const [storyAC, setStoryAC] = useState("Nil");
+  const [totalStoryPoints, setTotalStoryPoints] = useState(0);
   const [storyPoints, setStoryPoints] = useState(0);
   const [apiCount,setApiCount]=useState(0)
   const [otp, setOtp] = useState({
@@ -74,6 +75,7 @@ function Dashboard({ boardName, boardId, setView }) {
         `${live_base_url}/sprint/${sprint}/progress`
       );
       const h_chart_data = response.data.sprint_progress;
+      updateTotalStoryPoints(h_chart_data)
       setHChartData(h_chart_data);
       setHorizontalBarChartData({
         labels: h_chart_data.map((d) => d.story_name.substring(0, 25) + "..."),
@@ -158,6 +160,17 @@ function Dashboard({ boardName, boardId, setView }) {
       setStoryReviewers(reviewers);
     }
   }
+
+  function updateTotalStoryPoints(sprint_progress_data) {
+    if(sprint !== "") {
+      let points = 0;
+      for(let sprint of sprint_progress_data) {
+        points += sprint.story_points;
+      }
+      setTotalStoryPoints(points);
+    }
+  }
+
 if(apiCount==4){
   setStoryId(stories[0].story_id)
   setApiCount(0)
@@ -209,6 +222,7 @@ if(apiCount==4){
         setView={setView}
         boardId={boardId}
         boardName={boardName}
+        totalStoryPoints={totalStoryPoints}
       />
       <main>
         <StoriesPane
