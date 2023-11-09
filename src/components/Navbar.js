@@ -97,7 +97,7 @@ function Navbar({
               })}
             </select>
           )}
-          <div>Total Storypoints : {totalStoryPoints}</div>
+          <div className="total_story_points">Total Storypoints : {totalStoryPoints}</div>
         </div>
         <button
           className="btn btn-danger"
