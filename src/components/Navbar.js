@@ -16,6 +16,7 @@ function Navbar({
   setView,
   boardId,
   boardName,
+  totalStoryPoints,
 }) {
   const [options, setOptions] = useState([]);
   const [sprintsLoading, setSprintsLoading] = useState(false);
@@ -96,6 +97,7 @@ function Navbar({
               })}
             </select>
           )}
+          <div>Total Storypoints : {totalStoryPoints}</div>
         </div>
         <button
           className="btn btn-danger"

@@ -92,6 +92,9 @@ const boards = [
 ];
 
 function Landing({ setBoardId, setView, setBoardName }) {
+
+
+  // To filter the Searched boards by Board name
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleChange = (event) => {
@@ -103,6 +106,9 @@ function Landing({ setBoardId, setView, setBoardName }) {
       board.board_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       board.board_id.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // To make board names show in alphabetical odrer 
+  filteredBoards.sort((a, b) => a.board_name.localeCompare(b.board_name));
 
   return (
     <>
