@@ -11,10 +11,7 @@ function EffortEstimate({ storyPoints }) {
           <td>Story points</td>
           <td>{storyPoints !== 0 ? storyPoints : "Points not added"}</td>
         </tr>
-        <tr>
-          <td>Total Story points</td>
-          <td>{storyPoints !== 0 ? storyPoints : "Points not added"}</td>
-        </tr>
+
       </table>
     </div>
   );
