@@ -29,7 +29,7 @@ function Dashboard({ boardName, boardId, setView }) {
   const [storyAC, setStoryAC] = useState("Nil");
   const [totalStoryPoints, setTotalStoryPoints] = useState(0);
   const [storyPoints, setStoryPoints] = useState(0);
-  const [apiCount,setApiCount]=useState(0)
+  const [apiCount, setApiCount] = useState(0);
   const [otp, setOtp] = useState({
     number_of_sub_tasks: 0,
     completed_sub_tasks: 0,
@@ -51,10 +51,20 @@ function Dashboard({ boardName, boardId, setView }) {
       const response = await axios.get(
         `${live_base_url}/sprint/${sprint}/stories`
       );
+
       const sprint_stories = response.data.issues;
-      setStories(sprint_stories);
+      
+      // sorting by todo, inprogress, done
+      const storyOrder = ['To Do', 'In Progress', 'Done'];
+      const sprint_Stories_Sorted = (a, b) => {
+        return storyOrder.indexOf(a.story_status) - storyOrder.indexOf(b.story_status);
+      };
+
+      const stories_for_sprint = sprint_stories.sort(sprint_Stories_Sorted);
+
+      setStories(stories_for_sprint);
       setStoriesLoading(false);
-      setApiCount(prev=>prev+1)
+      setApiCount((prev) => prev + 1);
     }
   }
 
@@ -65,7 +75,7 @@ function Dashboard({ boardName, boardId, setView }) {
       );
       const sprint_members = response.data.members;
       setSprintMembers(sprint_members);
-      setApiCount(prev=>prev+1)
+      setApiCount((prev) => prev + 1);
     }
   }
 
@@ -75,7 +85,8 @@ function Dashboard({ boardName, boardId, setView }) {
         `${live_base_url}/sprint/${sprint}/progress`
       );
       const h_chart_data = response.data.sprint_progress;
-      updateTotalStoryPoints(h_chart_data)
+      // console.log(h_chart_data);
+      updateTotalStoryPoints(h_chart_data);
       setHChartData(h_chart_data);
       setHorizontalBarChartData({
         labels: h_chart_data.map((d) => d.story_name.substring(0, 25) + "..."),
@@ -101,7 +112,7 @@ function Dashboard({ boardName, boardId, setView }) {
           },
         ],
       });
-      setApiCount(prev=>prev+1)
+      setApiCount((prev) => prev + 1);
     }
   }
 
@@ -112,7 +123,7 @@ function Dashboard({ boardName, boardId, setView }) {
       );
       const pie_chart_data = response.data.values;
       setPieData(pie_chart_data);
-      setApiCount(prev=>prev+1)
+      setApiCount((prev) => prev + 1);
     }
   }
 
@@ -162,19 +173,19 @@ function Dashboard({ boardName, boardId, setView }) {
   }
 
   function updateTotalStoryPoints(sprint_progress_data) {
-    if(sprint !== "") {
+    if (sprint !== "") {
       let points = 0;
-      for(let sprint of sprint_progress_data) {
+      for (let sprint of sprint_progress_data) {
         points += sprint.story_points;
       }
       setTotalStoryPoints(points);
     }
   }
 
-if(apiCount==4){
-  setStoryId(stories[0].story_id)
-  setApiCount(0)
-}
+  if (apiCount == 4) {
+    setStoryId(stories[0].story_id);
+    setApiCount(0);
+  }
   useEffect(() => {
     getStories();
     getHorzChartData();
@@ -208,7 +219,7 @@ if(apiCount==4){
     updateOtp();
     updateTimeLogData();
     updateStoryReviewers();
-    console.log(pieData.filter((d) => d.story_id.includes(storyId)))
+    // console.log(pieData.filter((d) => d.story_id.includes(storyId)));
   }, [storyId]);
   return (
     <>
