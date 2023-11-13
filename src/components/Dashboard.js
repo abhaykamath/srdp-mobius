@@ -90,7 +90,7 @@ function Dashboard({ boardName, boardId, setView }) {
       const h_chart_data = response.data.sprint_progress;
 
       // sorting by todo, inprogress, done
-      const storyOrder = ["To Do", "In Dev", "Dev In Progress", "Development", "Code Review", "Done"];
+      const storyOrder = ["To Do", "In Progress", "In Dev", "Dev In Progress", "Development", "Code Review", "Done"];
       const sprint_Stories_Sorted = (a, b) => {
         return (
           storyOrder.indexOf(a.story_status) -
