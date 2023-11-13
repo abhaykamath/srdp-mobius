@@ -53,11 +53,14 @@ function Dashboard({ boardName, boardId, setView }) {
       );
 
       const sprint_stories = response.data.issues;
-      
+
       // sorting by todo, inprogress, done
-      const storyOrder = ['To Do', 'In Progress', 'Done'];
+      const storyOrder = ["To Do", "In Progress", "Done"];
       const sprint_Stories_Sorted = (a, b) => {
-        return storyOrder.indexOf(a.story_status) - storyOrder.indexOf(b.story_status);
+        return (
+          storyOrder.indexOf(a.story_status) -
+          storyOrder.indexOf(b.story_status)
+        );
       };
 
       const stories_for_sprint = sprint_stories.sort(sprint_Stories_Sorted);
@@ -85,8 +88,19 @@ function Dashboard({ boardName, boardId, setView }) {
         `${live_base_url}/sprint/${sprint}/progress`
       );
       const h_chart_data = response.data.sprint_progress;
-      // console.log(h_chart_data);
-      updateTotalStoryPoints(h_chart_data);
+
+      // sorting by todo, inprogress, done
+      const storyOrder = ["To Do", "In Dev", "Dev In Progress", "Development", "Code Review", "Done"];
+      const sprint_Stories_Sorted = (a, b) => {
+        return (
+          storyOrder.indexOf(a.story_status) -
+          storyOrder.indexOf(b.story_status)
+        );
+      };
+
+      const h_chart_data_sorted = h_chart_data.sort(sprint_Stories_Sorted);
+
+      updateTotalStoryPoints(h_chart_data_sorted);
       setHChartData(h_chart_data);
       setHorizontalBarChartData({
         labels: h_chart_data.map((d) => d.story_name.substring(0, 25) + "..."),
