@@ -51,7 +51,7 @@ function Dashboard({ boardName, boardId, setView }) {
       const response = await axios.get(
         `${live_base_url}/sprint/${sprint}/stories`
       );
-
+      console.log(response);
       const sprint_stories = response.data.issues;
 
       // sorting by todo, inprogress, done
@@ -88,9 +88,18 @@ function Dashboard({ boardName, boardId, setView }) {
         `${live_base_url}/sprint/${sprint}/progress`
       );
       const h_chart_data = response.data.sprint_progress;
+      console.log(h_chart_data);
 
-      // sorting by todo, inprogress, done
-      const storyOrder = ["To Do", "In Progress", "In Dev", "Dev In Progress", "Development", "Code Review", "Done"];
+      // Sorting by todo, inprogress, done
+      const storyOrder = [
+        "To Do",
+        "In Progress",
+        "In Dev",
+        "Dev In Progress",
+        "Development",
+        "Code Review",
+        "Done",
+      ];
       const sprint_Stories_Sorted = (a, b) => {
         return (
           storyOrder.indexOf(a.story_status) -
@@ -98,8 +107,20 @@ function Dashboard({ boardName, boardId, setView }) {
         );
       };
 
-      const h_chart_data_sorted = h_chart_data.sort(sprint_Stories_Sorted);
+      let h_chart_data_sorted = h_chart_data.sort(sprint_Stories_Sorted);
 
+      let [total_subtasks, completedtasks] = [0, 0];
+      h_chart_data_sorted.forEach((d) => {
+        total_subtasks += d.number_of_sub_tasks;
+        completedtasks += d.completed_sub_tasks;
+      });
+
+      setOtp({
+        number_of_sub_tasks: total_subtasks,
+        completed_sub_tasks: completedtasks,
+      });
+
+      console.log(h_chart_data_sorted, "h_chart_data_sorted");
       updateTotalStoryPoints(h_chart_data_sorted);
       setHChartData(h_chart_data);
       setHorizontalBarChartData({
@@ -197,7 +218,34 @@ function Dashboard({ boardName, boardId, setView }) {
   }
 
   if (apiCount == 4) {
-    setStoryId(stories[0].story_id);
+    let piedata = new Map();
+    pieData.forEach((d) => {
+      if (piedata.has(d.status_category_name)) {
+        piedata.set(
+          d.status_category_name,
+          piedata.get(d.status_category_name) + d.issue_count
+        );
+      } else {
+        piedata.set(d.status_category_name, d.issue_count);
+      }
+    });
+
+    setStoryPieData({
+      labels: Array.from(piedata.keys()),
+      datasets: [
+        {
+          label: "Subtask Count",
+          data: Array.from(piedata.values()),
+          backgroundColor: [
+            "#4285F4",
+            "#FBBC05",
+            "#34A853",
+            "#EA4335",
+            "#DA0C81",
+          ],
+        },
+      ],
+    });
     setApiCount(0);
   }
   useEffect(() => {
@@ -233,7 +281,6 @@ function Dashboard({ boardName, boardId, setView }) {
     updateOtp();
     updateTimeLogData();
     updateStoryReviewers();
-    // console.log(pieData.filter((d) => d.story_id.includes(storyId)));
   }, [storyId]);
   return (
     <>

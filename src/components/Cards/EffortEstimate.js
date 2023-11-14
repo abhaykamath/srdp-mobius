@@ -1,7 +1,6 @@
 import React from "react";
 
 function EffortEstimate({ storyPoints }) {
-  console.log(storyPoints);
   return (
     <div className="story-ac-card grid-item grid-item-4">
       <div className="header">Effort Estimate</div>
