@@ -167,6 +167,7 @@ function Dashboard({ boardName, boardId, setView }) {
       const AC = stories.filter((s) => s.story_id === storyId)[0]
         .story_ac_hygiene;
       setStoryAC(AC);
+      console.log(stories, "stories");
     }
   }
 
@@ -213,6 +214,7 @@ function Dashboard({ boardName, boardId, setView }) {
       for (let sprint of sprint_progress_data) {
         points += sprint.story_points;
       }
+      setStoryPoints(points)
       setTotalStoryPoints(points);
     }
   }
@@ -229,6 +231,7 @@ function Dashboard({ boardName, boardId, setView }) {
         piedata.set(d.status_category_name, d.issue_count);
       }
     });
+    console.log(pieData.filter((d) => d.status_category_name), "pieData");
 
     setStoryPieData({
       labels: Array.from(piedata.keys()),
