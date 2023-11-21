@@ -55,6 +55,16 @@ function Dashboard({ boardName, boardId, setView }) {
       const sprint_stories = response.data.issues;
 
       // sorting by todo, inprogress, done
+      function sort_in_order(a, b) {
+        const storyOrder = { "To Do": 1, Done: 3 };
+
+        return (
+          (storyOrder[a.story_status] || 2) - (storyOrder[b.story_status] || 2)
+        );
+      }
+
+      const sortedStories = sprint_stories.sort(sort_in_order);
+
       const storyOrder = ["To Do", "In Progress", "Done"];
       const sprint_Stories_Sorted = (a, b) => {
         return (
@@ -63,9 +73,20 @@ function Dashboard({ boardName, boardId, setView }) {
         );
       };
 
+      // Get story_ac_hygiene for all stories
+      let yes = 0;
+      let no = 0;
+      sprint_stories.forEach((d) => {
+        if (d.story_ac_hygiene == "NO") no++;
+        if (d.story_ac_hygiene == "YES") yes++;
+      });
+
+      // console.log(sprint_stories, "sprint_stories");
+      setStoryAC(`YES : ${yes}, NO : ${no}`);
+
       const stories_for_sprint = sprint_stories.sort(sprint_Stories_Sorted);
 
-      setStories(stories_for_sprint);
+      setStories(sortedStories);
       setStoriesLoading(false);
       setApiCount((prev) => prev + 1);
     }
@@ -91,23 +112,15 @@ function Dashboard({ boardName, boardId, setView }) {
       console.log(h_chart_data);
 
       // Sorting by todo, inprogress, done
-      const storyOrder = [
-        "To Do",
-        "In Progress",
-        "In Dev",
-        "Dev In Progress",
-        "Development",
-        "Code Review",
-        "Done",
-      ];
-      const sprint_Stories_Sorted = (a, b) => {
-        return (
-          storyOrder.indexOf(a.story_status) -
-          storyOrder.indexOf(b.story_status)
-        );
-      };
+      function sort_in_order(a, b) {
+        const storyOrder = { "To Do": 1, Done: 3 };
 
-      let h_chart_data_sorted = h_chart_data.sort(sprint_Stories_Sorted);
+        return (
+          (storyOrder[a.story_status] || 2) - (storyOrder[b.story_status] || 2)
+        );
+      }
+
+      let h_chart_data_sorted = h_chart_data.sort(sort_in_order);
 
       let [total_subtasks, completedtasks] = [0, 0];
       h_chart_data_sorted.forEach((d) => {
@@ -120,7 +133,11 @@ function Dashboard({ boardName, boardId, setView }) {
         completed_sub_tasks: completedtasks,
       });
 
-      console.log(h_chart_data_sorted, "h_chart_data_sorted");
+      let story_ac_hygine = stories.story_ac_hygine;
+      let length = stories.length;
+      console.log(h_chart_data_sorted.length, "length");
+
+      // console.log(h_chart_data_sorted, "h_chart_data_sorted");
       updateTotalStoryPoints(h_chart_data_sorted);
       setHChartData(h_chart_data);
       setHorizontalBarChartData({
@@ -167,7 +184,6 @@ function Dashboard({ boardName, boardId, setView }) {
       const AC = stories.filter((s) => s.story_id === storyId)[0]
         .story_ac_hygiene;
       setStoryAC(AC);
-      console.log(stories, "stories");
     }
   }
 
@@ -214,7 +230,7 @@ function Dashboard({ boardName, boardId, setView }) {
       for (let sprint of sprint_progress_data) {
         points += sprint.story_points;
       }
-      setStoryPoints(points)
+      setStoryPoints(points);
       setTotalStoryPoints(points);
     }
   }
@@ -231,7 +247,10 @@ function Dashboard({ boardName, boardId, setView }) {
         piedata.set(d.status_category_name, d.issue_count);
       }
     });
-    console.log(pieData.filter((d) => d.status_category_name), "pieData");
+    // console.log(
+    //   pieData.filter((d) => d.status_category_name),
+    //   "pieData"
+    // );
 
     setStoryPieData({
       labels: Array.from(piedata.keys()),
