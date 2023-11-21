@@ -51,7 +51,7 @@ function Dashboard({ boardName, boardId, setView }) {
       const response = await axios.get(
         `${live_base_url}/sprint/${sprint}/stories`
       );
-      console.log(response);
+      // console.log(response);
       const sprint_stories = response.data.issues;
 
       // sorting by todo, inprogress, done
@@ -109,7 +109,7 @@ function Dashboard({ boardName, boardId, setView }) {
         `${live_base_url}/sprint/${sprint}/progress`
       );
       const h_chart_data = response.data.sprint_progress;
-      console.log(h_chart_data);
+      // console.log(h_chart_data);
 
       // Sorting by todo, inprogress, done
       function sort_in_order(a, b) {
@@ -135,7 +135,7 @@ function Dashboard({ boardName, boardId, setView }) {
 
       let story_ac_hygine = stories.story_ac_hygine;
       let length = stories.length;
-      console.log(h_chart_data_sorted.length, "length");
+      // console.log(h_chart_data_sorted.length, "length");
 
       // console.log(h_chart_data_sorted, "h_chart_data_sorted");
       updateTotalStoryPoints(h_chart_data_sorted);
