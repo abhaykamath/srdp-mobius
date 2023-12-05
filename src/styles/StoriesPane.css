@@ -110,3 +110,8 @@
   background-color: white !important;
   color: black !important;
 }
+
+.story-details{
+  display: flex;
+  flex-direction: column;
+}

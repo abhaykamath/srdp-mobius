@@ -60,3 +60,8 @@
 .board-card:active {
   opacity: 0.75;
 }
+
+.search_bar::placeholder{
+  color: #c2c2c2;
+}
+
