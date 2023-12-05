@@ -40,10 +40,9 @@ function Dashboard({ boardName, boardId, setView }) {
     time_spent: 0,
   });
   const [storyReviewers, setStoryReviewers] = useState("Nil");
-
   const [horizontalBarChartData, setHorizontalBarChartData] = useState({});
-
   const [storyPieData, setStoryPieData] = useState({});
+  const [storyPointsData, setStoryPointsData] = useState();
 
   async function getStories() {
     if (sprint !== "") {
@@ -51,7 +50,7 @@ function Dashboard({ boardName, boardId, setView }) {
       const response = await axios.get(
         `${live_base_url}/sprint/${sprint}/stories`
       );
-      console.log(response);
+      // console.log(response);
       const sprint_stories = response.data.issues;
 
       // sorting by todo, inprogress, done
@@ -109,7 +108,7 @@ function Dashboard({ boardName, boardId, setView }) {
         `${live_base_url}/sprint/${sprint}/progress`
       );
       const h_chart_data = response.data.sprint_progress;
-      console.log(h_chart_data);
+      // console.log(h_chart_data);
 
       // Sorting by todo, inprogress, done
       function sort_in_order(a, b) {
@@ -135,7 +134,7 @@ function Dashboard({ boardName, boardId, setView }) {
 
       let story_ac_hygine = stories.story_ac_hygine;
       let length = stories.length;
-      console.log(h_chart_data_sorted.length, "length");
+      // console.log(h_chart_data_sorted.length, "length");
 
       // console.log(h_chart_data_sorted, "h_chart_data_sorted");
       updateTotalStoryPoints(h_chart_data_sorted);
@@ -180,10 +179,11 @@ function Dashboard({ boardName, boardId, setView }) {
   }
 
   function updateStoryAC() {
+    // console.log(stories, "dfvdfv");
     if (sprint !== "") {
       const AC = stories.filter((s) => s.story_id === storyId)[0]
         .story_ac_hygiene;
-      setStoryAC(AC);
+      // setStoryAC(AC);
     }
   }
 
@@ -227,10 +227,13 @@ function Dashboard({ boardName, boardId, setView }) {
   function updateTotalStoryPoints(sprint_progress_data) {
     if (sprint !== "") {
       let points = 0;
+      setStoryPointsData(sprint_progress_data);
       for (let sprint of sprint_progress_data) {
         points += sprint.story_points;
       }
-      setStoryPoints(points);
+      console.log(storyPointsData, "storyPointsData");
+
+      // setStoryPoints(points);
       setTotalStoryPoints(points);
     }
   }
@@ -324,6 +327,9 @@ function Dashboard({ boardName, boardId, setView }) {
           setStoryId={setStoryId}
           storiesLoading={storiesLoading}
           storyId={storyId}
+          storyAC={storyAC}
+          storyPoints={storyPoints}
+          storyPointsData ={storyPointsData}
         />
         <section id="right-pane">
           <div className="horizontal-chart-container grid-item grid-item-1">
@@ -347,7 +353,10 @@ function Dashboard({ boardName, boardId, setView }) {
             </div>
           </div>
           <StoryAC storyAC={storyAC} />
-          <EffortEstimate storyPoints={storyPoints} />
+          <EffortEstimate
+            storyPoints={storyPoints}
+            totalStoryPoints={totalStoryPoints}
+          />
           <PeerReviewInfo storyReviewers={storyReviewers} />
           <OnTimePredictability
             otp={otp}
@@ -356,7 +365,9 @@ function Dashboard({ boardName, boardId, setView }) {
           />
           <TimeLogInfo timeLogData={timeLogData} />
           <div className="sprint-members-container grid-item grid-item-8">
-            <div className="header">Members</div>
+            <div className="header">
+              Members ({sprintMembers.length !== 0 ? sprintMembers.length : 0}){" "}
+            </div>
             <Members sprintMembers={sprintMembers} />
           </div>
         </section>

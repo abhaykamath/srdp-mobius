@@ -2,7 +2,16 @@ import React, { useState } from "react";
 import "../styles/StoriesPane.css";
 import Loader from "./Loader";
 
-function StoriesPane({ stories, setStoryId, storiesLoading,storyId }) {
+function StoriesPane({
+  stories,
+  setStoryId,
+  storiesLoading,
+  storyId,
+  storyPoints,
+  // storyAC,
+  storyPointsData,
+}) {
+  console.log(stories, "stories......");
   return (
     <section id="left-pane">
       <div className="story-pane-header">STORIES</div>
@@ -22,7 +31,7 @@ function StoriesPane({ stories, setStoryId, storiesLoading,storyId }) {
                 className="story-pill"
                 style={{
                   backgroundColor:
-                  storyId === story.story_id ? "#36b37e" : "white",
+                    storyId === story.story_id ? "#36b37e" : "white",
                   color: storyId === story.story_id ? "white" : "black",
                   animation: `fadeInAndSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) ${
                     0.5 + index * 0.1
@@ -32,25 +41,29 @@ function StoriesPane({ stories, setStoryId, storiesLoading,storyId }) {
                   setStoryId(story.story_id.toString());
                 }}
               >
-                <div className="story-name">
-                  <div>
-                    <i
-                      style={{
-                        color:
-                        storyId === story.story_id
-                            ? "white"
-                            : "#36b37e",
-                      }}
-                      className="fa-solid fa-bookmark"
-                    ></i>
+                <div className="story-details">
+                  <div className="story-name">
+                    <div>
+                      <i
+                        style={{
+                          color:
+                            storyId === story.story_id ? "white" : "#36b37e",
+                        }}
+                        className="fa-solid fa-bookmark"
+                      ></i>
+                    </div>
+                    {story.story_name}
                   </div>
-                  {story.story_name}
+                  <div>Story Ac Hygine : {story.story_ac_hygiene}</div>
+                  <div>Story Points : {story.story_points}</div>
+                  <div>Assigned To : {story.assigne}</div>
+                  <div>Last Updated :{story.updated} </div>
                 </div>
                 <div
                   style={{
                     color: storyId === story.story_id ? "black" : "white",
                     backgroundColor:
-                    storyId === story.story_id ? "white" : "#4285f4",
+                      storyId === story.story_id ? "white" : "#4285f4",
                   }}
                   className="story-status-label"
                 >

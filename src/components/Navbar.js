@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 // import horz_data from "../data/horz_chart";
 import axios from "axios";
 import Loader from "./Loader";
+import "../styles/NavBar.css"
 
 let sprint_data_map = {};
 
