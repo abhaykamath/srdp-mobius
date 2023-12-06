@@ -320,6 +320,7 @@ function Dashboard({ boardName, boardId, setView }) {
         boardId={boardId}
         boardName={boardName}
         totalStoryPoints={totalStoryPoints}
+        stories={stories}
       />
       <main>
         <StoriesPane
@@ -331,6 +332,7 @@ function Dashboard({ boardName, boardId, setView }) {
           storyPoints={storyPoints}
           storyPointsData ={storyPointsData}
         />
+        
         <section id="right-pane">
           <div className="horizontal-chart-container grid-item grid-item-1">
             <div className="header">Sprint progress</div>

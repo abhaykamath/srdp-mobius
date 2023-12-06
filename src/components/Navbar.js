@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 // import horz_data from "../data/horz_chart";
 import axios from "axios";
 import Loader from "./Loader";
-import "../styles/NavBar.css"
+import "../styles/NavBar.css";
 
 let sprint_data_map = {};
 
@@ -17,10 +17,37 @@ function Navbar({
   setView,
   boardId,
   boardName,
-  totalStoryPoints,
+  stories,
+  // totalStoryPoints,
 }) {
   const [options, setOptions] = useState([]);
   const [sprintsLoading, setSprintsLoading] = useState(false);
+
+  //story_status
+  // story_points
+
+  const calculateStoryPoints = (story_status) => {
+    const filteredTasks = stories.filter(
+      (story) => story.story_status === story_status
+    );
+    const totalStoryPoints = filteredTasks.reduce(
+      (sum, story) => sum + story.story_points,
+      0
+    );
+    return totalStoryPoints;
+  };
+
+  const totalStoryPoints = stories.reduce(
+    (sum, story) => sum + story.story_points,
+    0
+  );
+  const todoStoryPoints = calculateStoryPoints("To Do");
+  const inProgressStoryPoints = calculateStoryPoints("In Progress");
+  const doneStoryPoints = calculateStoryPoints("Done");
+
+  const toDo_percentage = parseInt((todoStoryPoints/totalStoryPoints)*100);
+  const in_progress_percentage = parseInt((inProgressStoryPoints/totalStoryPoints)*100);
+  const done_percentage = parseInt((doneStoryPoints/totalStoryPoints)*100);
 
   async function getSprints() {
     setSprintsLoading(true);
@@ -98,7 +125,17 @@ function Navbar({
               })}
             </select>
           )}
-          <div className="total_story_points">Total Storypoints : {totalStoryPoints}</div>
+          {/* <div className="total_story_points">
+            Total Storypoints : {totalStoryPoints}
+          </div> */}
+           <div className="total_story_points">
+            Total Storypoints : {totalStoryPoints}
+          </div>
+          <div className="To Do">To Do : {todoStoryPoints} ({toDo_percentage}%)</div>
+          <div className="In Progress">
+            In Progress : {inProgressStoryPoints} ({in_progress_percentage}%)
+          </div>
+          <div className="Done">Done : {doneStoryPoints} ({done_percentage}%)</div>
         </div>
         <button
           className="btn btn-danger"
