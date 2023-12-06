@@ -74,6 +74,8 @@
   box-sizing: border-box;
   display: flex;
   gap: 0.75rem;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .story-name i {
@@ -111,7 +113,32 @@
   color: black !important;
 }
 
-.story-details{
+.story-details {
   display: flex;
   flex-direction: column;
+  width: 90%;
+}
+
+.story-points-in-story-pane {
+  display: flex;
+  font-size: 16px;
+
+  justify-content: flex-start;
+  /* align-items: flex-start; */
+  text-align: start;
+}
+
+.status-storypoints {
+  width: 10%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.story-hygiene,
+.Updated-date,
+.assigned-to {
+  padding-left: 1.5rem;
+  font-size: 16px;
 }
