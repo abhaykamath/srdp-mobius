@@ -330,10 +330,59 @@ function Dashboard({ boardName, boardId, setView }) {
           storyId={storyId}
           storyAC={storyAC}
           storyPoints={storyPoints}
-          storyPointsData ={storyPointsData}
+          storyPointsData={storyPointsData}
         />
-        
-        <section id="right-pane">
+
+        <section className="right-pane-1">
+          <div className="horizontal-chart-container h_chart_div">
+            <div className="header">Sprint progress</div>
+            <div className="horizontal-chart-canvas-container">
+              {hChartData.length !== 0 ? (
+                <BarChart chartData={horizontalBarChartData} />
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+          <div className="story-sprint-details-div">
+            <div className="pie-chart-container pie-chart-div">
+              <div className="header">Subtasks status</div>
+              <div className="horizontal-chart-canvas-container">
+                {pieData.length !== 0 ? (
+                  <PieChart chartData={storyPieData} />
+                ) : (
+                  "NO Subtask"
+                )}
+              </div>
+            </div>
+
+            <div className="sprint-members-container sprint-members-div">
+              <div className="header">
+                Members ({sprintMembers.length !== 0 ? sprintMembers.length : 0}
+                ){" "}
+              </div>
+              <Members sprintMembers={sprintMembers} />
+            </div>
+          </div>
+
+          <div className="hygine-ontime-timelog-div">
+            <div className="hygine-ontime-div">
+              <StoryAC storyAC={storyAC} />
+              <OnTimePredictability
+                otp={otp}
+                sprintStart={sprintStart}
+                sprintEnd={sprintEnd}
+              />
+            </div>
+            <div className="time-log-div">
+            <TimeLogInfo timeLogData={timeLogData} />
+
+              <PeerReviewInfo storyReviewers={storyReviewers} />
+            </div>
+          </div>
+        </section>
+
+        {/* <section id="right-pane">
           <div className="horizontal-chart-container grid-item grid-item-1">
             <div className="header">Sprint progress</div>
             <div className="horizontal-chart-canvas-container">
@@ -372,7 +421,7 @@ function Dashboard({ boardName, boardId, setView }) {
             </div>
             <Members sprintMembers={sprintMembers} />
           </div>
-        </section>
+        </section> */}
       </main>
     </>
   );
