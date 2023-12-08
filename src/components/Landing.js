@@ -97,7 +97,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
   const searchInputRef = useRef();
   const [searchTerm, setSearchTerm] = useState("");
   const all_boards_AQ =
-    "https://ig.aidtaas.com/tf-web/v1.0/64e1fd3d1443eb00018cc231/analytic-queries/65696b3e19b2493ebae3094d/data?size=1000";
+    "https://ig.aidtaas.com/tf-web/v1.0/64e1fd3d1443eb00018cc231/analytic-queries/6572f8c0a1e7e3437119a8a1/data?size=1000";
 
   async function getBoardsData() {
     const response = await axios.get(`${all_boards_AQ}`);
