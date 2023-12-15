@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../styles/Landing.css";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 // const boards = [
 //   { board_name: "MOB board", board_id: "1" },
 //   { board_name: "PM board", board_id: "4" },
@@ -96,9 +96,9 @@ function Landing({ setBoardId, setView, setBoardName }) {
   const [allboards, setAllboards] = useState([]);
   const searchInputRef = useRef();
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
   const all_boards_AQ =
     "https://ig.aidtaas.com/tf-web/v1.0/64e1fd3d1443eb00018cc231/analytic-queries/6572f8c0a1e7e3437119a8a1/data?size=1000";
-
   async function getBoardsData() {
     const response = await axios.get(`${all_boards_AQ}`);
     const all_boards_data = response.data.model.entities;
@@ -113,6 +113,13 @@ function Landing({ setBoardId, setView, setBoardName }) {
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
+
+  function handleCick(id, name, str) {
+    setBoardId(id);
+    setBoardName(name);
+    setView(str);
+    navigate(`/dashboard/${id}/${name}`);
+  }
 
   const filteredBoards = allboards.filter((board) => {
     const lowerCaseName = (board.board_name || "").toLowerCase();
@@ -163,9 +170,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
               key={index}
               className="board-card"
               onClick={(e) => {
-                setBoardId(board.board_id);
-                setBoardName(board.board_name);
-                setView("dashboard");
+                handleCick(board.board_id, board.board_name, "dashboard");
               }}
             >
               {board.board_name}

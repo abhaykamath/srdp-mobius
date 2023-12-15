@@ -1,22 +1,49 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Landing from "./Landing";
+import Comment from "./Comment";
 
 function App() {
-  const [boardId, setBoardId] = useState("269");
+  const [boardId, setBoardId] = useState("");
   const [boardName, setBoardName] = useState("");
   const [view, setView] = useState("landing");
+
+  // const LandingElement = (
+  //   <Landing
+  //     setBoardName={setBoardName}
+  //     setBoardId={setBoardId}
+  //     setView={setView}
+  //   ></Landing>
+  // );
+
   return (
     <>
-      {view === "landing" ? (
-        <Landing
-          setBoardName={setBoardName}
-          setBoardId={setBoardId}
-          setView={setView}
-        />
-      ) : (
-        <Dashboard boardName={boardName} boardId={boardId} setView={setView} />
-      )}
+      {/* <Router>
+        <Routes>
+       
+          <Route
+            path="/board"
+            element={
+              <Landing
+                setBoardName={setBoardName}
+                setBoardId={setBoardId}
+                setView={setView}
+              />
+            }
+          />
+          <Route
+            path={`/dashboard/:boardId/:boardName`}
+            element={
+              <Dashboard
+                setView={setView}
+              />
+            }
+          />
+        </Routes>
+      </Router> */}
+      
+      <Comment/>
     </>
   );
 }

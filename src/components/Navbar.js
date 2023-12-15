@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "./Loader";
 import "../styles/NavBar.css";
+import { Link } from "react-router-dom";
 
 let sprint_data_map = {};
 
@@ -45,9 +46,11 @@ function Navbar({
   const inProgressStoryPoints = calculateStoryPoints("In Progress");
   const doneStoryPoints = calculateStoryPoints("Done");
 
-  const toDo_percentage = parseInt((todoStoryPoints/totalStoryPoints)*100);
-  const in_progress_percentage = parseInt((inProgressStoryPoints/totalStoryPoints)*100);
-  const done_percentage = parseInt((doneStoryPoints/totalStoryPoints)*100);
+  const toDo_percentage = parseInt((todoStoryPoints / totalStoryPoints) * 100);
+  const in_progress_percentage = parseInt(
+    (inProgressStoryPoints / totalStoryPoints) * 100
+  );
+  const done_percentage = parseInt((doneStoryPoints / totalStoryPoints) * 100);
 
   async function getSprints() {
     setSprintsLoading(true);
@@ -128,23 +131,29 @@ function Navbar({
           {/* <div className="total_story_points">
             Total Storypoints : {totalStoryPoints}
           </div> */}
-           <div className="total_story_points">
+          <div className="total_story_points">
             Total Storypoints : {totalStoryPoints}
           </div>
-          <div className="To Do">To Do : {todoStoryPoints} ({toDo_percentage}%)</div>
+          <div className="To Do">
+            To Do : {todoStoryPoints} ({toDo_percentage}%)
+          </div>
           <div className="In Progress">
             In Progress : {inProgressStoryPoints} ({in_progress_percentage}%)
           </div>
-          <div className="Done">Done : {doneStoryPoints} ({done_percentage}%)</div>
+          <div className="Done">
+            Done : {doneStoryPoints} ({done_percentage}%)
+          </div>
         </div>
-        <button
-          className="btn btn-danger"
-          onClick={() => {
-            setView("landing");
-          }}
-        >
-          go back
-        </button>
+        <Link to={"/"}>
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              setView("landing");
+            }}
+          >
+            go back
+          </button>
+        </Link>
       </div>
     </nav>
   );

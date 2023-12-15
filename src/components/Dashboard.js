@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
 import StoriesPane from "./StoriesPane";
@@ -15,7 +16,9 @@ import "../styles/RightPane.css";
 const live_base_url = "https://srdp-mobius-apis.onrender.com";
 // const live_base_url = "http://localhost:4000";
 
-function Dashboard({ boardName, boardId, setView }) {
+function Dashboard({ setView }) {
+  const { boardId, boardName } = useParams();
+  console.log("..............", boardId, boardName, useParams());
   const [project, setProject] = useState("10235");
   const [stories, setStories] = useState([]);
   const [storiesLoading, setStoriesLoading] = useState(false);
@@ -180,15 +183,15 @@ function Dashboard({ boardName, boardId, setView }) {
 
   function updateStoryAC() {
     // console.log(stories, "dfvdfv");
-    if (sprint !== "") {
+    if (sprint !== "" && storyId!=='') {
       const AC = stories.filter((s) => s.story_id === storyId)[0]
         .story_ac_hygiene;
-      // setStoryAC(AC);
+       //setStoryAC(AC);
     }
   }
 
   function updateStoryPoints() {
-    if (sprint !== "") {
+    if (sprint !== "" && storyId!=='') {
       const points = hChartData.filter((s) => s.story_id === storyId)[0]
         .story_points;
       setStoryPoints(points);
@@ -196,7 +199,7 @@ function Dashboard({ boardName, boardId, setView }) {
   }
 
   function updateOtp() {
-    if (sprint !== "") {
+    if (sprint !== "" && storyId!=='') {
       const { number_of_sub_tasks, completed_sub_tasks } = hChartData.filter(
         (s) => s.story_id === storyId
       )[0];
@@ -205,7 +208,7 @@ function Dashboard({ boardName, boardId, setView }) {
   }
 
   function updateTimeLogData() {
-    if (sprint !== "") {
+    if (sprint !== "" && storyId!=='') {
       const { remaining_estimate, original_estimate, time_spent } =
         stories.filter((s) => s.story_id === storyId)[0];
       setTimeLogData({
@@ -217,7 +220,7 @@ function Dashboard({ boardName, boardId, setView }) {
   }
 
   function updateStoryReviewers() {
-    if (sprint !== "") {
+    if (sprint !== "" && storyId!=='') {
       const reviewers = stories.filter((s) => s.story_id === storyId)[0]
         .story_reviewers;
       setStoryReviewers(reviewers);
@@ -225,7 +228,7 @@ function Dashboard({ boardName, boardId, setView }) {
   }
 
   function updateTotalStoryPoints(sprint_progress_data) {
-    if (sprint !== "") {
+    if (sprint !== "" && storyId!=='') {
       let points = 0;
       setStoryPointsData(sprint_progress_data);
       for (let sprint of sprint_progress_data) {
@@ -375,7 +378,7 @@ function Dashboard({ boardName, boardId, setView }) {
               />
             </div>
             <div className="time-log-div">
-            <TimeLogInfo timeLogData={timeLogData} />
+              <TimeLogInfo timeLogData={timeLogData} />
 
               <PeerReviewInfo storyReviewers={storyReviewers} />
             </div>
