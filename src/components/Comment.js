@@ -9,7 +9,7 @@ const Comment = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/comments');
+        const response = await axios.get('https://srdp-mobius-apis.onrender.com/comments');
         setComments(response.data);
       } catch (error) {
         console.error('Error fetching comments:', error);
