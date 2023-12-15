@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import StoryAC from "./Cards/StoryAC";
 import axios from 'axios';
 import moment from 'moment';
+import { Link } from "react-router-dom";
 
 const Comment = () => {
   const [comments, setComments] = useState([]);
@@ -40,7 +41,7 @@ const Comment = () => {
         <td>{epic}</td>
         <td><img src={fields.issuetype.iconUrl} alt={`${ticketType} icon`} />{ticketType}</td>
         <td><a href={`https://gaiansolutions.atlassian.net/browse/${issue.key}`} target='_blank'>{issue.key}</a></td>
-        <td>{fields.assignee.displayName}</td>
+        <td>{fields.assignee && fields.assignee.displayName}</td>
         <td>{getDate(fields.updated)}</td>
         <td>{fields.status.statusCategory.name}</td>
         <td>{getCommentsView(issue)}</td>
@@ -51,7 +52,15 @@ const Comment = () => {
   return (
     <>
       <div className="story-ac-card grid-item grid-item-6">
-        <div className="header">On-Time Predictability</div>
+      <Link to={"/"}>
+          <button
+            className="btn btn-danger"
+            
+          >
+            Go Back
+          </button>
+        </Link>
+        <div className="header">Daily Status Updated</div>
         <table>
           <thead>
             <tr>
