@@ -52,11 +52,10 @@ const Comment = () => {
       <tr key={issue.key}>
         <td>{fields.project.name}</td>
         <td>{getEpicView(issue)}</td>
-        <td><img src={fields.issuetype.iconUrl} alt={`${ticketType} icon`} />{ticketType}</td>
-        <td><a href={`https://gaiansolutions.atlassian.net/browse/${issue.key}`} target='_blank'>{issue.fields.summary}</a></td>
+        <td><img src={fields.issuetype.iconUrl} alt={ticketType} title={ticketType} />&nbsp;<a href={`https://gaiansolutions.atlassian.net/browse/${issue.key}`} target='_blank'>{issue.fields.summary}</a></td>
         <td>{fields.assignee && fields.assignee.displayName}</td>
         <td>{getDate(fields.updated)}</td>
-        <td><div class={"task-status-" + fields.status.statusCategory.key}>{fields.status.statusCategory.name}</div></td>
+        <td><div className={"task-status-" + fields.status.statusCategory.key}>{fields.status.statusCategory.name}</div></td>
         <td>{getCommentsView(issue)}</td>
       </tr>
     );
@@ -79,11 +78,10 @@ const Comment = () => {
             
           </thead>
           <tbody>
-          <tr class='table-head'>
+          <tr key='table-header' className='table-head'>
               <td>Project</td>
               <td>Epic</td>
-              <td>Ticket Type</td>
-              <td>Ticket</td>
+              <td>Task</td>
               <td>Assignee</td>
               <td>Last Update Time</td>
               <td>Current Status</td>
