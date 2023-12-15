@@ -40,7 +40,7 @@ const Comment = () => {
         <td>{fields.project.name}</td>
         <td>{epic}</td>
         <td><img src={fields.issuetype.iconUrl} alt={`${ticketType} icon`} />{ticketType}</td>
-        <td><a href={`https://gaiansolutions.atlassian.net/browse/${issue.key}`} target='_blank'>{issue.key}</a></td>
+        <td><a href={`https://gaiansolutions.atlassian.net/browse/${issue.key}`} target='_blank'>{issue.summary}</a></td>
         <td>{fields.assignee && fields.assignee.displayName}</td>
         <td>{getDate(fields.updated)}</td>
         <td>{fields.status.statusCategory.name}</td>
@@ -51,7 +51,7 @@ const Comment = () => {
 
   return (
     <>
-      <div className="story-ac-card grid-item grid-item-6">
+      <div className="story-ac-card grid-item ">
       <Link to={"/"}>
           <button
             className="btn btn-danger"
@@ -60,21 +60,22 @@ const Comment = () => {
             Go Back
           </button>
         </Link>
-        <div className="header">Daily Status Updated</div>
+        <div className="header">Daily Status Updated: <b>{comments.length} Tasks</b></div>
         <table>
           <thead>
-            <tr>
-              <th>Project</th>
-              <th>Epic</th>
-              <th>Ticket Type</th>
-              <th>Ticket</th>
-              <th>Assignee</th>
-              <th>Last Update Time</th>
-              <th>Current Status</th>
-              <th>Comments</th>
-            </tr>
+            
           </thead>
           <tbody>
+          <tr>
+              <td sty>Project</td>
+              <td>Epic</td>
+              <td>Ticket Type</td>
+              <td>Ticket</td>
+              <td>Assignee</td>
+              <td>Last Update Time</td>
+              <td>Current Status</td>
+              <td>Comments</td>
+            </tr>
             {rows}
           </tbody>
         </table>
