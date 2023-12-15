@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../styles/Landing.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // const boards = [
 //   { board_name: "MOB board", board_id: "1" },
 //   { board_name: "PM board", board_id: "4" },
@@ -152,6 +152,14 @@ function Landing({ setBoardId, setView, setBoardName }) {
   return (
     <>
       <div className="landing-page-header">JIRA Boards</div>
+      <Link to={"/daily-status"}>
+          <button
+            className="btn btn-danger"
+            
+          >
+            Daily Status
+          </button>
+        </Link>
       <div className="searc_div">
         <input
           className="search_bar"

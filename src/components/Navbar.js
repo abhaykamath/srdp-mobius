@@ -15,7 +15,7 @@ function Navbar({
   setSprint,
   setSprintStart,
   setSprintEnd,
-  setView,
+setView,
   boardId,
   boardName,
   stories,
