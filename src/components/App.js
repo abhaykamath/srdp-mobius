@@ -19,11 +19,11 @@ function App() {
 
   return (
     <>
-      {/* <Router>
+      <Router>
         <Routes>
        
           <Route
-            path="/board"
+            path="/"
             element={
               <Landing
                 setBoardName={setBoardName}
@@ -40,10 +40,16 @@ function App() {
               />
             }
           />
+          <Route
+            path={`/daily-status`}
+            element={
+              <Comment/>
+            }
+          />
         </Routes>
-      </Router> */}
+      </Router>
       
-      <Comment/>
+      
     </>
   );
 }
