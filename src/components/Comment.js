@@ -3,6 +3,9 @@ import StoryAC from "./Cards/StoryAC";
 import axios from 'axios';
 import moment from 'moment';
 import { Link } from "react-router-dom";
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import './comments.css'
 
 const Comment = () => {
   const [comments, setComments] = useState([]);
@@ -24,26 +27,36 @@ const Comment = () => {
 
   const getCommentsView = (issue) => {
     let index = 0;
+    const hasMore = issue.statusUpdates.length > 1;
     return issue.statusUpdates.map(c => {
+      const b = hasMore ? ((++index) + '. ' + c.body) : c.body;
         return (
-            <div>{(++index) + '. ' + c.body}</div>
+            <div><Markdown remarkPlugins={[remarkGfm]}>{b}</Markdown></div>
         );
     });
   };
 
+  const getEpicView = (issue) => {
+    const parent = issue.fields.parent;
+    if(parent && parent.fields && parent.fields.summary) {
+      return (
+        <a href={`https://gaiansolutions.atlassian.net/browse/${parent.key}`} target="_blank">{parent.fields.summary}</a>
+      );
+    }
+  };
+
   const rows = comments.map(issue => {
     const fields = issue.fields || {};
-    const epic = "";
     const ticketType = fields.issuetype.name;
     return (
       <tr key={issue.key}>
         <td>{fields.project.name}</td>
-        <td>{epic}</td>
+        <td>{getEpicView(issue)}</td>
         <td><img src={fields.issuetype.iconUrl} alt={`${ticketType} icon`} />{ticketType}</td>
-        <td><a href={`https://gaiansolutions.atlassian.net/browse/${issue.key}`} target='_blank'>{issue.summary}</a></td>
+        <td><a href={`https://gaiansolutions.atlassian.net/browse/${issue.key}`} target='_blank'>{issue.fields.summary}</a></td>
         <td>{fields.assignee && fields.assignee.displayName}</td>
         <td>{getDate(fields.updated)}</td>
-        <td>{fields.status.statusCategory.name}</td>
+        <td><div class={"task-status-" + fields.status.statusCategory.key}>{fields.status.statusCategory.name}</div></td>
         <td>{getCommentsView(issue)}</td>
       </tr>
     );
@@ -51,7 +64,7 @@ const Comment = () => {
 
   return (
     <>
-      <div className="story-ac-card grid-item ">
+      <div className=" story-status grid-comments ">
       <Link to={"/"}>
           <button
             className="btn btn-danger"
@@ -66,8 +79,8 @@ const Comment = () => {
             
           </thead>
           <tbody>
-          <tr>
-              <td sty>Project</td>
+          <tr class='table-head'>
+              <td>Project</td>
               <td>Epic</td>
               <td>Ticket Type</td>
               <td>Ticket</td>
