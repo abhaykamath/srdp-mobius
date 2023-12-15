@@ -11,7 +11,18 @@ function StoriesPane({
   // storyAC,
   storyPointsData,
 }) {
-  console.log(stories, "stories......");
+  console.log('......',storyId)
+  const [storySelected,setStorySelected]=useState(false);
+  function handleCick(str){
+    if(storySelected){
+      setStoryId(str);
+    }
+    else{
+       setStoryId('');
+    }
+    setStorySelected(!storySelected)
+  }
+  // console.log(stories, "stories......");
   return (
     <section id="left-pane">
       <div className="stories-in-todo">
@@ -66,7 +77,7 @@ function StoriesPane({
                       }s 1 forwards`,
                     }}
                     onClick={(e) => {
-                      setStoryId(story.story_id.toString());
+                      handleCick(story.story_id.toString())
                     }}
                   >
                     <div className="story-details">
@@ -185,7 +196,7 @@ function StoriesPane({
                       }s 1 forwards`,
                     }}
                     onClick={(e) => {
-                      setStoryId(story.story_id.toString());
+                      handleCick(story.story_id.toString())
                     }}
                   >
                     <div className="story-details">
@@ -284,7 +295,7 @@ function StoriesPane({
                       }s 1 forwards`,
                     }}
                     onClick={(e) => {
-                      setStoryId(story.story_id.toString());
+                      handleCick(story.story_id.toString())
                     }}
                   >
                     <div className="story-details">
