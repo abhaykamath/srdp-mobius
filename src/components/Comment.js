@@ -10,7 +10,6 @@ import Loader from "./Loader";
 
 const Comment = () => {
   const [comments, setComments] = useState([]);
-  const [commentsLoading, setCommentsLoading] = useState(false);
 
   const live_base_url = "https://srdp-mobius-apis.onrender.com";
 
@@ -56,7 +55,6 @@ const Comment = () => {
   };
 
   const rows = comments.map((issue) => {
-    setCommentsLoading(true);
     const fields = issue.fields || {};
     const ticketType = fields.issuetype.name;
     return (
@@ -91,9 +89,9 @@ const Comment = () => {
 
   return (
     <>
-        <Link to={"/"}>
-          <button className="btn btn-danger">Go Back</button>
-        </Link>
+      <Link to={"/"}>
+        <button className="btn btn-danger">Go Back</button>
+      </Link>
       <div className=" story-status grid-comments ">
         <div className="header">
           Daily Status Updated: <b>{comments.length} Tasks</b>
