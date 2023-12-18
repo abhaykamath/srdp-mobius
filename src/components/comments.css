@@ -24,8 +24,8 @@
 }
 
 .table-head td {
-  /* font-size: large; */
   font-weight: bold;
+  font-size: 1rem;
 }
 
 .grid-comments {
@@ -36,5 +36,22 @@
 }
 
 td {
-  width: 10%;
+  width: 5%;
+}
+
+.buttons{
+  display: flex;
+  justify-content: space-between;
+}
+
+.data-row{
+  font-size: 0.8rem;
+}
+
+.header{
+  font-size: 1.1rem;
+}
+
+td, tr{
+  border: 1px solid black;
 }
