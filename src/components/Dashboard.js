@@ -46,6 +46,7 @@ function Dashboard({ setView }) {
   const [horizontalBarChartData, setHorizontalBarChartData] = useState({});
   const [storyPieData, setStoryPieData] = useState({});
   const [storyPointsData, setStoryPointsData] = useState();
+  const [storydata, setStorydata] = useState();
 
   async function getStories() {
     if (sprint !== "") {
@@ -183,15 +184,15 @@ function Dashboard({ setView }) {
 
   function updateStoryAC() {
     // console.log(stories, "dfvdfv");
-    if (sprint !== "" && storyId!=='') {
+    if (sprint !== "" && storyId !== "") {
       const AC = stories.filter((s) => s.story_id === storyId)[0]
         .story_ac_hygiene;
-       //setStoryAC(AC);
+      //setStoryAC(AC);
     }
   }
 
   function updateStoryPoints() {
-    if (sprint !== "" && storyId!=='') {
+    if (sprint !== "" && storyId !== "") {
       const points = hChartData.filter((s) => s.story_id === storyId)[0]
         .story_points;
       setStoryPoints(points);
@@ -199,7 +200,7 @@ function Dashboard({ setView }) {
   }
 
   function updateOtp() {
-    if (sprint !== "" && storyId!=='') {
+    if (sprint !== "" && storyId !== "") {
       const { number_of_sub_tasks, completed_sub_tasks } = hChartData.filter(
         (s) => s.story_id === storyId
       )[0];
@@ -208,7 +209,7 @@ function Dashboard({ setView }) {
   }
 
   function updateTimeLogData() {
-    if (sprint !== "" && storyId!=='') {
+    if (sprint !== "" && storyId !== "") {
       const { remaining_estimate, original_estimate, time_spent } =
         stories.filter((s) => s.story_id === storyId)[0];
       setTimeLogData({
@@ -220,7 +221,7 @@ function Dashboard({ setView }) {
   }
 
   function updateStoryReviewers() {
-    if (sprint !== "" && storyId!=='') {
+    if (sprint !== "" && storyId !== "") {
       const reviewers = stories.filter((s) => s.story_id === storyId)[0]
         .story_reviewers;
       setStoryReviewers(reviewers);
@@ -228,7 +229,7 @@ function Dashboard({ setView }) {
   }
 
   function updateTotalStoryPoints(sprint_progress_data) {
-    if (sprint !== "" && storyId!=='') {
+    if (sprint !== "" && storyId !== "") {
       let points = 0;
       setStoryPointsData(sprint_progress_data);
       for (let sprint of sprint_progress_data) {
@@ -249,8 +250,15 @@ function Dashboard({ setView }) {
           d.status_category_name,
           piedata.get(d.status_category_name) + d.issue_count
         );
+        setStorydata(
+          piedata.set(
+            d.status_category_name,
+            piedata.get(d.status_category_name) + d.issue_count
+          )
+        );
       } else {
         piedata.set(d.status_category_name, d.issue_count);
+        setStorydata(piedata.set(d.status_category_name, d.issue_count));
       }
     });
     // console.log(
@@ -259,7 +267,7 @@ function Dashboard({ setView }) {
     // );
 
     setStoryPieData({
-      labels: Array.from(piedata.keys()),
+      labels: Array.from(piedata.values()),
       datasets: [
         {
           label: "Subtask Count",
@@ -276,6 +284,7 @@ function Dashboard({ setView }) {
     });
     setApiCount(0);
   }
+  console.log(storydata, "storydata");
   useEffect(() => {
     getStories();
     getHorzChartData();

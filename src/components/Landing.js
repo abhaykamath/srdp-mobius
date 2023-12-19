@@ -153,13 +153,8 @@ function Landing({ setBoardId, setView, setBoardName }) {
     <>
       <div className="landing-page-header">JIRA Boards</div>
       <Link to={"/daily-status"}>
-          <button
-            className="btn btn-danger"
-            
-          >
-            Daily Status
-          </button>
-        </Link>
+        <button className="btn btn-primary">Daily Status</button>
+      </Link>
       <div className="searc_div">
         <input
           className="search_bar"

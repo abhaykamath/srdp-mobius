@@ -248,7 +248,7 @@ input[type="radio"]:hover {
 
 /* For Webkit-based browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
-  width: 1px;
+  width: 0.4rem;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -274,3 +274,4 @@ input[type="radio"]:hover {
 *::-moz-scrollbar-track {
   background-color: #ecf0f1;
 }
+
