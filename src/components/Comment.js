@@ -109,6 +109,7 @@ const Comment = () => {
   const customStyles = {
     headRow: {
       style: {
+        backgroundColor: "#4B0082",
         color: "white",
         // overflow:"auto",
         // border: "1px solid black",
@@ -122,20 +123,18 @@ const Comment = () => {
         fontSize: "1rem",
         fontWeight: "Bold",
         textTransform: "uppercase",
-        border: "1px solid white",
-        backgroundColor: "#4B0082",
-        color: "white",
+        border: "1px solid black",
+        backgroundColor: "#3498db", 
+        color: "white", 
       },
     },
-  
     cells: {
       style: {
         fontSize: "0.9rem",
-        borderTop: "1px solid black",
-        borderRight: "1px solid black",
+        border: "1px solid black",
         overflow: "none",
-        color: "#00000",
-        backgroundColor: "#D6EEEE",
+        backgroundColor: "#ecf0f1",
+
       },
     },
   };
@@ -225,53 +224,53 @@ const Comment = () => {
     }
   };
 
-  // const rows = comments.map((issue) => {
-  //   const fields = issue.fields || {};
-  //   const ticketType = fields.issuetype.name;
-  //   console.log("ticketType", ticketType);
-  //   return (
-  //     <tr key={issue.key} className="data-row">
-  //       <td>{fields.project.name}</td>
-  //       <td>{getEpicView(issue)}</td>
-  //       <td>
-  //         <img
-  //           src={fields.issuetype.iconUrl}
-  //           alt={ticketType}
-  //           title={ticketType}
-  //         />
-  //         &nbsp;
-  //         <a
-  //           href={`https://gaiansolutions.atlassian.net/browse/${issue.key}`}
-  //           target="_blank"
-  //         >
-  //           {issue.fields.summary}
-  //         </a>
-  //       </td>
-  //       <td>{fields.assignee && fields.assignee.displayName}</td>
-  //       <td>{getDate(fields.updated)}</td>
-  //       <td>
-  //         <div className={"task-status-" + fields.status.statusCategory.key}>
-  //           {fields.status.statusCategory.name}
-  //         </div>
-  //       </td>
-  //       <td>{getCommentsView(issue)}</td>
-  //     </tr>
-  //   );
-  // });
+  const rows = comments.map((issue) => {
+    const fields = issue.fields || {};
+    const ticketType = fields.issuetype.name;
+    console.log("ticketType", ticketType);
+    return (
+      <tr key={issue.key} className="data-row">
+        <td>{fields.project.name}</td>
+        <td>{getEpicView(issue)}</td>
+        <td>
+          <img
+            src={fields.issuetype.iconUrl}
+            alt={ticketType}
+            title={ticketType}
+          />
+          &nbsp;
+          <a
+            href={`https://gaiansolutions.atlassian.net/browse/${issue.key}`}
+            target="_blank"
+          >
+            {issue.fields.summary}
+          </a>
+        </td>
+        <td>{fields.assignee && fields.assignee.displayName}</td>
+        <td>{getDate(fields.updated)}</td>
+        <td>
+          <div className={"task-status-" + fields.status.statusCategory.key}>
+            {fields.status.statusCategory.name}
+          </div>
+        </td>
+        <td>{getCommentsView(issue)}</td>
+      </tr>
+    );
+  });
 
-  // const downloadPDF = () => {
-  //   const input = pdfRef.current;
+  const downloadPDF = () => {
+    const input = pdfRef.current;
 
-  //   const pdfOptions = {
-  //     margin: 10,
-  //     filename: "downloaded-page.pdf",
-  //     image: { type: "jpeg", quality: 0.98 },
-  //     html2canvas: { scale: 2 },
-  //     jsPDF: { unit: "mm", format: "a4", orientation: "landscape" }, // Set orientation to landscape
-  //   };
+    const pdfOptions = {
+      margin: 10,
+      filename: "downloaded-page.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "mm", format: "a4", orientation: "landscape" }, // Set orientation to landscape
+    };
 
-  //   html2pdf(input, pdfOptions);
-  // };
+    html2pdf(input, pdfOptions);
+  };
 
   const download_PDF = useReactToPrint({
     content: () => pdfRef.current,
@@ -294,9 +293,9 @@ const Comment = () => {
             Refresh
           </button>
 
-          {/* <button className="btn btn-primary" onClick={download_PDF}>
+          <button className="btn btn-primary" onClick={download_PDF}>
             Download
-          </button> */}
+          </button>
           {/* <button className="btn btn-primary" onClick={downloadPDF}>
             Download
           </button> */}
@@ -306,7 +305,7 @@ const Comment = () => {
           <div className="header">
             Daily Status Updated: <b>{comments.length} Tasks</b>
           </div>
-          {/* <div className="table-container">
+          <div className="table-container">
             <table>
               <thead></thead>
               <tbody>
@@ -328,9 +327,9 @@ const Comment = () => {
                 )}
               </tbody>
             </table>
-          </div> */}
+          </div>
           <div>
-            <DataTable
+            {/* <DataTable
               className="data-table"
               subHeader
               subHeaderComponent={
@@ -338,7 +337,6 @@ const Comment = () => {
                   type="text"
                   placeholder="Search..."
                   className="form-control"
-                  style={{ borderColor: "blue" }}
                   onChange={handleFilter}
                 />
               }
@@ -352,7 +350,7 @@ const Comment = () => {
                   <Loader />
                 </div>
               }
-            />
+            /> */}
           </div>
         </div>
       </div>
