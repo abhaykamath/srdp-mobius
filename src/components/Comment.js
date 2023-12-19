@@ -15,6 +15,7 @@ import { useReactToPrint } from "react-to-print";
 
 const Comment = () => {
   const [comments, setComments] = useState([]);
+  const [commentsFilter, setCommentsFilter] = useState([]);
   const [commentsData, setCommentsData] = useState([]);
   const pdfRef = useRef();
 
@@ -26,73 +27,169 @@ const Comment = () => {
     try {
       const response = await axios.get(`${live_base_url}/comments`);
       setComments(response.data);
+      setCommentsFilter(response.data);
       setCommentsLoading(false);
     } catch (error) {
       console.error("Error fetching comments:", error);
     }
   };
 
-  console.log(comments);
-  // const columns = [
-  //   {
-  //     name: "Project",
-  //     selector: (row) => <div>{row.fields.project.name}</div>,
-  //   },
-  //   {
-  //     name: "Epic",
-  //     selector: (row) => (
-  //       <div>
-  //         <a
-  //           href={`https://gaiansolutions.atlassian.net/browse/${row.fields.parent.key}}`}
-  //           target="_blank"
-  //         >
-  //           {row.fields.parent.fields.summary}
-  //         </a>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     name: "Task",
-  //     selector: (row) => (
-  //       <div>
-  //         <img
-  //           src={row.fields.issuetype.iconUrl}
-  //           alt={row.fields.issuetype.name}
-  //           title={row.fields.issuetype.name}
-  //         />
-  //         &nbsp;
-  //         <a
-  //           href={`https://gaiansolutions.atlassian.net/browse/${row.key}`}
-  //           target="_blank"
-  //         >
-  //           {row.fields.summary}
-  //         </a>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     name: "Assignee",
-  //     selector: (row) => (
-  //       <div>{row.fields.assignee && row.fields.assignee.displayName}</div>
-  //     ),
-  //   },
-  //   {
-  //     name: "Last Update Time",
-  //     selector: (row) => <div>{getDate(row.fields.updated)}</div>,
-  //   },
-  //   {
-  //     name: "Current Status	ject",
-  //     selector: (row) => (
-  //       <div className={"task-status-" + row.fields.status.statusCategory.key}>
-  //         {row.fields.status.statusCategory.name}
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     name: "Comments",
-  //     selector: (row) => <div>{getCommentsView(row)}</div>,
-  //   },
-  // ];
+  // console.log(comments, "comments");
+  const columns = [
+    {
+      name: "Project",
+      selector: (row) => <div>{row.fields.project.name}</div>,
+      sortable: true,
+    },
+    {
+      name: "Epic",
+      selector: (row) => {
+        return (
+          <div>
+            {row.fields.parent && row.fields.parent.key && (
+              <a
+                href={`https://gaiansolutions.atlassian.net/browse/${row.fields.parent.key}`}
+                target="_blank"
+              >
+                {row.fields.parent.fields.summary}
+              </a>
+            )}
+          </div>
+        );
+      },
+      sortable: true,
+    },
+    {
+      name: "Task",
+      selector: (row) => (
+        <div>
+          <img
+            src={row.fields.issuetype.iconUrl}
+            alt={row.fields.issuetype.name}
+            title={row.fields.issuetype.name}
+          />
+          &nbsp;
+          <a
+            href={`https://gaiansolutions.atlassian.net/browse/${row.key}`}
+            target="_blank"
+          >
+            {row.fields.summary}
+          </a>
+        </div>
+      ),
+      sortable: true,
+    },
+    {
+      name: "Assignee",
+      selector: (row) => (
+        <div>{row.fields.assignee && row.fields.assignee.displayName}</div>
+      ),
+      sortable: true,
+    },
+    {
+      name: "Last Update Time",
+      selector: (row) => <div>{getDate(row.fields.updated)}</div>,
+      sortable: true,
+    },
+    {
+      name: "Current Status",
+      selector: (row) => (
+        <div className={"task-status-" + row.fields.status.statusCategory.key}>
+          {row.fields.status.statusCategory.name}
+        </div>
+      ),
+      sortable: true,
+    },
+    {
+      name: "Comments",
+      selector: (row) => <div>{getCommentsView(row)}</div>,
+    },
+  ];
+
+  const customStyles = {
+    headRow: {
+      style: {
+        color: "white",
+        // overflow:"auto",
+        // border: "1px solid black",
+        backgroundColor: "#3498db", // Header background color
+        color: "white", // Header text color
+      },
+    },
+
+    headCells: {
+      style: {
+        fontSize: "1rem",
+        fontWeight: "Bold",
+        textTransform: "uppercase",
+        border: "1px solid white",
+        backgroundColor: "#4B0082",
+        color: "white",
+      },
+    },
+  
+    cells: {
+      style: {
+        fontSize: "0.9rem",
+        borderTop: "1px solid black",
+        borderRight: "1px solid black",
+        overflow: "none",
+        color: "#00000",
+        backgroundColor: "#D6EEEE",
+      },
+    },
+  };
+
+  const handleFilter = (event) => {
+    const newData = commentsFilter.filter((row) => {
+      const Project = row.fields.project.name
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase());
+
+      const epic =
+        row.fields.parent &&
+        row.fields.parent.fields &&
+        row.fields.parent.fields.summary
+          .toLowerCase()
+          .includes(event.target.value.toLowerCase());
+
+      const task = row.fields.summary
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase());
+
+      const assignee =
+        row.fields.assignee &&
+        row.fields.assignee.displayName
+          .toLowerCase()
+          .includes(event.target.value.toLowerCase());
+
+      const tast_Update_Time = getDate(row.fields.updated)
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase());
+
+      const current_Status = row.fields.status.statusCategory.name
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase());
+
+      const Comments = getCommentsView(row)
+        .map((comment) => comment.props.children)
+        .join(" ") // Join comments into a string
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase());
+
+      return (
+        Project ||
+        epic ||
+        task ||
+        assignee ||
+        tast_Update_Time ||
+        current_Status ||
+        Comments
+      );
+    });
+
+    setComments(newData);
+  };
 
   useEffect(() => {
     fetchData();
@@ -115,7 +212,7 @@ const Comment = () => {
 
   const getEpicView = (issue) => {
     const parent = issue.fields.parent;
-    console.log(parent, "parent");
+    // console.log(parent, "parent");
     if (parent && parent.fields && parent.fields.summary) {
       return (
         <a
@@ -128,39 +225,39 @@ const Comment = () => {
     }
   };
 
-  const rows = comments.map((issue) => {
-    const fields = issue.fields || {};
-    const ticketType = fields.issuetype.name;
-    console.log("ticketType", ticketType);
-    return (
-      <tr key={issue.key} className="data-row">
-        <td>{fields.project.name}</td>
-        <td>{getEpicView(issue)}</td>
-        <td>
-          <img
-            src={fields.issuetype.iconUrl}
-            alt={ticketType}
-            title={ticketType}
-          />
-          &nbsp;
-          <a
-            href={`https://gaiansolutions.atlassian.net/browse/${issue.key}`}
-            target="_blank"
-          >
-            {issue.fields.summary}
-          </a>
-        </td>
-        <td>{fields.assignee && fields.assignee.displayName}</td>
-        <td>{getDate(fields.updated)}</td>
-        <td>
-          <div className={"task-status-" + fields.status.statusCategory.key}>
-            {fields.status.statusCategory.name}
-          </div>
-        </td>
-        <td>{getCommentsView(issue)}</td>
-      </tr>
-    );
-  });
+  // const rows = comments.map((issue) => {
+  //   const fields = issue.fields || {};
+  //   const ticketType = fields.issuetype.name;
+  //   console.log("ticketType", ticketType);
+  //   return (
+  //     <tr key={issue.key} className="data-row">
+  //       <td>{fields.project.name}</td>
+  //       <td>{getEpicView(issue)}</td>
+  //       <td>
+  //         <img
+  //           src={fields.issuetype.iconUrl}
+  //           alt={ticketType}
+  //           title={ticketType}
+  //         />
+  //         &nbsp;
+  //         <a
+  //           href={`https://gaiansolutions.atlassian.net/browse/${issue.key}`}
+  //           target="_blank"
+  //         >
+  //           {issue.fields.summary}
+  //         </a>
+  //       </td>
+  //       <td>{fields.assignee && fields.assignee.displayName}</td>
+  //       <td>{getDate(fields.updated)}</td>
+  //       <td>
+  //         <div className={"task-status-" + fields.status.statusCategory.key}>
+  //           {fields.status.statusCategory.name}
+  //         </div>
+  //       </td>
+  //       <td>{getCommentsView(issue)}</td>
+  //     </tr>
+  //   );
+  // });
 
   // const downloadPDF = () => {
   //   const input = pdfRef.current;
@@ -180,7 +277,7 @@ const Comment = () => {
     content: () => pdfRef.current,
     documentTitle: "Daily-status-update",
     // onAfterPrint:() => alert("Saved as PDF")
-  })
+  });
 
   const refreshPage = () => {
     window.location.reload();
@@ -188,7 +285,7 @@ const Comment = () => {
 
   return (
     <>
-      <div>
+      <div className="comments">
         <div className="buttons">
           <Link to={"/"}>
             <button className="btn btn-danger">Go Back</button>
@@ -196,11 +293,11 @@ const Comment = () => {
           <button className="btn btn-success" onClick={refreshPage}>
             Refresh
           </button>
-         
-          <button className="btn btn-primary" onClick={download_PDF}>
-          Download
-          </button>
-           {/* <button className="btn btn-primary" onClick={downloadPDF}>
+
+          {/* <button className="btn btn-primary" onClick={download_PDF}>
+            Download
+          </button> */}
+          {/* <button className="btn btn-primary" onClick={downloadPDF}>
             Download
           </button> */}
         </div>
@@ -209,39 +306,54 @@ const Comment = () => {
           <div className="header">
             Daily Status Updated: <b>{comments.length} Tasks</b>
           </div>
-          <table>
-            <thead></thead>
-            <tbody>
-              <tr key="table-header" className="table-head">
-                <td>Project</td>
-                <td>Epic</td>
-                <td>Task</td>
-                <td>Assignee</td>
-                <td>Last Update Time</td>
-                <td>Current Status</td>
-                <td>Comments</td>
-              </tr>
-              {commentsLoading ? (
+          {/* <div className="table-container">
+            <table>
+              <thead></thead>
+              <tbody>
+                <tr key="table-header" className="table-head">
+                  <td>Project</td>
+                  <td>Epic</td>
+                  <td>Task</td>
+                  <td>Assignee</td>
+                  <td>Last Update Time</td>
+                  <td>Current Status</td>
+                  <td>Comments</td>
+                </tr>
+                {commentsLoading ? (
+                  <div className="story-loader">
+                    <Loader />
+                  </div>
+                ) : (
+                  rows
+                )}
+              </tbody>
+            </table>
+          </div> */}
+          <div>
+            <DataTable
+              className="data-table"
+              subHeader
+              subHeaderComponent={
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="form-control"
+                  style={{ borderColor: "blue" }}
+                  onChange={handleFilter}
+                />
+              }
+              customStyles={customStyles}
+              columns={columns}
+              data={comments}
+              fixedHeader
+              progressPending={commentsLoading}
+              progressComponent={
                 <div className="story-loader">
                   <Loader />
                 </div>
-              ) : (
-                rows
-              )}
-            </tbody>
-          </table>
-          {/* <DataTable
-          columns={columns}
-          data={comments}
-          fixedHeader
-          actions={<button className="btn btn-sm btn-info">Download</button>}
-          progressPending={commentsLoading}
-          progressComponent={
-            <div className="story-loader">
-              <Loader />
-            </div>
-          }
-        /> */}
+              }
+            />
+          </div>
         </div>
       </div>
     </>

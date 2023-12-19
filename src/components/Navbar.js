@@ -4,6 +4,7 @@ import axios from "axios";
 import Loader from "./Loader";
 import "../styles/NavBar.css";
 import { Link } from "react-router-dom";
+import "./navbar.css"
 
 let sprint_data_map = {};
 
@@ -144,16 +145,21 @@ function Navbar({
             Done : {doneStoryPoints} ({done_percentage}%)
           </div>
         </div>
-        <Link to={"/"}>
-          <button
-            className="btn btn-danger"
-            onClick={() => {
-              setView("landing");
-            }}
-          >
-            go back
-          </button>
-        </Link>
+        <div className="buttons-cont">
+          <Link to={"/daily-status"}>
+            <button className="btn btn-primary">Daily Status</button>
+          </Link>
+          <Link to={"/"}>
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                setView("landing");
+              }}
+            >
+              go back
+            </button>
+          </Link>
+        </div>
       </div>
     </nav>
   );
