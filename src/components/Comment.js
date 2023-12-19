@@ -296,9 +296,9 @@ const Comment = () => {
           <button className="btn btn-primary" onClick={download_PDF}>
             Download
           </button>
-          <button className="btn btn-primary" onClick={downloadPDF}>
+          {/* <button className="btn btn-primary" onClick={downloadPDF}>
             Download
-          </button>
+          </button> */}
         </div>
 
         <div className=" story-status grid-comments" ref={pdfRef}>
