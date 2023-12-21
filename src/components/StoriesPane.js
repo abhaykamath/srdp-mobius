@@ -11,18 +11,7 @@ function StoriesPane({
   // storyAC,
   storyPointsData,
 }) {
-  console.log('......',storyId)
-  const [storySelected,setStorySelected]=useState(false);
-  function handleCick(str){
-    if(storySelected){
-      setStoryId(str);
-    }
-    else{
-       setStoryId('');
-    }
-    setStorySelected(!storySelected)
-  }
-  // console.log(stories, "stories......");
+  console.log(stories, "stories......");
   return (
     <section id="left-pane">
       <div className="stories-in-todo">
@@ -77,7 +66,7 @@ function StoriesPane({
                       }s 1 forwards`,
                     }}
                     onClick={(e) => {
-                      handleCick(story.story_id.toString())
+                      setStoryId(story.story_id.toString());
                     }}
                   >
                     <div className="story-details">
@@ -115,7 +104,7 @@ function StoriesPane({
                         <div>Updated : {formattedDate}</div>
                       </div>
                       <div className="assigned-to">
-                        Assigned To : {story.assigne}
+                        Assigned To : {story.assignee}
                       </div>
                     </div>
                     <div className="status-storypoints">
@@ -196,7 +185,7 @@ function StoriesPane({
                       }s 1 forwards`,
                     }}
                     onClick={(e) => {
-                      handleCick(story.story_id.toString())
+                      setStoryId(story.story_id.toString());
                     }}
                   >
                     <div className="story-details">
@@ -234,7 +223,7 @@ function StoriesPane({
                         <div>Updated : {formattedDate}</div>
                       </div>
                       <div className="assigned-to">
-                        Assigned To : {story.assigne}
+                        Assigned To : {story.assignee}
                       </div>
                     </div>
                     <div className="status-storypoints">
@@ -295,7 +284,7 @@ function StoriesPane({
                       }s 1 forwards`,
                     }}
                     onClick={(e) => {
-                      handleCick(story.story_id.toString())
+                      setStoryId(story.story_id.toString());
                     }}
                   >
                     <div className="story-details">
@@ -333,7 +322,7 @@ function StoriesPane({
                         <div>Updated : {formattedDate}</div>
                       </div>
                       <div className="assigned-to">
-                        Assigned To : {story.assigne}
+                        Assigned To : {story.assignee}
                       </div>
                     </div>
                     <div className="status-storypoints">

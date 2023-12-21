@@ -18,7 +18,7 @@ const live_base_url = "https://srdp-mobius-apis.onrender.com";
 
 function Dashboard({ setView }) {
   const { boardId, boardName } = useParams();
-  console.log("..............", boardId, boardName, useParams());
+  // console.log("..............", boardId, boardName, useParams());
   const [project, setProject] = useState("10235");
   const [stories, setStories] = useState([]);
   const [storiesLoading, setStoriesLoading] = useState(false);
@@ -94,7 +94,6 @@ function Dashboard({ setView }) {
       setApiCount((prev) => prev + 1);
     }
   }
-
   async function getSprintMembers() {
     if (sprint !== "") {
       const response = await axios.get(
@@ -267,7 +266,7 @@ function Dashboard({ setView }) {
     // );
 
     setStoryPieData({
-      labels: Array.from(piedata.values()),
+      labels: Array.from(piedata.keys()),
       datasets: [
         {
           label: "Subtask Count",
