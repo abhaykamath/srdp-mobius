@@ -124,8 +124,8 @@ const Comment = () => {
         fontWeight: "Bold",
         textTransform: "uppercase",
         border: "1px solid black",
-        backgroundColor: "#3498db", 
-        color: "white", 
+        backgroundColor: "#3498db",
+        color: "white",
       },
     },
     cells: {
@@ -134,7 +134,6 @@ const Comment = () => {
         border: "1px solid black",
         overflow: "none",
         backgroundColor: "#ecf0f1",
-
       },
     },
   };
