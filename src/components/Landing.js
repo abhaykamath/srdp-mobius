@@ -151,35 +151,39 @@ function Landing({ setBoardId, setView, setBoardName }) {
 
   return (
     <>
-      <div className="landing-page-header">JIRA Boards</div>
-      <Link to={"/daily-status"}>
-        <button className="btn btn-primary">Daily Status</button>
-      </Link>
-      <div className="searc_div">
-        <input
-          className="search_bar"
-          type="text"
-          placeholder="Search by Board name..."
-          value={searchTerm}
-          onChange={handleChange}
-          ref={searchInputRef}
-        />
-      </div>
-      <div className="boards-header">Boards ({filteredBoards.length})</div>
-      <div className="boards-container">
-        {filteredBoards.map((board, index) => {
-          return (
-            <div
-              key={index}
-              className="board-card"
-              onClick={(e) => {
-                handleCick(board.board_id, board.board_name, "dashboard");
-              }}
-            >
-              {board.board_name}
-            </div>
-          );
-        })}
+      <div className="main-container">
+        <div className="head-container">
+          <div className="landing-page-header">JIRA Boards</div>
+          <Link to={"/daily-status"}>
+            <button className="btn btn-primary">Daily Status</button>
+          </Link>
+          <div className="searc_div">
+            <input
+              className="search_bar"
+              type="text"
+              placeholder="Search by Board name..."
+              value={searchTerm}
+              onChange={handleChange}
+              ref={searchInputRef}
+            />
+          </div>
+          <div className="boards-header">Boards ({filteredBoards.length})</div>
+        </div>
+        <div className="boards-container">
+          {filteredBoards.map((board, index) => {
+            return (
+              <div
+                key={index}
+                className="board-card"
+                onClick={(e) => {
+                  handleCick(board.board_id, board.board_name, "dashboard");
+                }}
+              >
+                {board.board_name}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </>
   );
