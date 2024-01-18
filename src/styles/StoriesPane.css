@@ -9,11 +9,13 @@
   /* overflow: auto; */
   /* color: white; */
 }
-.stories-in-todo, .stories-in-inprogress, .stories-in-done{
+.stories-in-todo,
+.stories-in-inprogress,
+.stories-in-done {
   display: flex;
   flex-direction: column;
   width: 33%;
-overflow: auto;
+  overflow: auto;
 }
 
 .story-pane-header {

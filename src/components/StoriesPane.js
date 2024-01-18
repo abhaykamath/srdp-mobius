@@ -11,7 +11,7 @@ function StoriesPane({
   // storyAC,
   storyPointsData,
 }) {
-  console.log(stories, "stories......");
+  // console.log(stories, "stories......");
   return (
     <section id="left-pane">
       <div className="stories-in-todo">
@@ -29,7 +29,7 @@ function StoriesPane({
               .filter((story) => story.status_name === "To Do")
               .map((story, index) => {
                 const last_updated = story.updated;
-                console.log(typeof last_updated, "last_updated");
+                // console.log(typeof last_updated, "last_updated");
                 const dateObject = new Date(last_updated);
                 const year = dateObject.getFullYear();
                 const month = dateObject.getMonth() + 1;
@@ -147,7 +147,7 @@ function StoriesPane({
               )
               .map((story, index) => {
                 const last_updated = story.updated;
-                console.log(typeof last_updated, "last_updated");
+                // console.log(typeof last_updated, "last_updated");
                 const dateObject = new Date(last_updated);
                 const year = dateObject.getFullYear();
                 const month = dateObject.getMonth() + 1;
@@ -170,7 +170,7 @@ function StoriesPane({
 
                 // console.log(story.duedate, typeof story.duedate, "duedate");
                 // console.log(new Date(), typeof new Date(), "Newdate");
-                console.log(today, typeof today);
+                // console.log(today, typeof today);
 
                 return (
                   <div
@@ -262,7 +262,7 @@ function StoriesPane({
               .filter((story) => story.status_name === "Done")
               .map((story, index) => {
                 const last_updated = story.updated;
-                console.log(typeof last_updated, "last_updated");
+                // console.log(typeof last_updated, "last_updated");
                 const dateObject = new Date(last_updated);
                 const year = dateObject.getFullYear();
                 const month = dateObject.getMonth() + 1;
