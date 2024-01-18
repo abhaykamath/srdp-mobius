@@ -52,7 +52,8 @@
 
 .fav-icon {
   position: absolute;
-  top: 0.5rem; 
+  font-size: 1.1rem;
+  top: 0.1rem; 
   right: 0.5rem;
   padding: 0.2rem;
   z-index: 1; 
