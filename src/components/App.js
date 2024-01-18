@@ -4,6 +4,7 @@ import Dashboard from "./Dashboard";
 import Landing from "./Landing";
 import Comment from "./Comment";
 
+
 function App() {
   const [boardId, setBoardId] = useState("");
   const [boardName, setBoardName] = useState("");

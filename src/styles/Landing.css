@@ -19,17 +19,18 @@
   outline: none;
 }
 
+.fav-header,
 .boards-header {
   box-sizing: border-box;
   padding: 0.5rem 1rem;
   color: white;
   font-size: 1.3rem;
+  height: 3vh;
 }
 
-.boards-container {
+.fav-container {
   box-sizing: border-box;
-
-  height: 80vh;
+  height: 38vh;
   padding: 1rem;
   display: grid;
   gap: 1rem;
@@ -37,7 +38,29 @@
   overflow-y: auto;
 }
 
+.boards-container {
+  box-sizing: border-box;
+  position: relative;
+  height: 38vh;
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  overflow-y: auto;
+
+}
+
+.fav-icon {
+  position: absolute;
+  top: 0.5rem; 
+  right: 0.5rem;
+  padding: 0.2rem;
+  z-index: 1; 
+
+}
+
 .board-card {
+  position: relative; 
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 0.25rem;
@@ -51,6 +74,7 @@
   justify-content: center;
   align-items: center;
   transition: transform 0.2s;
+
 }
 
 .board-card:hover {
@@ -70,12 +94,12 @@
 
 .head-container {
   width: 100%;
-  height: 17vh;
+  height: 18vh;
 }
 
 .main-container {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 5rem;
+  gap: 1rem;
 }

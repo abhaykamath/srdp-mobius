@@ -358,3 +358,52 @@ const Comment = () => {
 };
 
 export default Comment;
+
+// board_id = execution.getVariable("board_id");
+// spinnedSprintData = execution.getVariable("response_data").values;
+// var arr = S("[]");
+// for (var i = 0; i < spinnedSprintData.length; i++) {
+//   if (spinnedSprintData[0].id !== "") {
+//     var obj = S("{}");
+//     obj.prop("id", spinnedSprintData[i].id.toString());
+//     obj.prop("self", spinnedSprintData[i].self);
+//     obj.prop("state", spinnedSprintData[i].state);
+//     obj.prop("name", spinnedSprintData[i].name);
+//     if (spinnedSprintData[i].startDate) {
+//       obj.prop("startDate", spinnedSprintData[i].startDate);
+//     } else {
+//       obj.prop("startDate", "");
+//     }
+//     if (spinnedSprintData[i].endDate) {
+//       obj.prop("endDate", spinnedSprintData[i].endDate);
+//     } else {
+//       obj.prop("endDate", "");
+//     }
+//     if (spinnedSprintData[i].completeDate) {
+//       obj.prop("completeDate", spinnedSprintData[i].completeDate);
+//     } else {
+//       obj.prop("completeDate", "");
+//     }
+//     if (spinnedSprintData[i].goal) {
+//       obj.prop("goal", spinnedSprintData[i].goal);
+//     } else if (spinnedSprintData[i].goal == "") {
+//       obj.prop("goal", "");
+//     } else {
+//       obj.prop("goal", "");
+//     }
+//     obj.prop("originBoardId", spinnedSprintData[i].originBoardId.toString());
+//     if (spinnedSprintData[i].createdDate) {
+//       obj.prop("createdDate", spinnedSprintData[i].createdDate.toString());
+//     } else {
+//       obj.prop("createdDate", "");
+//     }
+//     obj.prop("board_id", board_id.toString());
+//     arr.append(obj);
+//   }
+// }
+// all_board_and_sprint_id.prop("boaard_id", board_id);
+
+// execution.setVariable("spinnedSprintData", arr);
+// //all_board_and_sprint_id = execution.getspinnedSprintData[i].completeDateVariable("all_board_and_sprint_id");
+// //execution.getVariable("all_board_and_sprint_id", all_board_and_sprint_id);
+// //execution.getVariable("spinnedSprintData", arr);

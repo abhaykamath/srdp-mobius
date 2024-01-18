@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { FaHeart , FaTrash} from "react-icons/fa";
 import "../styles/Landing.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -99,6 +100,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
   const navigate = useNavigate();
   const all_boards_AQ =
     "https://ig.aidtaas.com/tf-web/v1.0/64e1fd3d1443eb00018cc231/analytic-queries/6572f8c0a1e7e3437119a8a1/data?size=1000";
+  // const all_boards_AQ = [{ id: 114 }];
   async function getBoardsData() {
     const response = await axios.get(`${all_boards_AQ}`);
     const all_boards_data = response.data.model.entities;
@@ -106,19 +108,49 @@ function Landing({ setBoardId, setView, setBoardName }) {
       (board) => board.board_type === "scrum"
     );
     if (allboards.length <= 0) setAllboards(scrumBoards);
+    // console.log(allboards);
   }
-  // console.log(allboards.length);
 
+  const [favbooards, setFavboards] = useState(() => {
+    const storedFavboards = localStorage.getItem("favboards");
+    return storedFavboards ? JSON.parse(storedFavboards) : [];
+  });
+
+  const handleFavClick = (event, board) => {
+    const isBoardAlreadyFavorited = favbooards.some(
+      (favBoard) => favBoard.board_id === board.board_id
+    );
+
+    if (!isBoardAlreadyFavorited) {
+      const updatedFavboards = [...favbooards, board];
+      setFavboards(updatedFavboards);
+      // Modified: Update localStorage with the new favboards state
+      localStorage.setItem("favboards", JSON.stringify(updatedFavboards));
+    }
+
+    event.stopPropagation();
+  };
   // To filter the Searched boards by Board name
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  function handleCick(id, name, str) {
+  const handleDeleteClick = (event, board) => {
+    // Prevent the event from propagating to the board header
+    event.stopPropagation();
+
+    // Remove the board from favbooards
+    const updatedFavboards = favbooards.filter((favBoard) => favBoard.board_id !== board.board_id);
+    setFavboards(updatedFavboards);
+  };
+
+  function handleCick(id, name, event) {
+    // if (!event.target.classList.contains("fav-icon")) {
     setBoardId(id);
     setBoardName(name);
-    setView(str);
+    setView("dashboard");
     navigate(`/dashboard/${id}/${name}`);
+    // }
   }
 
   const filteredBoards = allboards.filter((board) => {
@@ -144,10 +176,11 @@ function Landing({ setBoardId, setView, setBoardName }) {
 
   useEffect(() => {
     getBoardsData();
+    localStorage.setItem("favboards", JSON.stringify(favbooards));
 
     // Auto-focus on the search input when the component mounts
     searchInputRef.current.focus();
-  }, []);
+  }, [favbooards]);
 
   return (
     <>
@@ -167,10 +200,39 @@ function Landing({ setBoardId, setView, setBoardName }) {
               ref={searchInputRef}
             />
           </div>
-          <div className="boards-header">Boards ({filteredBoards.length})</div>
         </div>
+
+        <div className="boards-header">
+          All Boards ({filteredBoards.length})
+        </div>
+
         <div className="boards-container">
           {filteredBoards.map((board, index) => {
+            return (
+              <div>
+                <div
+                  key={index}
+                  className="board-card"
+                  onClick={(e) => {
+                    handleCick(board.board_id, board.board_name, "dashboard");
+                  }}
+                >
+                  <span
+                    className="fav-icon"
+                    onClick={(e) => handleFavClick(e, board)}
+                  >
+                    <FaHeart style={{ color: "gold" }} />{" "}
+                  </span>
+                  {board.board_name}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="fav-header">Favourites ({favbooards.length})</div>
+        <div className="fav-container">
+          {favbooards.map((board, index) => {
             return (
               <div
                 key={index}
@@ -179,6 +241,12 @@ function Landing({ setBoardId, setView, setBoardName }) {
                   handleCick(board.board_id, board.board_name, "dashboard");
                 }}
               >
+                <span
+                  className="fav-icon"
+                  onClick={(e) => handleDeleteClick(e, board)}
+                >
+                  <FaTrash style={{ color: "grey" }} />{" "}
+                </span>
                 {board.board_name}
               </div>
             );

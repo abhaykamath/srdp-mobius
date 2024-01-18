@@ -54,7 +54,7 @@ function Dashboard({ setView }) {
       const response = await axios.get(
         `${live_base_url}/sprint/${sprint}/stories`
       );
-      // console.log(response);
+      console.log(response.data, "response");
       const sprint_stories = response.data.issues;
 
       // sorting by todo, inprogress, done
@@ -234,7 +234,7 @@ function Dashboard({ setView }) {
       for (let sprint of sprint_progress_data) {
         points += sprint.story_points;
       }
-      console.log(storyPointsData, "storyPointsData");
+      // console.log(storyPointsData, "storyPointsData");
 
       // setStoryPoints(points);
       setTotalStoryPoints(points);
@@ -283,7 +283,7 @@ function Dashboard({ setView }) {
     });
     setApiCount(0);
   }
-  console.log(storydata, "storydata");
+  // console.log(storydata, "storydata");
   useEffect(() => {
     getStories();
     getHorzChartData();
