@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FaHeart , FaTrash} from "react-icons/fa";
+import { FaHeart, FaTrash } from "react-icons/fa";
 import "../styles/Landing.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -140,7 +140,9 @@ function Landing({ setBoardId, setView, setBoardName }) {
     event.stopPropagation();
 
     // Remove the board from favbooards
-    const updatedFavboards = favbooards.filter((favBoard) => favBoard.board_id !== board.board_id);
+    const updatedFavboards = favbooards.filter(
+      (favBoard) => favBoard.board_id !== board.board_id
+    );
     setFavboards(updatedFavboards);
   };
 
@@ -208,6 +210,10 @@ function Landing({ setBoardId, setView, setBoardName }) {
 
         <div className="boards-container">
           {filteredBoards.map((board, index) => {
+            const isBoardFavorited = favbooards.some(
+              (favBoard) => favBoard.board_id === board.board_id
+            );
+
             return (
               <div>
                 <div
@@ -221,7 +227,11 @@ function Landing({ setBoardId, setView, setBoardName }) {
                     className="fav-icon"
                     onClick={(e) => handleFavClick(e, board)}
                   >
-                    <FaHeart style={{ color: "gold" }} />{" "}
+                    {isBoardFavorited ? (
+                      <FaHeart style={{ color: "blue" }} />
+                    ) : (
+                      <FaHeart style={{ color: "gold" }} />
+                    )}{" "}
                   </span>
                   {board.board_name}
                 </div>
