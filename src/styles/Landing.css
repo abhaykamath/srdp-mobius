@@ -47,21 +47,20 @@
   gap: 1rem;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   overflow-y: auto;
-
 }
 
 .fav-icon {
   position: absolute;
   font-size: 1.1rem;
-  top: 0.1rem; 
-  right: 0.5rem;
+  top: 0.3rem;
+  right: 0.3rem;
   padding: 0.2rem;
-  z-index: 1; 
-
+  z-index: 1;
 }
 
+
 .board-card {
-  position: relative; 
+  position: relative;
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 0.25rem;
@@ -75,7 +74,6 @@
   justify-content: center;
   align-items: center;
   transition: transform 0.2s;
-
 }
 
 .board-card:hover {

@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FaHeart, FaTrash } from "react-icons/fa";
+import { BsTrash, BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import "../styles/Landing.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { color } from "d3";
 // const boards = [
 //   { board_name: "MOB board", board_id: "1" },
 //   { board_name: "PM board", board_id: "4" },
@@ -228,10 +229,10 @@ function Landing({ setBoardId, setView, setBoardName }) {
                     onClick={(e) => handleFavClick(e, board)}
                   >
                     {isBoardFavorited ? (
-                      <FaHeart style={{ color: "blue" }} />
+                      <BsSuitHeartFill style={{ color: "#034694" }} />
                     ) : (
-                      <FaHeart style={{ color: "gold" }} />
-                    )}{" "}
+                      <BsSuitHeart style={{ color: "#034694" }} />
+                    )}
                   </span>
                   {board.board_name}
                 </div>
@@ -255,7 +256,9 @@ function Landing({ setBoardId, setView, setBoardName }) {
                   className="fav-icon"
                   onClick={(e) => handleDeleteClick(e, board)}
                 >
-                  <FaTrash style={{ color: "grey" }} />{" "}
+                  {/* <FaTrash style={{ color: "#ff3333" }} /> */}
+                  {/* <AiOutlineDelete color="red" /> */}
+                  <BsTrash style={{ color: "red" }} />
                 </span>
                 {board.board_name}
               </div>
