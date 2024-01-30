@@ -1,5 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { BsTrash, BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
+import {
+  BsTrash,
+  BsSuitHeart,
+  BsSuitHeartFill,
+  BsPieChart,
+  BsPieChartFill,
+} from "react-icons/bs";
+import PieChart from "./PieChart";
 import "../styles/Landing.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -94,24 +101,158 @@ import { color } from "d3";
 //   { board_name: "PQA board", board_id: "271" },
 // ];
 
+const live_base_url = "https://srdp-mobius-apis.onrender.com";
+
 function Landing({ setBoardId, setView, setBoardName }) {
   const [allboards, setAllboards] = useState([]);
   const searchInputRef = useRef();
   const [searchTerm, setSearchTerm] = useState("");
+  const [showPieChart, setShowPieChart] = useState(false);
+  const [boardId_pie, setBoardId_pie] = useState();
+  const [storyPieData, setStoryPieData] = useState({});
   const navigate = useNavigate();
+  const boardWorkflowId = 70127;
+  const sprintWorkflowId = 70506;
+  // const workFlowApi = `https://dev-workflowdesigner.gaiansolutions.com/api/wf/64e1fd3d1443eb00018cc231/execute/${boardWorkflowId}?env=TEST`;
+
+  async function triggerWorkflow() {
+    console.log("Before making API call");
+
+    try {
+      const formData = new FormData();
+      const response = await axios.post(
+        `https://dev-workflowdesigner.gaiansolutions.com/api/wf/64e1fd3d1443eb00018cc231/execute/${boardWorkflowId}?env=TEST`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("API call success", response);
+    } catch (error) {
+      console.error("API call error", error);
+    }
+  }
+
+  async function triggerWorkflowSprint(key, value) {
+    console.log("Before making API call");
+
+    try {
+      const formData = new FormData();
+      formData.append(key, value);
+
+      const response = await axios.post(
+        `https://dev-workflowdesigner.gaiansolutions.com/api/wf/64e1fd3d1443eb00018cc231/execute/${sprintWorkflowId}?env=TEST`,
+        formData,
+        {},
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("API call success", response);
+    } catch (error) {
+      console.error("API call error", error);
+    }
+  }
+
+  //  PieData
+  function handlePieData(e, id) {
+    setBoardId_pie(id);
+    console.log(id);
+    if (id) {
+      let piedata = new Map();
+      
+      // pieData.forEach((d) => {
+      //   console.log(d, "piedata");
+      //   if (piedata.has(d.status_category_name)) {
+      //     piedata.set(
+      //       d.status_category_name,
+      //       piedata.get(d.status_category_name) + d.issue_count
+      //     );
+      //     setStorydata(
+      //       piedata.set(
+      //         d.status_category_name,
+      //         piedata.get(d.status_category_name) + d.issue_count
+      //       )
+      //     );
+      //   } else {
+      //     piedata.set(d.status_category_name, d.issue_count);
+      //     setStorydata(piedata.set(d.status_category_name, d.issue_count));
+      //   }
+      // });
+      // console.log(
+      //   pieData.filter((d) => d.status_category_name),
+      //   "pieData"
+      // );
+  
+  // console.log(piedata, "piedata");
+  
+      setStoryPieData({
+        labels: Array.from(piedata.values()),
+        datasets: [
+          {
+            label: "Subtask Count",
+            data: Array.from(piedata.values()),
+            backgroundColor: [
+              "#4285F4",
+              "#FBBC05",
+              "#34A853",
+              "#EA4335",
+              "#DA0C81",
+            ],
+          },
+        ],
+      });
+    }
+    // setShowPieChart(!showPieChart);
+  }
+
+  // async function getPieChartData() {
+  //   if (sprint !== "") {
+  //     const response = await axios.get(
+  //       `${live_base_url}/sprint/${sprint}/subtasks/progress`
+  //     );
+  //     const pie_chart_data = response.data.values;
+  //     setPieData(pie_chart_data);
+  //     setApiCount((prev) => prev + 1);
+  //   }
+  // }
+
+  // Boards AQ
   const all_boards_AQ =
-    "https://ig.aidtaas.com/tf-web/v1.0/64e1fd3d1443eb00018cc231/analytic-queries/6572f8c0a1e7e3437119a8a1/data?size=1000";
+    "https://ig.aidtaas.com/tf-web/v1.0/64e1fd3d1443eb00018cc231/analytic-queries/65b8df755dfcd85bdf3655d0/data?size=1000";
   // const all_boards_AQ = [{ id: 114 }];
   async function getBoardsData() {
     const response = await axios.get(`${all_boards_AQ}`);
     const all_boards_data = response.data.model.entities;
     const scrumBoards = all_boards_data.filter(
-      (board) => board.board_type === "scrum"
+      (board) => board.board_type === "scrum" && board.board_name != null
     );
-    if (allboards.length <= 0) setAllboards(scrumBoards);
-    // console.log(allboards);
+    const uniqueBoardId = new Set();
+
+    // Use filter to remove duplicates based on board_id
+    const uniqueBoards = scrumBoards.filter((board) => {
+      // If the board_id is not in the Set, add it and include the board in the result
+      if (!uniqueBoardId.has(board.board_id)) {
+        uniqueBoardId.add(board.board_id);
+        return true;
+      }
+      // If the board_id is already in the Set, exclude the board from the result
+      return false;
+    });
+  
+    if (allboards.length <= 0) {
+      setAllboards(uniqueBoards);
+
+    }console.log(uniqueBoards, "Allboards");
   }
 
+  // favourites
   const [favbooards, setFavboards] = useState(() => {
     const storedFavboards = localStorage.getItem("favboards");
     return storedFavboards ? JSON.parse(storedFavboards) : [];
@@ -131,6 +272,9 @@ function Landing({ setBoardId, setView, setBoardName }) {
 
     event.stopPropagation();
   };
+
+  const [recentbooards, setRecentbooards] = useState([]);
+
   // To filter the Searched boards by Board name
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -147,13 +291,33 @@ function Landing({ setBoardId, setView, setBoardName }) {
     setFavboards(updatedFavboards);
   };
 
-  function handleCick(id, name, event) {
-    // if (!event.target.classList.contains("fav-icon")) {
+  function handleCick(id, name, event, board) {
+    // console.log("handleCick called with:", id, name);
+
     setBoardId(id);
+    // console.log(id, "=> board_id");
     setBoardName(name);
     setView("dashboard");
     navigate(`/dashboard/${id}/${name}`);
+
+    // console.log("Before making API call");
+
+    const dynamicKey = "board_id";
+    const dynamicValue = id;
+
+    triggerWorkflowSprint(dynamicKey, dynamicValue);
+
+    // const isBoardAlreadyRecent = recentbooards.some(
+    //   (recentBoard) => recentBoard.board_id === board.board_id
+    // );
+
+    // if (!isBoardAlreadyRecent) {
+    //   const updatedRecentboards = [...recentbooards, board];
+    //   setFavboards(updatedRecentboards);
+    //   // Modified: Update localStorage with the new favboards state
+    //   localStorage.setItem("recentboards", JSON.stringify(updatedRecentboards));
     // }
+    // event.stopPropagation();
   }
 
   const filteredBoards = allboards.filter((board) => {
@@ -178,6 +342,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
   // console.log(filteredBoards, "filterd");
 
   useEffect(() => {
+    triggerWorkflow();
     getBoardsData();
     localStorage.setItem("favboards", JSON.stringify(favbooards));
 
@@ -225,6 +390,12 @@ function Landing({ setBoardId, setView, setBoardName }) {
                   }}
                 >
                   <span
+                    className="fav-icon-chart"
+                    onMouseOver={(e) => handlePieData(e, board.board_id)}
+                  >
+                    {showPieChart && <PieChart boardId={boardId_pie} />}
+                  </span>
+                  <span
                     className="fav-icon"
                     onClick={(e) => handleFavClick(e, board)}
                   >
@@ -265,6 +436,29 @@ function Landing({ setBoardId, setView, setBoardName }) {
             );
           })}
         </div>
+
+        {/* <div className="recent-header">Recents ({recentbooards.length})</div>
+        <div className="recent-container">
+          {recentbooards.map((board, index) => {
+            return (
+              <div
+                key={index}
+                className="board-card"
+                onClick={(e) => {
+                  handleCick(
+                    e,
+                    board,
+                    board.board_id,
+                    board.board_name,
+                    "dashboard"
+                  );
+                }}
+              >
+                {board.board_name}
+              </div>
+            );
+          })}
+        </div> */}
       </div>
     </>
   );

@@ -122,7 +122,7 @@ function Navbar({
                     value={opt.id}
                   >
                     <div>{opt.state.toUpperCase()}</div>
-                    {" - "}
+                    
                     <div>{opt.name}</div>
                   </option>
                 );

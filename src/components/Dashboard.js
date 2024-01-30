@@ -243,7 +243,9 @@ function Dashboard({ setView }) {
 
   if (apiCount == 4) {
     let piedata = new Map();
+    
     pieData.forEach((d) => {
+      console.log(d, "piedata");
       if (piedata.has(d.status_category_name)) {
         piedata.set(
           d.status_category_name,
@@ -265,8 +267,10 @@ function Dashboard({ setView }) {
     //   "pieData"
     // );
 
+// console.log(piedata, "piedata");
+
     setStoryPieData({
-      labels: Array.from(piedata.keys()),
+      labels: Array.from(piedata.values()),
       datasets: [
         {
           label: "Subtask Count",

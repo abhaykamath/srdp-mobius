@@ -19,8 +19,19 @@
   outline: none;
 }
 
+.recent-container {
+  box-sizing: border-box;
+  height: 16vh;
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  overflow-y: auto;
+}
+
 .fav-header,
-.boards-header {
+.boards-header,
+.recent-header {
   box-sizing: border-box;
   padding: 0.5rem 1rem;
   color: white;
@@ -30,7 +41,8 @@
 
 .fav-container {
   box-sizing: border-box;
-  height: 38vh;
+  height: 30vh;
+  /* height: 16vh; */
   padding: 1rem;
   display: grid;
   gap: 1rem;
@@ -54,6 +66,15 @@
   font-size: 1.1rem;
   top: 0.3rem;
   right: 0.3rem;
+  padding: 0.2rem;
+  z-index: 1;
+}
+
+.fav-icon-chart{
+  position: absolute;
+  font-size: 1.1rem;
+  top: 0.3rem;
+  right: 2rem;
   padding: 0.2rem;
   z-index: 1;
 }
