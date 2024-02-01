@@ -177,6 +177,7 @@ function Dashboard({ setView }) {
       );
       const pie_chart_data = response.data.values;
       setPieData(pie_chart_data);
+      console.log(pieData, "pieData...............");
       setApiCount((prev) => prev + 1);
     }
   }
@@ -243,9 +244,9 @@ function Dashboard({ setView }) {
 
   if (apiCount == 4) {
     let piedata = new Map();
-    
+
     pieData.forEach((d) => {
-      console.log(d, "piedata");
+      // console.log(d, "piedata");
       if (piedata.has(d.status_category_name)) {
         piedata.set(
           d.status_category_name,
@@ -267,7 +268,7 @@ function Dashboard({ setView }) {
     //   "pieData"
     // );
 
-// console.log(piedata, "piedata");
+    // console.log(piedata, "piedata");
 
     setStoryPieData({
       labels: Array.from(piedata.values()),

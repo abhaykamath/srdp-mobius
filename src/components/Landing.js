@@ -11,6 +11,7 @@ import "../styles/Landing.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { color } from "d3";
+import Loader from "./Loader";
 // const boards = [
 //   { board_name: "MOB board", board_id: "1" },
 //   { board_name: "PM board", board_id: "4" },
@@ -101,6 +102,7 @@ import { color } from "d3";
 //   { board_name: "PQA board", board_id: "271" },
 // ];
 
+let sprint_data_map = {};
 const live_base_url = "https://srdp-mobius-apis.onrender.com";
 
 function Landing({ setBoardId, setView, setBoardName }) {
@@ -109,7 +111,13 @@ function Landing({ setBoardId, setView, setBoardName }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showPieChart, setShowPieChart] = useState(false);
   const [boardId_pie, setBoardId_pie] = useState();
-  const [storyPieData, setStoryPieData] = useState({});
+  const [landingPieData, setLandingPieData] = useState({});
+  const [storydata, setStorydata] = useState();
+  const [sprint, setSprint] = useState("");
+  const [pieData, setPieData] = useState([]);
+  const [isPieChartVisible, setIsPieChartVisible] = useState(false);
+  const [commentsLoading, setCommentsLoading] = useState(true);
+  const hoverTimeoutRef = useRef(null);
   const navigate = useNavigate();
   const boardWorkflowId = 70127;
   const sprintWorkflowId = 70506;
@@ -161,56 +169,98 @@ function Landing({ setBoardId, setView, setBoardName }) {
   }
 
   //  PieData
-  function handlePieData(e, id) {
-    setBoardId_pie(id);
-    console.log(id);
-    if (id) {
-      let piedata = new Map();
-      
-      // pieData.forEach((d) => {
-      //   console.log(d, "piedata");
-      //   if (piedata.has(d.status_category_name)) {
-      //     piedata.set(
-      //       d.status_category_name,
-      //       piedata.get(d.status_category_name) + d.issue_count
-      //     );
-      //     setStorydata(
-      //       piedata.set(
-      //         d.status_category_name,
-      //         piedata.get(d.status_category_name) + d.issue_count
-      //       )
-      //     );
-      //   } else {
-      //     piedata.set(d.status_category_name, d.issue_count);
-      //     setStorydata(piedata.set(d.status_category_name, d.issue_count));
-      //   }
-      // });
-      // console.log(
-      //   pieData.filter((d) => d.status_category_name),
-      //   "pieData"
-      // );
-  
-  // console.log(piedata, "piedata");
-  
-      setStoryPieData({
-        labels: Array.from(piedata.values()),
-        datasets: [
-          {
-            label: "Subtask Count",
-            data: Array.from(piedata.values()),
-            backgroundColor: [
-              "#4285F4",
-              "#FBBC05",
-              "#34A853",
-              "#EA4335",
-              "#DA0C81",
-            ],
-          },
-        ],
-      });
-    }
-    // setShowPieChart(!showPieChart);
+  function handlePieData(id) {
+    hoverTimeoutRef.current = setTimeout(() => {
+      setBoardId_pie(id);
+      console.log(id);
+
+      if (id) {
+        async function getLastSprints() {
+          // setSprintsLoading(true);
+          const response = await axios.get(
+            live_base_url + "/" + id + "/allSprints"
+          );
+          const all_sprints = response.data.filter(
+            (sprint) => sprint.state !== "future"
+          );
+          for (let sprint of all_sprints) {
+            sprint_data_map[sprint.id.toString()] = {
+              sprint_start: sprint.startDate.substring(0, 10),
+              sprint_end: sprint.endDate.substring(0, 10),
+            };
+          }
+          let default_sprint;
+          const active_sprint = all_sprints.filter(
+            (sprint) => sprint.state === "active"
+          );
+          if (active_sprint.length === 0) {
+            let closed_sprints = all_sprints.filter(
+              (sprint) => sprint.state === "closed"
+            );
+            default_sprint = closed_sprints[closed_sprints.length - 1];
+          } else {
+            default_sprint = active_sprint[0];
+          }
+          console.log(default_sprint.id);
+
+          setSprint(default_sprint.id);
+          if (sprint !== "") {
+            const response = await axios.get(
+              `${live_base_url}/sprint/${sprint}/subtasks/progress`
+            );
+            const pie_chart_data = response.data.values;
+            setPieData(pie_chart_data);
+            // console.log(pie_chart_data, "pieData$$$$$$$$");
+
+            let piedata = new Map();
+
+            pie_chart_data.forEach((d) => {
+              if (piedata.has(d.status_category_name)) {
+                piedata.set(
+                  d.status_category_name,
+                  piedata.get(d.status_category_name) + d.issue_count
+                );
+                setStorydata(
+                  piedata.set(
+                    d.status_category_name,
+                    piedata.get(d.status_category_name) + d.issue_count
+                  )
+                );
+              } else {
+                piedata.set(d.status_category_name, d.issue_count);
+                setStorydata(
+                  piedata.set(d.status_category_name, d.issue_count)
+                );
+              }
+            });
+            console.log(piedata);
+            setLandingPieData({
+              labels: Array.from(piedata.keys()),
+              datasets: [
+                {
+                  label: "Subtask Count",
+                  data: Array.from(piedata.values()),
+                  backgroundColor: [
+                    "#4285F4",
+                    "#FBBC05",
+                    "#34A853",
+                    "#EA4335",
+                    "#DA0C81",
+                  ],
+                },
+              ],
+            });
+          }
+        }
+        getLastSprints();
+
+        console.log(landingPieData);
+        // console.log(piedata, "piedata");
+      }
+    }, 1000);
+    // event.stopPropagation();
   }
+  // setShowPieChart(!showPieChart);
 
   // async function getPieChartData() {
   //   if (sprint !== "") {
@@ -245,11 +295,11 @@ function Landing({ setBoardId, setView, setBoardName }) {
       // If the board_id is already in the Set, exclude the board from the result
       return false;
     });
-  
+
     if (allboards.length <= 0) {
       setAllboards(uniqueBoards);
-
-    }console.log(uniqueBoards, "Allboards");
+    }
+    console.log(uniqueBoards, "Allboards");
   }
 
   // favourites
@@ -278,6 +328,11 @@ function Landing({ setBoardId, setView, setBoardName }) {
   // To filter the Searched boards by Board name
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
+  };
+
+  const handleClearClick = () => {
+    setSearchTerm("");
+    searchInputRef.current.focus();
   };
 
   const handleDeleteClick = (event, board) => {
@@ -350,6 +405,8 @@ function Landing({ setBoardId, setView, setBoardName }) {
     searchInputRef.current.focus();
   }, [favbooards]);
 
+  useEffect(() => {}, [landingPieData]);
+
   return (
     <>
       <div className="main-container">
@@ -367,6 +424,12 @@ function Landing({ setBoardId, setView, setBoardName }) {
               onChange={handleChange}
               ref={searchInputRef}
             />
+            <button
+              className="btn btn-success"
+              onClick={handleClearClick}
+            >
+              Clear
+            </button>
           </div>
         </div>
 
@@ -388,17 +451,45 @@ function Landing({ setBoardId, setView, setBoardName }) {
                   onClick={(e) => {
                     handleCick(board.board_id, board.board_name, "dashboard");
                   }}
-                >
+                  >
                   <span
                     className="fav-icon-chart"
-                    onMouseOver={(e) => handlePieData(e, board.board_id)}
-                  >
-                    {showPieChart && <PieChart boardId={boardId_pie} />}
+                    onMouseEnter={() => {
+                      handlePieData(board.board_id);
+                      setIsPieChartVisible(true);
+                    }}
+                    onMouseLeave={() => {
+                      setIsPieChartVisible(false);
+                      setLandingPieData({});
+                      clearTimeout(hoverTimeoutRef.current);
+                    }}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                    }}
+                    >
+                    <BsPieChart  />
+                    <div>
+                      {boardId_pie === board.board_id && isPieChartVisible ? (
+                        <div className="piechart">
+                          {landingPieData.datasets &&
+                          landingPieData.datasets.length > 0 ? (
+                            <PieChart chartData={landingPieData}  />
+                          ) : (
+                            <div>
+                              <Loader />
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
                   </span>
                   <span
                     className="fav-icon"
                     onClick={(e) => handleFavClick(e, board)}
-                  >
+                    >
                     {isBoardFavorited ? (
                       <BsSuitHeartFill style={{ color: "#034694" }} />
                     ) : (
