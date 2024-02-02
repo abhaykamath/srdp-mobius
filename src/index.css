@@ -248,7 +248,7 @@ input[type="radio"]:hover {
 
 /* For Webkit-based browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
-  width: 0.4rem;
+  width: 0.3rem;
 }
 
 ::-webkit-scrollbar-thumb {

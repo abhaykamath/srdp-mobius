@@ -117,6 +117,8 @@ function Landing({ setBoardId, setView, setBoardName }) {
   const [pieData, setPieData] = useState([]);
   const [isPieChartVisible, setIsPieChartVisible] = useState(false);
   const [commentsLoading, setCommentsLoading] = useState(true);
+  const [expandedBoard, setExpandedBoard] = useState(null);
+  const [showLoader, setShowLoader] = useState(false);
   const hoverTimeoutRef = useRef(null);
   const navigate = useNavigate();
   const boardWorkflowId = 70127;
@@ -124,7 +126,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
   // const workFlowApi = `https://dev-workflowdesigner.gaiansolutions.com/api/wf/64e1fd3d1443eb00018cc231/execute/${boardWorkflowId}?env=TEST`;
 
   async function triggerWorkflow() {
-    console.log("Before making API call");
+    // console.log("Before making API call");
 
     try {
       const formData = new FormData();
@@ -171,6 +173,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
   //  PieData
   function handlePieData(id) {
     hoverTimeoutRef.current = setTimeout(() => {
+      setShowLoader(true);
       setBoardId_pie(id);
       console.log(id);
 
@@ -180,38 +183,51 @@ function Landing({ setBoardId, setView, setBoardName }) {
           const response = await axios.get(
             live_base_url + "/" + id + "/allSprints"
           );
-          const all_sprints = response.data.filter(
-            (sprint) => sprint.state !== "future"
-          );
-          for (let sprint of all_sprints) {
-            sprint_data_map[sprint.id.toString()] = {
-              sprint_start: sprint.startDate.substring(0, 10),
-              sprint_end: sprint.endDate.substring(0, 10),
-            };
-          }
-          let default_sprint;
-          const active_sprint = all_sprints.filter(
-            (sprint) => sprint.state === "active"
-          );
-          if (active_sprint.length === 0) {
-            let closed_sprints = all_sprints.filter(
-              (sprint) => sprint.state === "closed"
+          if (response.data.length > 0) {
+            const all_sprints = response.data.filter(
+              (sprint) => sprint.state !== "future"
             );
-            default_sprint = closed_sprints[closed_sprints.length - 1];
-          } else {
-            default_sprint = active_sprint[0];
-          }
-          console.log(default_sprint.id);
-
-          setSprint(default_sprint.id);
-          if (sprint !== "") {
-            const response = await axios.get(
-              `${live_base_url}/sprint/${sprint}/subtasks/progress`
+            for (let sprint of all_sprints) {
+              sprint_data_map[sprint.id.toString()] = {
+                sprint_start: sprint.startDate.substring(0, 10),
+                sprint_end: sprint.endDate.substring(0, 10),
+              };
+            }
+            let default_sprint;
+            const active_sprint = all_sprints.filter(
+              (sprint) => sprint.state === "active"
             );
-            const pie_chart_data = response.data.values;
-            setPieData(pie_chart_data);
-            // console.log(pie_chart_data, "pieData$$$$$$$$");
-
+            if (active_sprint.length === 0) {
+              let closed_sprints = all_sprints.filter(
+                (sprint) => sprint.state === "closed"
+              );
+              default_sprint =
+                closed_sprints.length > 0
+                  ? closed_sprints[closed_sprints.length - 1]
+                  : { id: "" };
+            } else {
+              default_sprint = active_sprint[0];
+            }
+            // console.log(
+            //   "**************",
+            //   default_sprint.id ? default_sprint.id : ""
+            // );
+            setSprint(default_sprint.id ? default_sprint.id : "");
+            let pie_chart_data;
+            if (default_sprint.id !== "") {
+              const response = await axios.get(
+                `${live_base_url}/sprint/${default_sprint.id}/subtasks/progress`
+              );
+              pie_chart_data = response.data.values;
+              if (pie_chart_data.length > 0) {
+                setPieData(pie_chart_data);
+              } else {
+                setPieData(["nodata"]);
+              }
+            } else {
+              setPieData([]);
+              pie_chart_data = [];
+            }
             let piedata = new Map();
 
             pie_chart_data.forEach((d) => {
@@ -233,7 +249,10 @@ function Landing({ setBoardId, setView, setBoardName }) {
                 );
               }
             });
-            console.log(piedata);
+            if(Object.keys(piedata).length === 0){
+              piedata.set("NO Subtask", "0")
+            }
+            console.log(piedata, "piedata");
             setLandingPieData({
               labels: Array.from(piedata.keys()),
               datasets: [
@@ -299,7 +318,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
     if (allboards.length <= 0) {
       setAllboards(uniqueBoards);
     }
-    console.log(uniqueBoards, "Allboards");
+    // console.log(uniqueBoards, "Allboards");
   }
 
   // favourites
@@ -424,12 +443,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
               onChange={handleChange}
               ref={searchInputRef}
             />
-            <button
-              className="btn btn-success"
-              onClick={handleClearClick}
-            >
-              Clear
-            </button>
+            <button className="btn btn-success" onClick={handleClearClick}>Clear</button>
           </div>
         </div>
 
@@ -447,38 +461,42 @@ function Landing({ setBoardId, setView, setBoardName }) {
               <div>
                 <div
                   key={index}
-                  className="board-card"
+                  className={`board-card ${
+                    expandedBoard === board.board_id ? "expanded" : ""
+                  }`}
                   onClick={(e) => {
                     handleCick(board.board_id, board.board_name, "dashboard");
                   }}
-                  >
+                >
                   <span
                     className="fav-icon-chart"
+                    style={{ zIndex: 1000 }}
                     onMouseEnter={() => {
-                      handlePieData(board.board_id);
                       setIsPieChartVisible(true);
+                      handlePieData(board.board_id);
+                      setExpandedBoard(board.board_id);
                     }}
                     onMouseLeave={() => {
+                      setShowLoader(false);
                       setIsPieChartVisible(false);
+                      setExpandedBoard(null);
                       setLandingPieData({});
                       clearTimeout(hoverTimeoutRef.current);
                     }}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      event.stopPropagation();
-                    }}
-                    >
-                    <BsPieChart  />
+                    // onClick={(event) => {
+                    //   event.preventDefault();
+                    //   event.stopPropagation();
+                    // }}
+                  >
+                    <BsPieChart />
                     <div>
                       {boardId_pie === board.board_id && isPieChartVisible ? (
                         <div className="piechart">
                           {landingPieData.datasets &&
                           landingPieData.datasets.length > 0 ? (
-                            <PieChart chartData={landingPieData}  />
+                            <PieChart chartData={landingPieData} />
                           ) : (
-                            <div>
-                              <Loader />
-                            </div>
+                            <div>{showLoader && <Loader />}</div>
                           )}
                         </div>
                       ) : (
@@ -489,7 +507,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
                   <span
                     className="fav-icon"
                     onClick={(e) => handleFavClick(e, board)}
-                    >
+                  >
                     {isBoardFavorited ? (
                       <BsSuitHeartFill style={{ color: "#034694" }} />
                     ) : (
@@ -518,11 +536,9 @@ function Landing({ setBoardId, setView, setBoardName }) {
                   className="fav-icon"
                   onClick={(e) => handleDeleteClick(e, board)}
                 >
-                  {/* <FaTrash style={{ color: "#ff3333" }} /> */}
-                  {/* <AiOutlineDelete color="red" /> */}
                   <BsTrash style={{ color: "red" }} />
                 </span>
-                {board.board_name}
+                <div>{board.board_name}</div>
               </div>
             );
           })}
