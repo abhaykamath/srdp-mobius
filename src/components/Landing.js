@@ -249,7 +249,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
                 );
               }
             });
-            if(Object.keys(piedata).length === 0){
+            if(piedata.size === 0){
               piedata.set("NO Subtask", "0")
             }
             console.log(piedata, "piedata");
