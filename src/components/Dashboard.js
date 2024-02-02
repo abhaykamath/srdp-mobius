@@ -271,7 +271,7 @@ function Dashboard({ setView }) {
     // console.log(piedata, "piedata");
 
     setStoryPieData({
-      labels: Array.from(piedata.values()),
+      labels: Array.from(piedata.keys()),
       datasets: [
         {
           label: "Subtask Count",
