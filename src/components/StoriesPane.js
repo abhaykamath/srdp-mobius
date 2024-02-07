@@ -15,7 +15,10 @@ function StoriesPane({
   return (
     <section id="left-pane">
       <div className="stories-in-todo">
-        <div className="story-pane-header">To Do ({(stories.filter((story) => story.status_name === "To Do").length)})</div>
+        <div className="story-pane-header">
+          To Do (
+          {stories.filter((story) => story.status_name === "To Do").length})
+        </div>
 
         {storiesLoading ? (
           <div className="story-loader">
@@ -26,6 +29,7 @@ function StoriesPane({
         ) : (
           <div className="stories-list">
             {stories
+              .sort((a, b) => new Date(a.updated) - new Date(b.updated))
               .filter((story) => story.status_name === "To Do")
               .map((story, index) => {
                 const last_updated = story.updated;
@@ -51,7 +55,6 @@ function StoriesPane({
                 );
 
                 const today = `${current_year}-${current_month}-${current_day}`;
-
 
                 return (
                   <div
@@ -97,7 +100,17 @@ function StoriesPane({
                           {story.story_ac_hygiene}
                         </span>
                       </div>
-                      <div className="Updated-date" style={{ backgroundColor: story.duedate!= "Not added" ? (new Date(story.duedate) >= new Date(today)? "#00FF00" : "#FA8072") : ""}}>
+                      <div
+                        className="Updated-date"
+                        style={{
+                          backgroundColor:
+                            story.duedate != "Not added"
+                              ? new Date(story.duedate) >= new Date(today)
+                                ? "#00FF00"
+                                : "#FA8072"
+                              : "",
+                        }}
+                      >
                         <div>Due : {story.duedate}</div>
                       </div>
                       <div className="Updated-date">
@@ -129,8 +142,16 @@ function StoriesPane({
         )}
       </div>
       <div className="stories-in-inprogress">
-        <div className="story-pane-header">In Progress ({(stories.filter((story) => story.status_name !== "Done" && story.status_name !== "To Do"
-              )).length})</div>
+        <div className="story-pane-header">
+          In Progress (
+          {
+            stories.filter(
+              (story) =>
+                story.status_name !== "Done" && story.status_name !== "To Do"
+            ).length
+          }
+          )
+        </div>
 
         {storiesLoading ? (
           <div className="story-loader">
@@ -141,6 +162,7 @@ function StoriesPane({
         ) : (
           <div className="stories-list">
             {stories
+              .sort((a, b) => new Date(a.updated) - new Date(b.updated))
               .filter(
                 (story) =>
                   story.status_name !== "Done" && story.status_name !== "To Do"
@@ -216,7 +238,17 @@ function StoriesPane({
                           {story.story_ac_hygiene}
                         </span>
                       </div>
-                      <div className="Updated-date" style={{ backgroundColor: story.duedate!= "Not added" ? (new Date(story.duedate) >= new Date(today)? "#00FF00" : "#FA8072") : ""}}>
+                      <div
+                        className="Updated-date"
+                        style={{
+                          backgroundColor:
+                            story.duedate != "Not added"
+                              ? new Date(story.duedate) >= new Date(today)
+                                ? "#00FF00"
+                                : "#FA8072"
+                              : "",
+                        }}
+                      >
                         <div>Due : {story.duedate}</div>
                       </div>
                       <div className="Updated-date">
@@ -248,7 +280,10 @@ function StoriesPane({
         )}
       </div>
       <div className="stories-in-done">
-        <div className="story-pane-header">Done ({(stories.filter((story) => story.status_name === "Done")).length})</div>
+        <div className="story-pane-header">
+          Done ({stories.filter((story) => story.status_name === "Done").length}
+          )
+        </div>
 
         {storiesLoading ? (
           <div className="story-loader">
@@ -259,8 +294,10 @@ function StoriesPane({
         ) : (
           <div className="stories-list">
             {stories
+              .sort((a, b) => new Date(a.updated) - new Date(b.updated))
               .filter((story) => story.status_name === "Done")
               .map((story, index) => {
+                // console.log(stories, "$$$$$$$$$$$$$$$$$$$$__________________$$$$$$$$$$$$$$$$$");
                 const last_updated = story.updated;
                 // console.log(typeof last_updated, "last_updated");
                 const dateObject = new Date(last_updated);

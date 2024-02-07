@@ -12,6 +12,7 @@ import OnTimePredictability from "./Cards/OnTimePredictability";
 import TimeLogInfo from "./Cards/TimeLogInfo";
 import Members from "./Members";
 import "../styles/RightPane.css";
+import Alerts from "./Alerts";
 
 const live_base_url = "https://srdp-mobius-apis.onrender.com";
 // const live_base_url = "http://localhost:4000";
@@ -47,6 +48,8 @@ function Dashboard({ setView }) {
   const [storyPieData, setStoryPieData] = useState({});
   const [storyPointsData, setStoryPointsData] = useState();
   const [storydata, setStorydata] = useState();
+  const [storyDone, setStoryDone] = useState([]);
+  let statusDone;
 
   async function getStories() {
     if (sprint !== "") {
@@ -54,7 +57,7 @@ function Dashboard({ setView }) {
       const response = await axios.get(
         `${live_base_url}/sprint/${sprint}/stories`
       );
-      console.log(response.data, "response");
+      // console.log(response.data, "response");
       const sprint_stories = response.data.issues;
 
       // sorting by todo, inprogress, done
@@ -88,12 +91,20 @@ function Dashboard({ setView }) {
       setStoryAC(`YES : ${yes}, NO : ${no}`);
 
       const stories_for_sprint = sprint_stories.sort(sprint_Stories_Sorted);
-
+      console.log(sortedStories);
       setStories(sortedStories);
       setStoriesLoading(false);
       setApiCount((prev) => prev + 1);
     }
   }
+
+  async function getAlerts() {
+    // const statusDone = stories.filter((story) => story.status_name === "Done");
+    // setStoryDone(statusDone);
+    console.log(stories.length);
+    console.log(storyDone, "storyDone");
+  }
+
   async function getSprintMembers() {
     if (sprint !== "") {
       const response = await axios.get(
@@ -297,6 +308,9 @@ function Dashboard({ setView }) {
   }, [sprint]);
 
   useEffect(() => {
+    getAlerts();
+  }, []);
+  useEffect(() => {
     setStoryPieData({
       labels: pieData
         .filter((d) => d.story_id.includes(storyId))
@@ -348,6 +362,7 @@ function Dashboard({ setView }) {
           storyPoints={storyPoints}
           storyPointsData={storyPointsData}
         />
+        <Alerts stories={stories} />
 
         <section className="right-pane-1">
           <div className="horizontal-chart-container h_chart_div">
