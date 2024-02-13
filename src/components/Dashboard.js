@@ -98,12 +98,6 @@ function Dashboard({ setView }) {
     }
   }
 
-  async function getAlerts() {
-    // const statusDone = stories.filter((story) => story.status_name === "Done");
-    // setStoryDone(statusDone);
-    console.log(stories.length);
-    console.log(storyDone, "storyDone");
-  }
 
   async function getSprintMembers() {
     if (sprint !== "") {
@@ -307,9 +301,7 @@ function Dashboard({ setView }) {
     getSprintMembers();
   }, [sprint]);
 
-  useEffect(() => {
-    getAlerts();
-  }, []);
+
   useEffect(() => {
     setStoryPieData({
       labels: pieData
@@ -362,7 +354,7 @@ function Dashboard({ setView }) {
           storyPoints={storyPoints}
           storyPointsData={storyPointsData}
         />
-        <Alerts stories={stories} />
+        <Alerts />
 
         <section className="right-pane-1">
           <div className="horizontal-chart-container h_chart_div">

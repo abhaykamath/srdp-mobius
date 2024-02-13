@@ -543,6 +543,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
             );
           })}
         </div>
+        
 
         {/* <div className="recent-header">Recents ({recentbooards.length})</div>
         <div className="recent-container">
