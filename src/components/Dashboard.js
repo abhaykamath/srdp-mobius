@@ -49,6 +49,8 @@ function Dashboard({ setView }) {
   const [storyPointsData, setStoryPointsData] = useState();
   const [storydata, setStorydata] = useState();
   const [storyDone, setStoryDone] = useState([]);
+  const [member, setMember] = useState("All Members");
+
   let statusDone;
 
   async function getStories() {
@@ -90,14 +92,13 @@ function Dashboard({ setView }) {
       // console.log(sprint_stories, "sprint_stories");
       setStoryAC(`YES : ${yes}, NO : ${no}`);
 
-      const stories_for_sprint = sprint_stories.sort(sprint_Stories_Sorted);
+      // const stories_for_sprint = sprint_stories.sort(sprint_Stories_Sorted);
       console.log(sortedStories);
       setStories(sortedStories);
       setStoriesLoading(false);
       setApiCount((prev) => prev + 1);
     }
   }
-
 
   async function getSprintMembers() {
     if (sprint !== "") {
@@ -301,7 +302,6 @@ function Dashboard({ setView }) {
     getSprintMembers();
   }, [sprint]);
 
-
   useEffect(() => {
     setStoryPieData({
       labels: pieData
@@ -329,6 +329,15 @@ function Dashboard({ setView }) {
     updateTimeLogData();
     updateStoryReviewers();
   }, [storyId]);
+
+  async function filterStoriesByMember(memberName) {
+    setMember(memberName);
+    console.log("stories..................//////////////////", memberName);
+  }
+  const clearSelectedMember = () => {
+    setMember("All Members");
+    };
+
   return (
     <>
       <Navbar
@@ -353,6 +362,7 @@ function Dashboard({ setView }) {
           storyAC={storyAC}
           storyPoints={storyPoints}
           storyPointsData={storyPointsData}
+          member={member}
         />
         <Alerts />
 
@@ -380,11 +390,24 @@ function Dashboard({ setView }) {
             </div>
 
             <div className="sprint-members-container sprint-members-div">
-              <div className="header">
-                Members ({sprintMembers.length !== 0 ? sprintMembers.length : 0}
-                ){" "}
+              <div className="members_header">
+                <div className="header">
+                  Members (
+                  {sprintMembers.length !== 0 ? sprintMembers.length : 0})
+                </div>
+                <button
+                  className="btn btn-secondary btn-sm"
+                  onClick={clearSelectedMember}
+                >
+                  Clear
+                </button>
               </div>
-              <Members sprintMembers={sprintMembers} />
+              <div className="selecte_member_cont">Member Selected : <span className="selected_member">{member}</span></div>
+              <Members
+                sprintMembers={sprintMembers}z
+                filterStoriesByMember={filterStoriesByMember}
+                mmember={member}
+              />
             </div>
           </div>
 

@@ -59,3 +59,25 @@ td {
   border-collapse: collapse;
   padding: 0.25rem;
 }
+
+.members_header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.selected_member {
+  cursor: pointer;
+  box-sizing: border-box;
+  font-size: 0.75rem;
+  height: fit-content;
+  /* border: 1px solid #ccc; */
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background-color: #1b55dc;
+  color: white;
+}
+
+.selecte_member_cont {
+  font-size: 0.8rem;
+}

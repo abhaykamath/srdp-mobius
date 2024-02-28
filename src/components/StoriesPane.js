@@ -8,9 +8,14 @@ function StoriesPane({
   storiesLoading,
   storyId,
   storyPoints,
+  member,
   // storyAC,
   storyPointsData,
 }) {
+  if (member !== "All Members") {
+    console.log("members", member);
+    stories = stories.filter((story) => story.assignee == member);
+  }
   // console.log(stories, "stories......");
   return (
     <section id="left-pane">
