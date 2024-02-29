@@ -133,20 +133,22 @@ function Landing({ setBoardId, setView, setBoardName }) {
 
   async function triggerWorkflow() {
     // console.log("Before making API call");
-
+    var body = {
+      ownerId: "65d331209d55420001aa7c79",
+    };
     try {
       const formData = new FormData();
       const response = await axios.post(
         `https://bob-workflowdesigner.aidtaas.com/api/wf/execute/${boardWorkflowId}?sync=false&env=TEST`,
-        
+        {
+          ownerId: "65d331209d55420001aa7c79",
+        },
+
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
             Authorization: `${token}`,
-            accept: "application/json, text/plain, */*",
-          },
-          body: {
-            ownerId: "65d331209d55420001aa7c79",
+            accept: "*/*",
           },
         }
       );
