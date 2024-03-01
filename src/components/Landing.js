@@ -127,7 +127,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
 
   // Boards AQ
   const all_boards_AQ =
-    "https://ig.aidtaas.com/pi-bigquery-service/v1.0/big-queries/65df2fcf53183f13d05bd378/data?size=10000";
+    "https://ig.aidtaas.com/pi-bigquery-service/v1.0/big-queries/65e19b89c7d70117c9910ea7/data?size=1000";
   const token =
     "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImZmOGYxNjhmLTNmZjYtNDZlMi1iMTJlLWE2YTdlN2Y2YTY5MCJ9.eyJzdWIiOiJnYWlhbi5jb20iLCJ1c2VyX25hbWUiOiJwb3J0YWxfdGVzdCIsInNjb3BlIjpbInRydXN0IiwicmVhZCIsIndyaXRlIl0sInRlbmFudElkIjoiNjExYmRkMzQyNmE5NDg2MDA1NjkzYjExIiwiaXNzIjoiZ2FpYW4uY29tIiwidXNlck5hbWUiOiJwb3J0YWxfdGVzdCIsImF1dGhvcml0aWVzIjpbIlJPTEVfT01OSV9DT05TVU1FUiIsIlJPTEVfTUFSS0VUUExBQ0VfVVNFUiIsIlJPTEVfT01OSV9VU0VSIl0sImp0aSI6IjgxODE1ZDNmLTY1MTAtNDJkNC05NWZkLTNiZTJmMWYzYjg5ZiIsImVtYWlsIjoicG9ydGFsX3Rlc3RAZ2F0ZXN0YXV0b21hdGlvbi5jb20iLCJjbGllbnRfaWQiOiJnYWlhbiJ9.Mz1gWLt1rujlQWW3SzuwtERk1i6HwG9utVuMUnL-RX4kKtR1jl0eR9MZmNjRZ0znbrr6w8MOj2aAULtpIEYmM9jU_mXGBuqetPIbTuV2d4Hkv6f0qaJZLAIAU3qhgijQI9O4a2yg_rmHnibNhEcZMKEFK5AXw8M_B8XIgnNYlXDkpjEqP6Siv0HJmHA3T1j1XY8PCsluzIwDzIgRr-xqAJcaCnUwGR7XxsF-X0plk8L9qV1Z3bF2EMqqBsednYeqaM3EqwJXk27R5PFU7jn5aOc-_n9DxaGLcuJB5JoqoGW7DeaIKLzMwxvS9vP_bc8vDOxl8xk-zTRAq8goyHV6IQ";
 
@@ -313,14 +313,14 @@ function Landing({ setBoardId, setView, setBoardName }) {
       },
     });
     console.log(response);
-    const response_data = response.data.model.entities;
-    const all_boards_data = response_data.map((board) => {
-      return {
-        board_id: board["entity.id"],
-        board_name: board["entity.name"],
-        board_type: board["entity.type"],
-      };
-    });
+    const all_boards_data = response.data.model.entities;
+    // const all_boards_data = response_data.map((board) => {
+    //   return {
+    //     board_id: board["entity.id"],
+    //     board_name: board["entity.name"],
+    //     board_type: board["entity.type"],
+    //   };
+    // });
     const scrumBoards = all_boards_data.filter(
       (board) => board.board_type === "scrum" && board.board_name != null
     );
