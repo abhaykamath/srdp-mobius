@@ -349,10 +349,106 @@ function Landing({ setBoardId, setView, setBoardName }) {
     return storedFavboards ? JSON.parse(storedFavboards) : [];
   });
 
+  // Summmary board
+  const [summary_boards, setSummary_boards] = useState();
+  const [delete_boards, setDelete_boards] = useState();
+  async function get_summmary_dashboard() {
+    var body = [summary_boards];
+    try {
+      const response = await axios.get(
+        `https://ig.aidtaas.com/tf-entity-ingestion/v1.0/schemas/65e5a9cef1e0ce18934d8de3/instances/list?size=1000`,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`,
+            accept: "*/*",
+          },
+        }
+      );
+
+      console.log("API call success", response);
+    } catch (error) {
+      console.error("API call error", error);
+    }
+  }
+  async function post_summmary_dashboard() {
+    var body = [summary_boards];  
+    try {
+      const response = await axios.post(
+        `https://ig.aidtaas.com/tf-entity-ingestion/v1.0/schemas/65e5a9cef1e0ce18934d8de3/instances?upsert=true`,
+        body,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`,
+            accept: "*/*",
+          },
+        }
+      );
+
+      console.log("API call success", response);
+    } catch (error) {
+      console.error("API call error", error);
+    }
+  }
+
+  async function get_summmary_dashboard() {
+    var body = [summary_boards];
+    try {
+      const response = await axios.get(
+        `https://ig.aidtaas.com/tf-entity-ingestion/v1.0/schemas/65e5a9cef1e0ce18934d8de3/instances/list?size=1000`,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`,
+            accept: "*/*",
+          },
+        }
+      );
+
+      console.log("API call success", response);
+    } catch (error) {
+      console.error("API call error", error);
+    }
+  }
+
+  async function delete_summmary_dashboard() {
+    var body = delete_boards;
+    try {
+      const response = await axios.delete(
+        `https://ig.aidtaas.com/tf-entity-ingestion/v1.0/schemas/65e5a9cef1e0ce18934d8de3/instances`,
+        body,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`,
+            accept: "*/*",
+          },
+        }
+      );
+
+      console.log("API call success", response);
+    } catch (error) {
+      console.error("API call error", error);
+    }
+    get_summmary_dashboard()
+  }
+
   const handleFavClick = (event, board) => {
+    console.log(board, "/////////////////////////////////////////////////");
     const isBoardAlreadyFavorited = favbooards.some(
       (favBoard) => favBoard.board_id === board.board_id
     );
+    setSummary_boards({
+      board_id: board.board_id,
+      board_name: board.board_name,
+      board_type: board.board_type,
+    });
+    post_summmary_dashboard();
 
     if (!isBoardAlreadyFavorited) {
       const updatedFavboards = [...favbooards, board];
@@ -385,6 +481,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
       (favBoard) => favBoard.board_id !== board.board_id
     );
     setFavboards(updatedFavboards);
+    setDelete_boards({board: board.board_id})
   };
 
   function handleCick(id, name, event, board) {
@@ -456,7 +553,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
           <Link to={"/daily-status"}>
             <button className="btn btn-primary">Daily Status</button>
           </Link>
-          <div className="searc_div">
+          <div className="search_div">
             <input
               className="search_bar"
               type="text"
@@ -545,7 +642,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
           })}
         </div>
 
-        <div className="fav-header">Favourites ({favbooards.length})</div>
+        <div className="fav-header">Summary Dashboards ({favbooards.length})</div>
         <div className="fav-container">
           {favbooards.map((board, index) => {
             return (
@@ -596,3 +693,32 @@ function Landing({ setBoardId, setView, setBoardName }) {
 }
 
 export default Landing;
+
+
+
+
+
+// var oauth_key = "yNAMqASQTQ73IFqfPehbItPCN";
+// var oauth_token = "1724749974079234048-wBt9aHO3mTEER00F6SFvTkMqsF8C7R";
+// var oauth_signature_method = "HMAC-SHA1";
+// var oauth_timestamp = "1709284452";
+// var oauth_nonce = "TLha1VJUnC0";
+// var oauth_version = "1.0";
+// var oauth_signature = "6okVLBt0Xz%2FRMLGHx5VFim0X5Sw%3D";
+
+// var authorization = `OAuth oauth_consumer_key=${oauth_key},oauth_token=${oauth_token},oauth_signature_method=${oauth_signature_method},oauth_timestamp=${oauth_timestamp},oauth_nonce=${oauth_nonce},oauth_version=${oauth_version},oauth_signature=${oauth_signature}`
+
+// execution.setVariable("api_authorization",authorization);
+
+
+// "OAuth " +
+//     "oauth_consumer_key=" + `"${oauth_key}"` + "," +
+//     "oauth_token=" + `"${oauth_token}"` + "," +
+//     "oauth_signature_method=" + `"${oauth_signature_method}"` + "," +
+//     "oauth_timestamp=" + `"${oauth_timestamp}"` + "," +
+//     "oauth_nonce=" + `"${oauth_nonce}"` + "," +
+//     "oauth_version=" + `"${oauth_version}"` + "," +
+//     "oauth_signature=" + `"${oauth_signature}"`; 
+
+
+//      `OAuth oauth_consumer_key=${oauth_key},oauth_token=${oauth_token},oauth_signature_method=${oauth_signature_method},oauth_timestamp=${oauth_timestamp},oauth_nonce=${oauth_nonce},oauth_version=${oauth_version},oauth_signature=${oauth_signature}`
