@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
-import Landing from "./Landing";
+// import Landing from "./Landing";
 import Comment from "./Comment";
+import LandingPage from "./LandingPage/LandingPage";
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
           <Route
             path="/"
             element={
-              <Landing
+              <LandingPage
                 setBoardName={setBoardName}
                 setBoardId={setBoardId}
                 setView={setView}
