@@ -29,6 +29,7 @@
     "react-to-print": "^2.14.15",
     "recharts": "^2.8.0",
     "remark-gfm": "4.0.0",
+    "sass": "^1.71.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
