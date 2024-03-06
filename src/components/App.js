@@ -4,6 +4,7 @@ import Dashboard from "./Dashboard";
 // import Landing from "./Landing";
 import Comment from "./Comment";
 import LandingPage from "./LandingPage/LandingPage";
+import Landing from "./Landing";
 
 
 function App() {

@@ -4,7 +4,7 @@
   padding: 0;
 }
 
-@mixin flex-container(
+/* @mixin flex-container(
   $direction: row,
   $justify-content: center,
   $align-items: center,
@@ -15,7 +15,7 @@
   justify-content: $justify-content;
   align-items: $align-items;
   gap: $gap;
-}
+} */
 
 body {
   background-color: #354a5f;
@@ -257,31 +257,4 @@ input[type="radio"]:hover {
   flex-direction: column;
 }
 
-/* For Webkit-based browsers (Chrome, Safari) */
-// ::-webkit-scrollbar {
-//   width: 0.3rem;
-// }
 
-// ::-webkit-scrollbar-thumb {
-//   background-color: #9b59b6;
-//   border-radius: 2px;
-//   border: 1px solid blue;
-// }
-
-// ::-webkit-scrollbar-track {
-//   background-color: #ecf0f1;
-// }
-
-// /* For Firefox */
-// * {
-//   scrollbar-width: thin;
-//   scrollbar-color: #9b59b6 #ecf0f1;
-// }
-
-// *::-moz-scrollbar-thumb {
-//   background-color: #9b59b6;
-// }
-
-// *::-moz-scrollbar-track {
-//   background-color: #ecf0f1;
-// }
