@@ -365,8 +365,8 @@ function Landing({ setBoardId, setView, setBoardName }) {
     triggerWorkflowSprint(dynamicKey, dynamicValue);
   }
 
-  // const filteredBoards = allboards.filter((board) => {
-  const filteredBoards = data.filter((board) => {
+  const filteredBoards = allboards.filter((board) => {
+  // const filteredBoards = data.filter((board) => {
     const lowerCaseName = (board.board_name || "").toLowerCase();
     const lowerCaseId = (board.board_id || "").toString().toLowerCase();
 
