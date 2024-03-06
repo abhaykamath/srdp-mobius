@@ -294,7 +294,7 @@ function Dashboard({ setView }) {
     });
     setApiCount(0);
   }
-  // console.log(storydata, "storydata");
+  // console.log(storydata, "storydata" );
   useEffect(() => {
     getStories();
     getHorzChartData();

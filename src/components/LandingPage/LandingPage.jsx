@@ -124,6 +124,8 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
     const navigate = useNavigate();
     const boardWorkflowId = 82;
     const sprintWorkflowId = 70506;
+
+    // const f_data =
     // const workFlowApi = `https://dev-workflowdesigner.gaiansolutions.com/api/wf/64e1fd3d1443eb00018cc231/execute/${boardWorkflowId}?env=TEST`;
 
     // Boards AQ
@@ -154,15 +156,13 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                 }
             );
 
-            console.log("API call success", response);
+            // console.log("API call success", response);
         } catch (error) {
             console.error("API call error", error);
         }
     }
 
     async function triggerWorkflowSprint(key, value) {
-        console.log("Before making API call");
-
         try {
             const formData = new FormData();
             formData.append(key, value);
@@ -178,7 +178,7 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                 }
             );
 
-            console.log("API call success", response);
+            // console.log("API call success", response);
         } catch (error) {
             console.error("API call error", error);
         }
@@ -189,7 +189,7 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
         hoverTimeoutRef.current = setTimeout(() => {
             setShowLoader(true);
             setBoardId_pie(id);
-            console.log(id);
+            // console.log(id);
 
             if (id) {
                 async function getLastSprints() {
@@ -222,10 +222,7 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                         } else {
                             default_sprint = active_sprint[0];
                         }
-                        // console.log(
-                        //   "**************",
-                        //   default_sprint.id ? default_sprint.id : ""
-                        // );
+
                         setSprint(default_sprint.id ? default_sprint.id : "");
                         let pie_chart_data;
                         if (default_sprint.id !== "") {
@@ -266,7 +263,7 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                         if (piedata.size === 0) {
                             piedata.set("NO Subtask", "0");
                         }
-                        console.log(piedata, "piedata");
+                        // console.log(piedata, "piedata");
                         setLandingPieData({
                             labels: Array.from(piedata.keys()),
                             datasets: [
@@ -287,33 +284,19 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                 }
                 getLastSprints();
 
-                console.log(landingPieData);
+                // console.log(landingPieData);
                 // console.log(piedata, "piedata");
             }
         }, 1000);
         // event.stopPropagation();
     }
-    // setShowPieChart(!showPieChart);
 
-    // async function getPieChartData() {
-    //   if (sprint !== "") {
-    //     const response = await axios.get(
-    //       `${live_base_url}/sprint/${sprint}/subtasks/progress`
-    //     );
-    //     const pie_chart_data = response.data.values;
-    //     setPieData(pie_chart_data);
-    //     setApiCount((prev) => prev + 1);
-    //   }
-    // }
-
-    // const all_boards_AQ = [{ id: 114 }];
     async function getBoardsData() {
         const response = await axios.get(`${all_boards_AQ}`, {
             headers: {
                 Authorization: `${token}`,
             },
         });
-        console.log(response);
         const all_boards_data = response.data.model.entities;
         // const all_boards_data = response_data.map((board) => {
         //   return {
@@ -345,27 +328,87 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
     }
 
     // favourites
-    const [favbooards, setFavboards] = useState(() => {
-        const storedFavboards = localStorage.getItem("favboards");
-        return storedFavboards ? JSON.parse(storedFavboards) : [];
-    });
+    const [favboards, setFavboards] = useState([]);
 
-    const handleFavClick = (event, board) => {
-        const isBoardAlreadyFavorited = favbooards.some(
-            (favBoard) => favBoard.board_id === board.board_id
-        );
+    // Summmary board
+    const [summary_boards, setSummary_boards] = useState({});
+    const [delete_boards, setDelete_boards] = useState();
 
-        if (!isBoardAlreadyFavorited) {
-            const updatedFavboards = [...favbooards, board];
-            setFavboards(updatedFavboards);
-            // Modified: Update localStorage with the new favboards state
-            localStorage.setItem("favboards", JSON.stringify(updatedFavboards));
+    async function get_summmary_dashboard() {
+        // var body = [summary_boards];
+        try {
+            const response = await axios.get(
+                "https://ig.aidtaas.com/tf-entity-ingestion/v1.0/schemas/65e5a9cef1e0ce18934d8de3/instances/list?size=1000",
+
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: token,
+                        accept: "*/*",
+                    },
+                }
+            );
+            setFavboards(response.data.entities);
+            console.log("API get", response);
+        } catch (error) {
+            console.error("API call error", error);
         }
+    }
+    async function post_summmary_dashboard() {
+        var body = [summary_boards];
+        try {
+            const response = await axios.post(
+                `https://ig.aidtaas.com/tf-entity-ingestion/v1.0/schemas/65e5a9cef1e0ce18934d8de3/instances?upsert=true`,
+                body,
+
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: token,
+                        accept: "*/*",
+                    },
+                }
+            );
+            get_summmary_dashboard();
+
+            console.log("API call success", response);
+        } catch (error) {
+            console.error("API call error", error);
+        }
+    }
+
+    async function delete_summmary_dashboard() {
+        var body = delete_boards;
+
+        try {
+            const response = await axios.delete(
+                "https://ig.aidtaas.com/tf-entity-ingestion/v1.0/schemas/65e5a9cef1e0ce18934d8de3/instances",
+                {
+                    headers: {
+                        Authorization: token,
+                        "Content-Type": "application/json",
+                        Accept: "*/*",
+                    },
+                    data: body,
+                }
+            );
+            get_summmary_dashboard();
+            console.log("API call success", response);
+        } catch (error) {
+            console.error("API call error", error);
+        }
+    }
+
+    const handleFavClick = (event, board, id, name, type) => {
+        setSummary_boards({
+            board_id: board.board_id,
+            board_name: board.board_name,
+            board_type: board.board_type,
+        });
 
         event.stopPropagation();
     };
-
-    const [recentbooards, setRecentbooards] = useState([]);
+    // console.log(summary_boards, "summary_boards");
 
     // To filter the Searched boards by Board name
     const handleChange = (event) => {
@@ -377,16 +420,22 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
         searchInputRef.current.focus();
     };
 
-    const handleDeleteClick = (event, board) => {
+    const handleDeleteClick = (event, board, id, name) => {
         // Prevent the event from propagating to the board header
         event.stopPropagation();
-
-        // Remove the board from favbooards
-        const updatedFavboards = favbooards.filter(
-            (favBoard) => favBoard.board_id !== board.board_id
-        );
-        setFavboards(updatedFavboards);
+        // console.log("DELETE CALLED");
+        setDelete_boards((prev) => ({ board_id: board.board_id }));
     };
+
+    useEffect(() => {
+        post_summmary_dashboard();
+    }, [summary_boards]);
+
+    useEffect(() => {
+        console.log("delete id : ", delete_boards);
+        delete_summmary_dashboard();
+        // get_summmary_dashboard();
+    }, [delete_boards]);
 
     function handleCick(id, name, event, board) {
         // console.log("handleCick called with:", id, name);
@@ -403,21 +452,10 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
         const dynamicValue = id;
 
         triggerWorkflowSprint(dynamicKey, dynamicValue);
-
-        // const isBoardAlreadyRecent = recentbooards.some(
-        //   (recentBoard) => recentBoard.board_id === board.board_id
-        // );
-
-        // if (!isBoardAlreadyRecent) {
-        //   const updatedRecentboards = [...recentbooards, board];
-        //   setFavboards(updatedRecentboards);
-        //   // Modified: Update localStorage with the new favboards state
-        //   localStorage.setItem("recentboards", JSON.stringify(updatedRecentboards));
-        // }
-        // event.stopPropagation();
     }
 
     const filteredBoards = allboards.filter((board) => {
+    // const filteredBoards = data.filter((board) => {
         const lowerCaseName = (board.board_name || "").toLowerCase();
         const lowerCaseId = (board.board_id || "").toString().toLowerCase();
 
@@ -428,7 +466,6 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
     });
 
     // To make board names show in alphabetical odrer
-    // To make board names show in alphabetical order
     filteredBoards.sort((a, b) => {
         const nameA = (a.board_name || "").toLowerCase();
         const nameB = (b.board_name || "").toLowerCase();
@@ -441,13 +478,14 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
     useEffect(() => {
         triggerWorkflow();
         getBoardsData();
-        localStorage.setItem("favboards", JSON.stringify(favbooards));
+        get_summmary_dashboard();
 
         // Auto-focus on the search input when the component mounts
         searchInputRef.current.focus();
-    }, [favbooards]);
+    }, []);
 
     useEffect(() => { }, [landingPieData]);
+
 
     return (
         <>
@@ -477,7 +515,7 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
 
                 <div className={css.boardsContainer}>
                     {filteredBoards.map((board, index) => {
-                        const isBoardFavorited = favbooards.some(
+                        const isBoardFavorited = favboards.some(
                             (favBoard) => favBoard.board_id === board.board_id
                         );
 
@@ -540,9 +578,9 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                     })}
                 </div>
 
-                <div className={css.favHeader}>Favourites ({favbooards.length})</div>
+                <div className={css.favHeader}>Summary Dashboards ({favboards.length})</div>
                 <div className={css.favContainer}>
-                    {favbooards.map((board, index) => {
+                    {favboards.map((board, index) => {
                         return (
                             <div
                                 key={index}
