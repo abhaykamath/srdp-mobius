@@ -6,6 +6,7 @@ import {
     BsPieChart,
     BsPieChartFill,
 } from "react-icons/bs";
+import data from './Data'
 import PieChart from "../PieChart";
 import css from './LandingPage.module.scss'
 import axios from "axios";
@@ -452,11 +453,11 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
         <>
             <div className={css.mainContainer}>
                 <div className={css.headContainer}>
-                    <div className={css.landingPageHeader}>JIRA Boards</div>
-                    <Link to={"/daily-status"}>
-                        <button className={css.btnPrimary}>Daily Status</button>
-                    </Link>
+                    <h1>
+                        JIRA Boards
+                    </h1>
                     <div className={css.searchDiv}>
+                        <button className={css.btnPrimary} onClick={() => navigate("/daily-status")}>Daily Status</button>
                         <input
                             className={css.searchBar}
                             type="text"
@@ -469,10 +470,9 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                             Clear
                         </button>
                     </div>
-                </div>
-
-                <div className={css.boardsHeader}>
-                    All Boards ({filteredBoards.length})
+                    <div className={css.boardsHeader}>
+                        All Boards ({filteredBoards.length})
+                    </div>
                 </div>
 
                 <div className={css.boardsContainer}>
@@ -482,14 +482,15 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                         );
 
                         return (
-                            <div>
-                                <div
-                                    key={index}
-                                    className={`${css.boardCard} ${expandedBoard === board.board_id ? css.expanded : ''}`}
-                                    onClick={(e) => {
-                                        handleCick(board.board_id, board.board_name, "dashboard");
-                                    }}
-                                >
+
+                            <div
+                                key={index}
+                                className={`${css.boardCard} ${expandedBoard === board.board_id ? css.expanded : ''}`}
+                                onClick={(e) => {
+                                    handleCick(board.board_id, board.board_name, "dashboard");
+                                }}
+                            >
+                                <div>
                                     <span
                                         className={css.favIconChart}
                                         style={{ zIndex: 1000 }}
@@ -527,13 +528,13 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                                         onClick={(e) => handleFavClick(e, board)}
                                     >
                                         {isBoardFavorited ? (
-                                            <BsSuitHeartFill style={{ color: "#034694" }} />
+                                            <BsSuitHeartFill style={{ color: "#A367B1" }} />
                                         ) : (
-                                            <BsSuitHeart style={{ color: "#034694" }} />
+                                            <BsSuitHeart style={{ color: "#A367B1" }} />
                                         )}
                                     </span>
-                                    {board.board_name}
                                 </div>
+                                <p>{board.board_name}</p>
                             </div>
                         );
                     })}
@@ -545,7 +546,7 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                         return (
                             <div
                                 key={index}
-                                className={css.boardCard}
+                                className={css.favCard}
                                 onClick={(e) => {
                                     handleCick(board.board_id, board.board_name, "dashboard");
                                 }}
@@ -554,9 +555,9 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                                     className={css.favIcon}
                                     onClick={(e) => handleDeleteClick(e, board)}
                                 >
-                                    <BsTrash style={{ color: "red" }} />
+                                    <BsTrash style={{ color: "#392467" }} />
                                 </span>
-                                <div>{board.board_name}</div>
+                                <p>{board.board_name}</p>
                             </div>
                         );
                     })}

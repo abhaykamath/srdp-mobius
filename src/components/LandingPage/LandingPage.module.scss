@@ -1,0 +1,366 @@
+@use "../../index.module.scss";
+* {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+.mainContainer {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: white;
+  .headContainer {
+    width: 100%;
+    margin-bottom: clamp(0.068375rem, 0rem + 1.094vw, 6.8375rem);
+    @include index.flex-container(column, flex-start, flex-start);
+    > h1 {
+      @media only screen and (max-width: 767px) {
+        font-size: clamp(0.15625rem, 0rem + 4.5vw, 15.625rem);
+        padding: clamp(
+          0.097625rem,
+          -0.00003156565656563248rem + 1.5625050505050502vw,
+          9.765625rem
+        );
+      }
+      @media screen and (min-width: 768px) and (max-width: 1024px) {
+        font-size: clamp(0.1953125rem, 0rem + 3.125vw, 19.53125rem);
+      }
+      background-color: #5d3587;
+      width: 100%;
+      padding: clamp(
+        0.0488125rem,
+        6.938893903907228e-18rem + 0.7809999999999999vw,
+        4.88125rem
+      );
+      font-size: clamp(0.068375rem, 0rem + 1.094vw, 6.8375rem);
+      text-align: center;
+      color: white;
+    }
+
+    .btnPrimary,
+    .btnSuccess {
+      // width: 10vw;
+      @media only screen and (max-width: 767px) {
+        font-size: clamp(0.1171875rem, 0rem + 2.475vw, 11.71875rem);
+        padding: 0.4vw 2vw;
+        border-radius: 0.6vw;
+      }
+      @media screen and (min-width: 768px) and (max-width: 1024px) {
+        font-size: clamp(0.1755rem, 0rem + 1.408vw, 17.55rem);
+        padding: 0.5vw 2vw;
+      }
+      font-size: clamp(
+        0.0488125rem,
+        6.938893903907228e-18rem + 0.7809999999999999vw,
+        4.88125rem
+      );
+      background-color: #a367b1;
+      outline: none;
+      border: none;
+      color: white;
+      border-radius: 0.2vw;
+      padding: 0.4vw 0.6vw;
+    }
+
+    .boardsHeader,
+    .favHeader {
+      width: 100%;
+      @media only screen and (max-width: 767px) {
+        font-size: clamp(0.15625rem, 0rem + 2.9vw, 15.625rem);
+      }
+      @media screen and (min-width: 768px) and (max-width: 1024px) {
+        font-size: clamp(0.1953125rem, 0rem + 2.125vw, 19.53125rem);
+      }
+      padding-inline: clamp(
+        0.0488125rem,
+        6.938893903907228e-18rem + 1.7809999999999999vw,
+        4.88125rem
+      );
+      font-size: clamp(0.068375rem, 0rem + 1.094vw, 6.8375rem);
+      font-weight: 600;
+      color: #5d3587;
+    }
+  }
+
+  .searchDiv {
+    @media only screen and (max-width: 767px) {
+      @include index.flex-container(row, space-between, center, 0.2vw);
+      padding-inline: clamp(0.0390625rem, 0rem + 1.425vw, 3.90625rem);
+    }
+    @media screen and (min-width: 768px) and (max-width: 1024px) {
+      @include index.flex-container(row, center, center, 2vw);
+    }
+    width: 100%;
+    padding: clamp(0.0390625rem, 0rem + 0.825vw, 3.90625rem);
+    //   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+
+    @include index.flex-container(row, flex-start, flex-end, 1vw);
+    .btnSuccess {
+      // width: 10vw;
+      @media only screen and (max-width: 767px) {
+        font-size: clamp(0.1171875rem, 0rem + 2.475vw, 11.71875rem);
+        padding: 0.4vw 2vw;
+        border-radius: 0.6vw;
+      }
+      @media screen and (min-width: 768px) and (max-width: 1024px) {
+        font-size: clamp(0.1755rem, 0rem + 1.408vw, 17.55rem);
+        padding: 0.5vw 2vw;
+      }
+      font-size: clamp(
+        0.0488125rem,
+        6.938893903907228e-18rem + 0.7809999999999999vw,
+        4.88125rem
+      );
+      background-color: #a367b1;
+      outline: none;
+      border: none;
+      color: white;
+      border-radius: 0.2vw;
+      padding: 0.4vw 0.6vw;
+    }
+    input {
+      @media only screen and (max-width: 767px) {
+        width: 60vw;
+        height: 5vw;
+        font-size: clamp(0.087875rem, 0rem + 2.406vw, 8.7875rem);
+      }
+      @media screen and (min-width: 768px) and (max-width: 1024px) {
+        width: 52.5vw;
+        height: 3.5vw;
+        font-size: clamp(0.087875rem, 0rem + 1.406vw, 8.7875rem);
+      }
+      font-size: clamp(0.087875rem, 0rem + 1.006vw, 8.7875rem);
+      width: 20vw;
+      outline: none;
+      border: none;
+      color: #6e367b;
+      // border-bottom: 0.1vw solid #cbcbcb;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.055);
+      padding: clamp(0.0390625rem, 0rem + 0.225vw, 3.90625rem);
+      padding-left: clamp(0.068375rem, 0rem + 1.694vw, 6.8375rem);
+      &::placeholder {
+        color: #6e367b;
+      }
+    }
+    .btnSuccess {
+      @media only screen and (max-width: 767px) {
+        font-size: clamp(0.1171875rem, 0rem + 2.475vw, 11.71875rem);
+        padding: 0.4vw 2vw;
+        border-radius: 0.6vw;
+      }
+      @media screen and (min-width: 768px) and (max-width: 1024px) {
+        padding: 0.5vw 2vw;
+      }
+      padding: 0.4vw 0.8vw;
+    }
+  }
+
+  .boardsContainer {
+    background-color: #f1bffd;
+    @media only screen and (max-width: 767px) {
+      //   padding-inline: 1vw;
+      height: 50vh;
+      padding: clamp(0.0390625rem, 0rem + 2.825vw, 3.90625rem);
+      //   display: grid;
+      //   grid-template-columns: auto auto auto;
+    }
+    width: 100%;
+    height: 40vh;
+    padding-inline: auto;
+    overflow: scroll;
+    @include index.flex-container(row, center, flex-start, 1.5vw);
+    flex-wrap: wrap;
+    align-content: flex-start;
+    margin-top: clamp(0.1171875rem, 1.171875rem + 1.075vw, 11.71875rem);
+    padding-top: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
+
+    .boardCard {
+      @media only screen and (max-width: 767px) {
+        width: 90%;
+        height: 15vw;
+        @include index.flex-container(column, flex-start, flex-start, 1vw);
+        padding: clamp(0.0390625rem, 0rem + 1.925vw, 3.90625rem);
+        margin-right: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
+      }
+      @media screen and (min-width: 768px) and (max-width: 1024px) {
+        width: calc(90% / 3);
+        @include index.flex-container(column, flex-start, flex-start, 2vw);
+        height: 15vw;
+        padding: 1vw 2vw;
+      }
+      width: 14vw;
+      height: 5vw;
+      @include index.flex-container(column, flex-start, flex-start);
+      padding: clamp(0.0390625rem, 0rem + 0.425vw, 3.90625rem);
+      border-radius: 0.4vw;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      background-color: white;
+      transition: transform 0.2s;
+      transition: background 0.1s;
+      &:hover {
+        cursor: pointer;
+        background-color: #5d3587;
+        transform: scale(1.05);
+        > p {
+          color: white;
+        }
+      }
+      > div {
+        width: 100%;
+        @include index.flex-container(row, flex-end, flex-start, 1vw);
+        span {
+          font-size: clamp(0.087875rem, 0rem + 1.006vw, 8.7875rem);
+          @media only screen and (max-width: 767px) {
+            font-size: clamp(0.087875rem, 0rem + 2.406vw, 8.7875rem);
+          }
+          @media screen and (min-width: 768px) and (max-width: 1024px) {
+            font-size: clamp(0.1953125rem, 0rem + 2.125vw, 19.53125rem);
+          }
+        }
+      }
+      > p {
+        @media only screen and (max-width: 767px) {
+          font-size: clamp(0.1171875rem, 0rem + 2.975vw, 11.71875rem);
+        }
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+          font-size: clamp(0.1953125rem, 0rem + 2.125vw, 19.53125rem);
+        }
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        text-align: center;
+        font-size: clamp(0.05859375rem, 0rem + 0.9375vw, 5.859375rem);
+        color: black;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .favHeader {
+    @media only screen and (max-width: 767px) {
+      font-size: clamp(0.15625rem, 0rem + 2.9vw, 15.625rem);
+    }
+    @media screen and (min-width: 768px) and (max-width: 1024px) {
+      font-size: clamp(0.1953125rem, 0rem + 2.125vw, 19.53125rem);
+    }
+    width: 100%;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: clamp(
+      0.0488125rem,
+      6.938893903907228e-18rem + 0.7809999999999999vw,
+      4.88125rem
+    );
+    // padding: clamp(
+    //   0.0488125rem,
+    //   6.938893903907228e-18rem + 1.7809999999999999vw,
+    //   4.88125rem
+    // );
+    font-size: clamp(0.068375rem, 0rem + 1.094vw, 6.8375rem);
+    font-weight: 600;
+    color: #5d3587;
+  }
+
+  .favContainer {
+    width: 100%;
+    height: 30vh;
+    background-color: #f1bffd;
+    margin-top: clamp(0.078125rem, 0rem + 0.25vw, 7.8125rem);
+    padding: clamp(0.087875rem, 0rem + 1.106vw, 8.7875rem);
+    padding-left: clamp(0.087875rem, 0rem + 3.806vw, 8.7875rem);
+    @include index.flex-container(row, flex-start, center, 1.5vw);
+    overflow: scroll;
+    @media only screen and (min-width: 1024px) {
+      flex-wrap: wrap;
+    }
+    @media only screen and (max-width: 767px) {
+      @include index.flex-container(column, flex-start, center, 3vw);
+      height: 20vh;
+      overflow: scroll;
+      flex-wrap: none;
+    }
+    @media screen and (min-width: 768px) and (max-width: 1024px) {
+      @include index.flex-container(row, flex-start, center, 3vw);
+      flex-wrap: wrap;
+      overflow: scroll;
+    }
+    .favCard {
+      //   @include index.flex-container(column, flex-start, center, .6vw);
+      //   min-width: 250px;
+      //   height: 8vw;
+      //   @media only screen and (max-width: 767px) {
+      //     min-width: 120px;
+      //     height: 14vw;
+      //     font-size: clamp(0.1171875rem, 0rem + 2.975vw, 11.71875rem);
+      //   }
+      //   @media screen and (min-width: 768px) and (max-width: 1024px) {
+      //     min-width: 160px;
+      //     height: 10vw;
+      //     font-size: clamp(0.1953125rem, 0rem + 2.125vw, 19.53125rem);
+      //   }
+      //   padding: clamp(0.068375rem, 0rem + 0.594vw, 6.8375rem);
+      //   background-color: #ffd1e3;
+      //   border-radius: 1vw;
+      //   color: #a367b1;
+      //   font-size: clamp(0.15625rem, 0rem + 1.5vw, 15.625rem);
+      //   font-weight: 600;
+      //   span {
+      //     align-self: flex-end;
+      //   }
+      @media only screen and (max-width: 767px) {
+        width: 90%;
+        height: 15vw;
+        @include index.flex-container(column, flex-start, flex-start, 1vw);
+        padding: clamp(0.0390625rem, 0rem + 1.925vw, 3.90625rem);
+        margin-right: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
+      }
+      @media screen and (min-width: 768px) and (max-width: 1024px) {
+        width: calc(90% / 3);
+        @include index.flex-container(column, flex-start, flex-start, 2vw);
+        height: 15vw;
+        padding: 1vw 2vw;
+      }
+      min-width: 14vw;
+      height: 5vw;
+      @include index.flex-container(column, flex-start, flex-start);
+      padding: clamp(0.0390625rem, 0rem + 0.825vw, 3.90625rem);
+      border-radius: 0.4vw;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      background-color: white;
+      transition: transform 0.2s;
+      &:hover {
+        background-color: #5d3587;
+        transform: scale(1.05);
+        cursor: pointer;
+        > p {
+          color: white;
+        }
+      }
+      span {
+        align-self: flex-end;
+        font-size: clamp(0.087875rem, 0rem + 1.006vw, 8.7875rem);
+        @media only screen and (max-width: 767px) {
+          font-size: clamp(0.087875rem, 0rem + 2.406vw, 8.7875rem);
+        }
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+          font-size: clamp(0.1953125rem, 0rem + 2.125vw, 19.53125rem);
+        }
+      }
+
+      > p {
+        @media only screen and (max-width: 767px) {
+          font-size: clamp(0.1171875rem, 0rem + 2.975vw, 11.71875rem);
+        }
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+          font-size: clamp(0.1953125rem, 0rem + 2.125vw, 19.53125rem);
+        }
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        text-align: center;
+        font-size: clamp(0.05859375rem, 0rem + 0.9375vw, 5.859375rem);
+        color: black;
+        font-weight: 400;
+      }
+    }
+  }
+}

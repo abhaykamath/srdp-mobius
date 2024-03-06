@@ -4,6 +4,19 @@
   padding: 0;
 }
 
+@mixin flex-container(
+  $direction: row,
+  $justify-content: center,
+  $align-items: center,
+  $gap: 0
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  gap: $gap;
+}
+
 body {
   background-color: #354a5f;
 }
@@ -223,55 +236,52 @@ input[type="radio"]:hover {
   height: 100%;
 }
 
-.hygine-ontime-timelog-div{
+.hygine-ontime-timelog-div {
   height: 10%;
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
-
 }
 
-.hygine-ontime-div{
+.hygine-ontime-div {
   gap: 0.5rem;
   width: 50%;
   display: flex;
   flex-direction: column;
 }
 
-.time-log-div{
+.time-log-div {
   gap: 0.5rem;
   width: 50%;
   display: flex;
   flex-direction: column;
-
 }
 
 /* For Webkit-based browsers (Chrome, Safari) */
-::-webkit-scrollbar {
-  width: 0.3rem;
-}
+// ::-webkit-scrollbar {
+//   width: 0.3rem;
+// }
 
-::-webkit-scrollbar-thumb {
-  background-color: #9b59b6;
-  border-radius: 2px;
-  border: 1px solid blue;
-}
+// ::-webkit-scrollbar-thumb {
+//   background-color: #9b59b6;
+//   border-radius: 2px;
+//   border: 1px solid blue;
+// }
 
-::-webkit-scrollbar-track {
-  background-color: #ecf0f1;
-}
+// ::-webkit-scrollbar-track {
+//   background-color: #ecf0f1;
+// }
 
-/* For Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #9b59b6 #ecf0f1;
-}
+// /* For Firefox */
+// * {
+//   scrollbar-width: thin;
+//   scrollbar-color: #9b59b6 #ecf0f1;
+// }
 
-*::-moz-scrollbar-thumb {
-  background-color: #9b59b6;
-}
+// *::-moz-scrollbar-thumb {
+//   background-color: #9b59b6;
+// }
 
-*::-moz-scrollbar-track {
-  background-color: #ecf0f1;
-}
-
+// *::-moz-scrollbar-track {
+//   background-color: #ecf0f1;
+// }
