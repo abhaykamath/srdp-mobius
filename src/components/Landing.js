@@ -12,95 +12,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { color } from "d3";
 import Loader from "./Loader";
-// const boards = [
-//   { board_name: "MOB board", board_id: "1" },
-//   { board_name: "PM board", board_id: "4" },
-//   { board_name: "UX Work", board_id: "199" },
-//   { board_name: "RR board", board_id: "215" },
-//   { board_name: "L3AAS board", board_id: "82" },
-//   { board_name: "OCS board", board_id: "91" },
-//   { board_name: "MCDS board", board_id: "205" },
-//   { board_name: "Marketplace", board_id: "150" },
-//   { board_name: "PLED board", board_id: "135" },
-//   { board_name: "COE Sprint4", board_id: "202" },
-//   { board_name: "IOS board", board_id: "203" },
-//   { board_name: "TechWarriors Sprint 6", board_id: "140" },
-//   { board_name: "MAYA board", board_id: "79" },
-//   { board_name: "HM board", board_id: "80" },
-//   { board_name: "CES Development Sprint Board", board_id: "84" },
-//   { board_name: "UI dev (JS)", board_id: "6" },
-//   { board_name: "UI Development board 3", board_id: "86" },
-//   { board_name: "scrum board - NAB", board_id: "90" },
-//   { board_name: "Sprint 2", board_id: "68" },
-//   { board_name: "Sprint 2", board_id: "61" },
-//   { board_name: "GP board", board_id: "78" },
-//   { board_name: "PILT board", board_id: "102" },
-//   { board_name: "Testing Team Board", board_id: "71" },
-//   { board_name: "Green - Lime", board_id: "164" },
-//   { board_name: "test pilot", board_id: "107" },
-//   { board_name: "Pilot srum test", board_id: "123" },
-//   { board_name: "UMP board", board_id: "138" },
-//   { board_name: "Designer Tool", board_id: "170" },
-//   { board_name: "MAV", board_id: "141" },
-//   { board_name: "COE", board_id: "194" },
-//   { board_name: "MP-Sprint-3", board_id: "187" },
-//   { board_name: "Adwize", board_id: "167" },
-//   { board_name: "Platform Ops", board_id: "169" },
-//   { board_name: "DS board", board_id: "185" },
-//   { board_name: "MP Sprint-4", board_id: "195" },
-//   { board_name: "Backend Services Sprint Board", board_id: "186" },
-//   { board_name: "MP-Sprint-4", board_id: "191" },
-//   { board_name: "CDP board", board_id: "193" },
-//   { board_name: "MP", board_id: "196" },
-//   { board_name: "Sprint 0", board_id: "74" },
-//   { board_name: "MSUDeployments", board_id: "179" },
-//   { board_name: "AT board", board_id: "81" },
-//   { board_name: "SHAPE-SCRUM", board_id: "133" },
-//   { board_name: "VIS board", board_id: "117" },
-//   { board_name: "ATSC1 board", board_id: "153" },
-//   { board_name: "Green SeaWeed", board_id: "163" },
-//   { board_name: "Red Team - Deep Solutions", board_id: "155" },
-//   { board_name: "Blue Team - Integrations", board_id: "162" },
-//   { board_name: "Olive sprint 3", board_id: "168" },
-//   { board_name: "Sprint Board", board_id: "76" },
-//   { board_name: "NCS board", board_id: "128" },
-//   { board_name: "Pitcher", board_id: "97" },
-//   { board_name: "CP", board_id: "98" },
-//   { board_name: "Green Olive", board_id: "124" },
-//   { board_name: "Jarvis", board_id: "144" },
-//   { board_name: "Sprint 1", board_id: "69" },
-//   { board_name: "UI development board - sprint 2", board_id: "70" },
-//   { board_name: "CES Scrum Board", board_id: "83" },
-//   { board_name: "Green Pickle", board_id: "115" },
-//   { board_name: "Android TV/App", board_id: "114" },
-//   { board_name: "DEV board", board_id: "125" },
-//   { board_name: "Design Sprint 2", board_id: "257" },
-//   { board_name: "SUP board", board_id: "244" },
-//   { board_name: "Moscribe ", board_id: "251" },
-//   { board_name: "FE board", board_id: "252" },
-//   { board_name: "DAT board", board_id: "253" },
-//   { board_name: "MU board", board_id: "258" },
-//   { board_name: "Monet Scrum Board", board_id: "259" },
-//   { board_name: "PCPF board", board_id: "276" },
-//   { board_name: "BU board", board_id: "280" },
-//   { board_name: "MIAS board", board_id: "281" },
-//   { board_name: "MPE Scrum Board", board_id: "255" },
-//   { board_name: "MPI board", board_id: "260" },
-//   { board_name: "MBOB board", board_id: "261" },
-//   { board_name: "MMONET board", board_id: "262" },
-//   { board_name: "MHCY board", board_id: "263" },
-//   { board_name: "MVINCI board", board_id: "264" },
-//   { board_name: "MSRE board", board_id: "266" },
-//   { board_name: "MBS board", board_id: "267" },
-//   { board_name: "MIE board", board_id: "282" },
-//   { board_name: "M3IN1 board", board_id: "272" },
-//   { board_name: "MSUHAAAS board", board_id: "275" },
-//   { board_name: "SRD board", board_id: "283" },
-//   { board_name: "Kathy's view ", board_id: "265" },
-//   { board_name: "VB board", board_id: "268" },
-//   { board_name: "MON2 board", board_id: "269" },
-//   { board_name: "PQA board", board_id: "271" },
-// ];
+import data from "./data";
 
 let sprint_data_map = {};
 const live_base_url = "https://srdp-mobius-apis.onrender.com";
@@ -123,6 +35,8 @@ function Landing({ setBoardId, setView, setBoardName }) {
   const navigate = useNavigate();
   const boardWorkflowId = 82;
   const sprintWorkflowId = 70506;
+
+  // const f_data =
   // const workFlowApi = `https://dev-workflowdesigner.gaiansolutions.com/api/wf/64e1fd3d1443eb00018cc231/execute/${boardWorkflowId}?env=TEST`;
 
   // Boards AQ
@@ -153,15 +67,13 @@ function Landing({ setBoardId, setView, setBoardName }) {
         }
       );
 
-      console.log("API call success", response);
+      // console.log("API call success", response);
     } catch (error) {
       console.error("API call error", error);
     }
   }
 
   async function triggerWorkflowSprint(key, value) {
-    console.log("Before making API call");
-
     try {
       const formData = new FormData();
       formData.append(key, value);
@@ -177,7 +89,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
         }
       );
 
-      console.log("API call success", response);
+      // console.log("API call success", response);
     } catch (error) {
       console.error("API call error", error);
     }
@@ -188,7 +100,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
     hoverTimeoutRef.current = setTimeout(() => {
       setShowLoader(true);
       setBoardId_pie(id);
-      console.log(id);
+      // console.log(id);
 
       if (id) {
         async function getLastSprints() {
@@ -221,10 +133,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
             } else {
               default_sprint = active_sprint[0];
             }
-            // console.log(
-            //   "**************",
-            //   default_sprint.id ? default_sprint.id : ""
-            // );
+
             setSprint(default_sprint.id ? default_sprint.id : "");
             let pie_chart_data;
             if (default_sprint.id !== "") {
@@ -265,7 +174,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
             if (piedata.size === 0) {
               piedata.set("NO Subtask", "0");
             }
-            console.log(piedata, "piedata");
+            // console.log(piedata, "piedata");
             setLandingPieData({
               labels: Array.from(piedata.keys()),
               datasets: [
@@ -286,33 +195,19 @@ function Landing({ setBoardId, setView, setBoardName }) {
         }
         getLastSprints();
 
-        console.log(landingPieData);
+        // console.log(landingPieData);
         // console.log(piedata, "piedata");
       }
     }, 1000);
     // event.stopPropagation();
   }
-  // setShowPieChart(!showPieChart);
 
-  // async function getPieChartData() {
-  //   if (sprint !== "") {
-  //     const response = await axios.get(
-  //       `${live_base_url}/sprint/${sprint}/subtasks/progress`
-  //     );
-  //     const pie_chart_data = response.data.values;
-  //     setPieData(pie_chart_data);
-  //     setApiCount((prev) => prev + 1);
-  //   }
-  // }
-
-  // const all_boards_AQ = [{ id: 114 }];
   async function getBoardsData() {
     const response = await axios.get(`${all_boards_AQ}`, {
       headers: {
         Authorization: `${token}`,
       },
     });
-    console.log(response);
     const all_boards_data = response.data.model.entities;
     // const all_boards_data = response_data.map((board) => {
     //   return {
@@ -344,36 +239,34 @@ function Landing({ setBoardId, setView, setBoardName }) {
   }
 
   // favourites
-  const [favbooards, setFavboards] = useState(() => {
-    const storedFavboards = localStorage.getItem("favboards");
-    return storedFavboards ? JSON.parse(storedFavboards) : [];
-  });
+  const [favboards, setFavboards] = useState([]);
 
   // Summmary board
-  const [summary_boards, setSummary_boards] = useState();
+  const [summary_boards, setSummary_boards] = useState({});
   const [delete_boards, setDelete_boards] = useState();
+
   async function get_summmary_dashboard() {
-    var body = [summary_boards];
+    // var body = [summary_boards];
     try {
       const response = await axios.get(
-        `https://ig.aidtaas.com/tf-entity-ingestion/v1.0/schemas/65e5a9cef1e0ce18934d8de3/instances/list?size=1000`,
+        "https://ig.aidtaas.com/tf-entity-ingestion/v1.0/schemas/65e5a9cef1e0ce18934d8de3/instances/list?size=1000",
 
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${token}`,
+            Authorization: token,
             accept: "*/*",
           },
         }
       );
-
-      console.log("API call success", response);
+      setFavboards(response.data.entities);
+      console.log("API get", response);
     } catch (error) {
       console.error("API call error", error);
     }
   }
   async function post_summmary_dashboard() {
-    var body = [summary_boards];  
+    var body = [summary_boards];
     try {
       const response = await axios.post(
         `https://ig.aidtaas.com/tf-entity-ingestion/v1.0/schemas/65e5a9cef1e0ce18934d8de3/instances?upsert=true`,
@@ -382,32 +275,12 @@ function Landing({ setBoardId, setView, setBoardName }) {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${token}`,
+            Authorization: token,
             accept: "*/*",
           },
         }
       );
-
-      console.log("API call success", response);
-    } catch (error) {
-      console.error("API call error", error);
-    }
-  }
-
-  async function get_summmary_dashboard() {
-    var body = [summary_boards];
-    try {
-      const response = await axios.get(
-        `https://ig.aidtaas.com/tf-entity-ingestion/v1.0/schemas/65e5a9cef1e0ce18934d8de3/instances/list?size=1000`,
-
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `${token}`,
-            accept: "*/*",
-          },
-        }
-      );
+      get_summmary_dashboard();
 
       console.log("API call success", response);
     } catch (error) {
@@ -417,50 +290,36 @@ function Landing({ setBoardId, setView, setBoardName }) {
 
   async function delete_summmary_dashboard() {
     var body = delete_boards;
+
     try {
       const response = await axios.delete(
-        `https://ig.aidtaas.com/tf-entity-ingestion/v1.0/schemas/65e5a9cef1e0ce18934d8de3/instances`,
-        body,
-
+        "https://ig.aidtaas.com/tf-entity-ingestion/v1.0/schemas/65e5a9cef1e0ce18934d8de3/instances",
         {
           headers: {
+            Authorization: token,
             "Content-Type": "application/json",
-            Authorization: `${token}`,
-            accept: "*/*",
+            Accept: "*/*",
           },
+          data: body,
         }
       );
-
+      get_summmary_dashboard();
       console.log("API call success", response);
     } catch (error) {
       console.error("API call error", error);
     }
-    get_summmary_dashboard()
   }
 
-  const handleFavClick = (event, board) => {
-    console.log(board, "/////////////////////////////////////////////////");
-    const isBoardAlreadyFavorited = favbooards.some(
-      (favBoard) => favBoard.board_id === board.board_id
-    );
+  const handleFavClick = (event, board, id, name, type) => {
     setSummary_boards({
       board_id: board.board_id,
       board_name: board.board_name,
       board_type: board.board_type,
     });
-    post_summmary_dashboard();
-
-    if (!isBoardAlreadyFavorited) {
-      const updatedFavboards = [...favbooards, board];
-      setFavboards(updatedFavboards);
-      // Modified: Update localStorage with the new favboards state
-      localStorage.setItem("favboards", JSON.stringify(updatedFavboards));
-    }
 
     event.stopPropagation();
   };
-
-  const [recentbooards, setRecentbooards] = useState([]);
+  // console.log(summary_boards, "summary_boards");
 
   // To filter the Searched boards by Board name
   const handleChange = (event) => {
@@ -472,17 +331,22 @@ function Landing({ setBoardId, setView, setBoardName }) {
     searchInputRef.current.focus();
   };
 
-  const handleDeleteClick = (event, board) => {
+  const handleDeleteClick = (event, board, id, name) => {
     // Prevent the event from propagating to the board header
     event.stopPropagation();
-
-    // Remove the board from favbooards
-    const updatedFavboards = favbooards.filter(
-      (favBoard) => favBoard.board_id !== board.board_id
-    );
-    setFavboards(updatedFavboards);
-    setDelete_boards({board: board.board_id})
+    // console.log("DELETE CALLED");
+    setDelete_boards((prev) => ({ board_id: board.board_id }));
   };
+
+  useEffect(() => {
+    post_summmary_dashboard();
+  }, [summary_boards]);
+
+  useEffect(() => {
+    console.log("delete id : ", delete_boards);
+    delete_summmary_dashboard();
+    // get_summmary_dashboard();
+  }, [delete_boards]);
 
   function handleCick(id, name, event, board) {
     // console.log("handleCick called with:", id, name);
@@ -499,21 +363,10 @@ function Landing({ setBoardId, setView, setBoardName }) {
     const dynamicValue = id;
 
     triggerWorkflowSprint(dynamicKey, dynamicValue);
-
-    // const isBoardAlreadyRecent = recentbooards.some(
-    //   (recentBoard) => recentBoard.board_id === board.board_id
-    // );
-
-    // if (!isBoardAlreadyRecent) {
-    //   const updatedRecentboards = [...recentbooards, board];
-    //   setFavboards(updatedRecentboards);
-    //   // Modified: Update localStorage with the new favboards state
-    //   localStorage.setItem("recentboards", JSON.stringify(updatedRecentboards));
-    // }
-    // event.stopPropagation();
   }
 
-  const filteredBoards = allboards.filter((board) => {
+  // const filteredBoards = allboards.filter((board) => {
+  const filteredBoards = data.filter((board) => {
     const lowerCaseName = (board.board_name || "").toLowerCase();
     const lowerCaseId = (board.board_id || "").toString().toLowerCase();
 
@@ -524,7 +377,6 @@ function Landing({ setBoardId, setView, setBoardName }) {
   });
 
   // To make board names show in alphabetical odrer
-  // To make board names show in alphabetical order
   filteredBoards.sort((a, b) => {
     const nameA = (a.board_name || "").toLowerCase();
     const nameB = (b.board_name || "").toLowerCase();
@@ -537,11 +389,11 @@ function Landing({ setBoardId, setView, setBoardName }) {
   useEffect(() => {
     triggerWorkflow();
     getBoardsData();
-    localStorage.setItem("favboards", JSON.stringify(favbooards));
+    get_summmary_dashboard();
 
     // Auto-focus on the search input when the component mounts
     searchInputRef.current.focus();
-  }, [favbooards]);
+  }, []);
 
   useEffect(() => {}, [landingPieData]);
 
@@ -574,7 +426,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
 
         <div className="boards-container">
           {filteredBoards.map((board, index) => {
-            const isBoardFavorited = favbooards.some(
+            const isBoardFavorited = favboards.some(
               (favBoard) => favBoard.board_id === board.board_id
             );
 
@@ -604,10 +456,6 @@ function Landing({ setBoardId, setView, setBoardName }) {
                       setLandingPieData({});
                       clearTimeout(hoverTimeoutRef.current);
                     }}
-                    // onClick={(event) => {
-                    //   event.preventDefault();
-                    //   event.stopPropagation();
-                    // }}
                   >
                     <BsPieChart />
                     <div>
@@ -627,7 +475,15 @@ function Landing({ setBoardId, setView, setBoardName }) {
                   </span>
                   <span
                     className="fav-icon"
-                    onClick={(e) => handleFavClick(e, board)}
+                    onClick={(e) =>
+                      handleFavClick(
+                        e,
+                        board,
+                        board.board_id,
+                        board.board_name,
+                        board.board_type
+                      )
+                    }
                   >
                     {isBoardFavorited ? (
                       <BsSuitHeartFill style={{ color: "#034694" }} />
@@ -642,9 +498,11 @@ function Landing({ setBoardId, setView, setBoardName }) {
           })}
         </div>
 
-        <div className="fav-header">Summary Dashboards ({favbooards.length})</div>
+        <div className="fav-header">
+          Summary Dashboards ({favboards.length})
+        </div>
         <div className="fav-container">
-          {favbooards.map((board, index) => {
+          {favboards.map((board, index) => {
             return (
               <div
                 key={index}
@@ -653,72 +511,27 @@ function Landing({ setBoardId, setView, setBoardName }) {
                   handleCick(board.board_id, board.board_name, "dashboard");
                 }}
               >
-                <span
-                  className="fav-icon"
-                  onClick={(e) => handleDeleteClick(e, board)}
-                >
-                  <BsTrash style={{ color: "red" }} />
+                <span className="fav-icon">
+                  <BsTrash
+                    style={{ color: "red" }}
+                    onClick={(e) =>
+                      handleDeleteClick(
+                        e,
+                        board,
+                        board.board_id,
+                        board.board_name
+                      )
+                    }
+                  />
                 </span>
                 <div>{board.board_name}</div>
               </div>
             );
           })}
         </div>
-
-        {/* <div className="recent-header">Recents ({recentbooards.length})</div>
-        <div className="recent-container">
-          {recentbooards.map((board, index) => {
-            return (
-              <div
-                key={index}
-                className="board-card"
-                onClick={(e) => {
-                  handleCick(
-                    e,
-                    board,
-                    board.board_id,
-                    board.board_name,
-                    "dashboard"
-                  );
-                }}
-              >
-                {board.board_name}
-              </div>
-            );
-          })}
-        </div> */}
       </div>
     </>
   );
 }
 
 export default Landing;
-
-
-
-
-
-// var oauth_key = "yNAMqASQTQ73IFqfPehbItPCN";
-// var oauth_token = "1724749974079234048-wBt9aHO3mTEER00F6SFvTkMqsF8C7R";
-// var oauth_signature_method = "HMAC-SHA1";
-// var oauth_timestamp = "1709284452";
-// var oauth_nonce = "TLha1VJUnC0";
-// var oauth_version = "1.0";
-// var oauth_signature = "6okVLBt0Xz%2FRMLGHx5VFim0X5Sw%3D";
-
-// var authorization = `OAuth oauth_consumer_key=${oauth_key},oauth_token=${oauth_token},oauth_signature_method=${oauth_signature_method},oauth_timestamp=${oauth_timestamp},oauth_nonce=${oauth_nonce},oauth_version=${oauth_version},oauth_signature=${oauth_signature}`
-
-// execution.setVariable("api_authorization",authorization);
-
-
-// "OAuth " +
-//     "oauth_consumer_key=" + `"${oauth_key}"` + "," +
-//     "oauth_token=" + `"${oauth_token}"` + "," +
-//     "oauth_signature_method=" + `"${oauth_signature_method}"` + "," +
-//     "oauth_timestamp=" + `"${oauth_timestamp}"` + "," +
-//     "oauth_nonce=" + `"${oauth_nonce}"` + "," +
-//     "oauth_version=" + `"${oauth_version}"` + "," +
-//     "oauth_signature=" + `"${oauth_signature}"`; 
-
-
-//      `OAuth oauth_consumer_key=${oauth_key},oauth_token=${oauth_token},oauth_signature_method=${oauth_signature_method},oauth_timestamp=${oauth_timestamp},oauth_nonce=${oauth_nonce},oauth_version=${oauth_version},oauth_signature=${oauth_signature}`
