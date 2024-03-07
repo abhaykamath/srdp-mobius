@@ -365,8 +365,8 @@ function Landing({ setBoardId, setView, setBoardName }) {
     triggerWorkflowSprint(dynamicKey, dynamicValue);
   }
 
-  const filteredBoards = allboards.filter((board) => {
-  // const filteredBoards = data.filter((board) => {
+  // const filteredBoards = allboards.filter((board) => {
+  const filteredBoards = data.filter((board) => {
     const lowerCaseName = (board.board_name || "").toLowerCase();
     const lowerCaseId = (board.board_id || "").toString().toLowerCase();
 
@@ -425,7 +425,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
         </div>
 
         <div className="boards-container">
-          {filteredBoards.map((board, index) => {
+          {favboards.map((board, index) => {
             const isBoardFavorited = favboards.some(
               (favBoard) => favBoard.board_id === board.board_id
             );
