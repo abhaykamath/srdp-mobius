@@ -454,8 +454,8 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
         triggerWorkflowSprint(dynamicKey, dynamicValue);
     }
 
-    const filteredBoards = allboards.filter((board) => {
-    // const filteredBoards = data.filter((board) => {
+    // const filteredBoards = allboards.filter((board) => {
+    const filteredBoards = data.filter((board) => {
         const lowerCaseName = (board.board_name || "").toLowerCase();
         const lowerCaseId = (board.board_id || "").toString().toLowerCase();
 
@@ -532,10 +532,18 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                                     <span
                                         className={css.favIconChart}
                                         style={{ zIndex: 1000 }}
-                                        onMouseEnter={() => {
+                                        onClick={(event) => {
+                                            event.stopPropagation()
                                             setIsPieChartVisible(true);
                                             handlePieData(board.board_id);
                                             setExpandedBoard(board.board_id);
+                                        }}
+                                        onMouseEnter={(event) => {
+                                            // event.stopPropagation()
+                                            setIsPieChartVisible(true);
+                                            handlePieData(board.board_id);
+                                            setExpandedBoard(board.board_id);
+                                            console.log("hovered")
                                         }}
                                         onMouseLeave={() => {
                                             setShowLoader(false);
@@ -551,7 +559,7 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                                                 <div className={css.piechart}>
                                                     {landingPieData.datasets &&
                                                         landingPieData.datasets.length > 0 ? (
-                                                        <PieChart chartData={landingPieData} />
+                                                        <PieChart chartData={landingPieData} heading={board.board_name} />
                                                     ) : (
                                                         <div>{showLoader && <Loader />}</div>
                                                     )}
