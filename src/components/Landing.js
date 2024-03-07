@@ -12,7 +12,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { color } from "d3";
 import Loader from "./Loader";
-import data from "./data";
+import data from "./LandingPage/Data";
 
 let sprint_data_map = {};
 const live_base_url = "https://srdp-mobius-apis.onrender.com";

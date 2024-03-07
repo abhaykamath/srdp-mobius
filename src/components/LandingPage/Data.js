@@ -1,4 +1,4 @@
-const data = [
+const all_data = [
   {
     "board_name": "MOB board",
     "board_type": "scrum",
@@ -1218,5 +1218,8 @@ const data = [
     "self": "https://gaiansolutions.atlassian.net/rest/agile/1.0/board/98"
   }
 ]
+
+const data = all_data.filter((b) => b.board_type == "scrum")
+
 
 export default data

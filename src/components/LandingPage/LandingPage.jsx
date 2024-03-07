@@ -366,8 +366,8 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
         triggerWorkflowSprint(dynamicKey, dynamicValue);
     }
 
-    const filteredBoards = allboards.filter((board) => {
-    // const filteredBoards = data.filter((board) => {
+    // const filteredBoards = allboards.filter((board) => {
+    const filteredBoards = data.filter((board) => {
         const lowerCaseName = (board.board_name || "").toLowerCase();
         const lowerCaseId = (board.board_id || "").toString().toLowerCase();
 
@@ -389,7 +389,7 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
 
     useEffect(() => {
         triggerWorkflow();
-        getBoardsData();
+        // getBoardsData();
         get_summmary_dashboard();
 
         // Auto-focus on the search input when the component mounts
