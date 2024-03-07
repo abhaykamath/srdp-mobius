@@ -14,17 +14,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { color } from "d3";
 import Loader from "../Loader";
 
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-} from '@chakra-ui/react'
-
-
 let sprint_data_map = {};
 const live_base_url = "https://srdp-mobius-apis.onrender.com";
 
@@ -377,8 +366,8 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
         triggerWorkflowSprint(dynamicKey, dynamicValue);
     }
 
-    // const filteredBoards = allboards.filter((board) => {
-    const filteredBoards = data.filter((board) => {
+    const filteredBoards = allboards.filter((board) => {
+    // const filteredBoards = data.filter((board) => {
         const lowerCaseName = (board.board_name || "").toLowerCase();
         const lowerCaseId = (board.board_id || "").toString().toLowerCase();
 
@@ -455,10 +444,18 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                                     <span
                                         className={css.favIconChart}
                                         style={{ zIndex: 1000 }}
-                                        onMouseEnter={() => {
+                                        onClick={(event) => {
+                                            event.stopPropagation()
                                             setIsPieChartVisible(true);
                                             handlePieData(board.board_id);
                                             setExpandedBoard(board.board_id);
+                                        }}
+                                        onMouseEnter={(event) => {
+                                            // event.stopPropagation()
+                                            setIsPieChartVisible(true);
+                                            handlePieData(board.board_id);
+                                            setExpandedBoard(board.board_id);
+                                            console.log("hovered")
                                         }}
                                         onMouseLeave={() => {
                                             setShowLoader(false);
@@ -474,23 +471,7 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                                                 <div className={css.piechart}>
                                                     {landingPieData.datasets &&
                                                         landingPieData.datasets.length > 0 ? (
-                                                        <Modal isOpen={true}>
-                                                            <ModalOverlay />
-                                                            <ModalContent>
-                                                                <ModalHeader>{board.board_name}</ModalHeader>
-                                                                {/* <ModalCloseButton onClick={()=> setIsPieChartVisible(false)}/> */}
-                                                                <ModalBody>
-                                                                    <PieChart chartData={landingPieData} />
-                                                                </ModalBody>
-
-                                                                <ModalFooter>
-                                                                    {/* <Button colorScheme='blue' mr={3} >
-                                                                        Close
-                                                                    </Button> */}
-                                                                    {/* <Button variant='ghost'>Secondary Action</Button> */}
-                                                                </ModalFooter>
-                                                            </ModalContent>
-                                                        </Modal>
+                                                        <PieChart chartData={landingPieData} heading={board.board_name} />
                                                     ) : (
                                                         <div>{showLoader && <Loader />}</div>
                                                     )}

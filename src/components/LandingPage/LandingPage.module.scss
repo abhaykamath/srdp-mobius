@@ -121,8 +121,8 @@
     input {
       @media only screen and (max-width: 767px) {
         width: 60vw;
-        height: 5vw;
-        font-size: clamp(0.087875rem, 0rem + 2.406vw, 8.7875rem);
+        height: 6vw;
+        font-size: clamp(0.087875rem, 0rem + 3.406vw, 8.7875rem);
       }
       @media screen and (min-width: 768px) and (max-width: 1024px) {
         width: 52.5vw;
@@ -168,11 +168,12 @@
     height: 40vh;
     padding-inline: auto;
     overflow: scroll;
-    @include mixin.flex-container(row, center, flex-start, 1.5vw);
+    @include mixin.flex-container(row, flex-start, flex-start, 1.5vw);
     flex-wrap: wrap;
     align-content: flex-start;
     margin-top: clamp(0.1171875rem, 1.171875rem + 1.075vw, 11.71875rem);
-    padding-top: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
+    padding: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
+    padding-inline: clamp(0.1171875rem, 1.171875rem + 2.875vw, 11.71875rem);
 
     .boardCard {
       @media only screen and (max-width: 767px) {
@@ -180,7 +181,8 @@
         height: 15vw;
         @include mixin.flex-container(column, flex-start, flex-start, 1vw);
         padding: clamp(0.0390625rem, 0rem + 1.925vw, 3.90625rem);
-        margin-right: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
+        margin-inline: auto;
+        // margin-right: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
       }
       @media screen and (min-width: 768px) and (max-width: 1024px) {
         width: calc(90% / 3);
@@ -188,8 +190,13 @@
         height: 15vw;
         padding: 1vw 2vw;
       }
+      z-index: 1;
+      &.expanded {
+        z-index: 2;
+      }
       width: 14vw;
       height: 5vw;
+      position: relative;
       @include mixin.flex-container(column, flex-start, flex-start);
       padding: clamp(0.0390625rem, 0rem + 0.425vw, 3.90625rem);
       border-radius: 0.4vw;
@@ -211,10 +218,10 @@
         span {
           font-size: clamp(0.087875rem, 0rem + 1.006vw, 8.7875rem);
           @media only screen and (max-width: 767px) {
-            font-size: clamp(0.087875rem, 0rem + 2.406vw, 8.7875rem);
+            font-size: clamp(0.087875rem, 0rem + 3.406vw, 8.7875rem);
           }
           @media screen and (min-width: 768px) and (max-width: 1024px) {
-            font-size: clamp(0.1953125rem, 0rem + 2.125vw, 19.53125rem);
+            font-size: clamp(0.1171875rem, 0rem + 2.475vw, 11.71875rem);
           }
         }
       }
@@ -233,6 +240,39 @@
         color: black;
         font-weight: 400;
       }
+      .piechart {
+        position: absolute;
+        top: 1.6vw;
+        right: 0.2vw;
+        background-color: #fff;
+        border: 0.1vw solid #6e367b;
+        border-radius: 0.4vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
+        z-index: 3;
+        width: 10vw;
+        height: 10vw;
+        @media only screen and (max-width: 768px) {
+          width: 80vw;
+          height: 40vw;
+          top: 10vw;
+          right: 2.5%;
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+          width: 20vw;
+          height: 16vw;
+          top: 4vw;
+          right: 0.4vw;
+        }
+
+        // @media screen and (min-width: 1024px) {
+        //   width: 700px;
+        //   height: 500px;
+        // }
+      }
     }
   }
 
@@ -245,11 +285,7 @@
     }
     width: 100%;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    padding: clamp(
-      0.0488125rem,
-      6.938893903907228e-18rem + 0.7809999999999999vw,
-      4.88125rem
-    );
+    padding: clamp(0.078125rem, 0rem + 1.05vw, 7.8125rem);
     // padding: clamp(
     //   0.0488125rem,
     //   6.938893903907228e-18rem + 1.7809999999999999vw,
@@ -262,9 +298,9 @@
 
   .favContainer {
     width: 100%;
-    min-height: 30vh;
-     background-color: #dbbffd;
-    margin-top: clamp(0.078125rem, 0rem + 0.25vw, 7.8125rem);
+    height: 30vh;
+    background-color: #dbbffd;
+    // margin-top: clamp(0.078125rem, 0rem + 0.25vw, 7.8125rem);
     padding: clamp(0.087875rem, 0rem + 1.106vw, 8.7875rem);
     padding-left: clamp(0.087875rem, 0rem + 3.806vw, 8.7875rem);
     @include mixin.flex-container(row, flex-start, center, 1.5vw);
@@ -279,45 +315,26 @@
       flex-wrap: none;
     }
     @media screen and (min-width: 768px) and (max-width: 1024px) {
-      @include mixin.flex-container(row, flex-start, center, 3vw);
+      @include mixin.flex-container(row, flex-start, center, 1.5vw);
       flex-wrap: wrap;
       overflow: scroll;
     }
     .favCard {
-      //   @include mixin.flex-container(column, flex-start, center, .6vw);
-      //   min-width: 250px;
-      //   height: 8vw;
-      //   @media only screen and (max-width: 767px) {
-      //     min-width: 120px;
-      //     height: 14vw;
-      //     font-size: clamp(0.1171875rem, 0rem + 2.975vw, 11.71875rem);
-      //   }
-      //   @media screen and (min-width: 768px) and (max-width: 1024px) {
-      //     min-width: 160px;
-      //     height: 10vw;
-      //     font-size: clamp(0.1953125rem, 0rem + 2.125vw, 19.53125rem);
-      //   }
-      //   padding: clamp(0.068375rem, 0rem + 0.594vw, 6.8375rem);
-      //   background-color: #ffd1e3;
-      //   border-radius: 1vw;
-      //   color: #a367b1;
-      //   font-size: clamp(0.15625rem, 0rem + 1.5vw, 15.625rem);
-      //   font-weight: 600;
-      //   span {
-      //     align-self: flex-end;
-      //   }
       @media only screen and (max-width: 767px) {
         width: 90%;
         height: 15vw;
         @include mixin.flex-container(column, flex-start, flex-start, 1vw);
         padding: clamp(0.0390625rem, 0rem + 1.925vw, 3.90625rem);
-        margin-right: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
+        margin-right: clamp(0.0390625rem, 0rem + 0.425vw, 3.90625rem);
       }
       @media screen and (min-width: 768px) and (max-width: 1024px) {
         width: calc(90% / 3);
         @include mixin.flex-container(column, flex-start, flex-start, 2vw);
         height: 15vw;
         padding: 1vw 2vw;
+      }
+      @media only screen and (min-width: 1024px) {
+        max-width: 14vw;
       }
       min-width: 14vw;
       height: 5vw;
@@ -357,10 +374,32 @@
         padding: 0;
         width: 100%;
         text-align: center;
-        font-size: clamp(0.05859375rem, 0rem + 0.9375vw, 5.859375rem);
+        font-size: clamp(0.05859375rem, 0rem + 0.8375vw, 5.859375rem);
         color: black;
         font-weight: 400;
       }
     }
   }
+}
+
+.close {
+  @media only screen and (max-width: 768px) {
+    padding-inline: 5vw;
+    border-radius: 6px;
+  }
+  outline: none;
+  border: none;
+  border-radius: 0.4vw;
+  background-color: #5d3587;
+  color: white;
+  padding: clamp(0.0390625rem, 0rem + 0.325vw, 3.90625rem);
+  padding-inline: clamp(
+    0.0488125rem,
+    6.938893903907228e-18rem + 0.7809999999999999vw,
+    4.88125rem
+  );
+  font-size: clamp(0.1171875rem, 1.171875rem + 0.275vw, 11.71875rem);
+}
+
+.piechart {
 }
