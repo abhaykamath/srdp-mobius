@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Members.css";
 
-function Members({ sprintMembers, filterStoriesByMember, }) {
+function Members({ sprintMembers, filterStoriesByMember }) {
   const [selectedMember, setSelectedMember] = useState();
 
-
-  
   const handleMemberClick = (memberName) => {
     filterStoriesByMember(memberName);
     setSelectedMember(memberName);

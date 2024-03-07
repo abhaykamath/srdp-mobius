@@ -425,7 +425,7 @@ function Landing({ setBoardId, setView, setBoardName }) {
         </div>
 
         <div className="boards-container">
-          {filteredBoards.map((board, index) => {
+          {favboards.map((board, index) => {
             const isBoardFavorited = favboards.some(
               (favBoard) => favBoard.board_id === board.board_id
             );

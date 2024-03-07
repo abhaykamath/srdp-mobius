@@ -4,7 +4,7 @@ import axios from "axios";
 import Loader from "./Loader";
 import "../styles/NavBar.css";
 import { Link } from "react-router-dom";
-import "./navbar.css"
+import "./navbar.css";
 
 let sprint_data_map = {};
 

@@ -404,7 +404,7 @@ function Dashboard({ setView }) {
               </div>
               <div className="selecte_member_cont">Member Selected : <span className="selected_member">{member}</span></div>
               <Members
-                sprintMembers={sprintMembers}z
+                sprintMembers={sprintMembers}
                 filterStoriesByMember={filterStoriesByMember}
                 mmember={member}
               />
