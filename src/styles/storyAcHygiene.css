@@ -1,11 +1,13 @@
-.ac_info_btn{
+.ac_info_btn {
     cursor: pointer;
 }
-.header{
+
+.header {
     position: relative;
 }
-.ac_info{
-    
+
+.ac_info {
+    z-index: 1;
     background-color: #44e073;
     padding: 3%;
     padding-left: 5%;
@@ -16,4 +18,3 @@
     width: 100%;
     border-radius: 0.7rem;
 }
-
