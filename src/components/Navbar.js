@@ -20,6 +20,7 @@ function Navbar({
   boardId,
   boardName,
   stories,
+  member,
   // totalStoryPoints,
 }) {
   const [options, setOptions] = useState([]);
@@ -28,6 +29,9 @@ function Navbar({
   //story_status
   // story_points
 
+  if (member !== "All Members") {
+    stories = stories.filter((story) => story.assignee == member);
+  }
   const calculateStoryPoints = (story_status) => {
     const filteredTasks = stories.filter(
       (story) => story.story_status === story_status
@@ -43,6 +47,8 @@ function Navbar({
     (sum, story) => sum + story.story_points,
     0
   );
+
+  // if()
   const todoStoryPoints = calculateStoryPoints("To Do");
   const inProgressStoryPoints = calculateStoryPoints("In Progress");
   const doneStoryPoints = calculateStoryPoints("Done");
@@ -89,7 +95,6 @@ function Navbar({
   useEffect(() => {
     getSprints();
   }, []);
-
   return (
     <nav className="custom-navbar">
       <div className="dashboard-name">

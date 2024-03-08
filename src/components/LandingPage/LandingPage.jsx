@@ -460,7 +460,7 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
 
     useEffect(() => {
         triggerWorkflow();
-        // getBoardsData();
+        getBoardsData();
         get_summmary_dashboard();
 
         // Auto-focus on the search input when the component mounts
