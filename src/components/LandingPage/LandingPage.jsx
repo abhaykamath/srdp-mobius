@@ -36,6 +36,75 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
     const boardWorkflowId = 82;
     const sprintWorkflowId = 70506;
 
+    const [screenSize, setScreenSize] = useState('');
+
+    useEffect(() => {
+        const handleResize = () => {
+            const width = window.innerWidth;
+            let size = '';
+
+            if (width < 768) {
+                size = 'mobile';
+            } else if (width >= 768 && width < 1024) {
+                size = 'tablet';
+            } else {
+                size = 'desktop';
+            }
+
+            setScreenSize(size);
+        };
+
+        // Initial call to set screen size
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const handleClick = (event,board) => {
+        // Perform different actions based on screen size
+        switch (screenSize) {
+            case 'mobile':
+                event.stopPropagation()
+                setIsPieChartVisible(true);
+                handlePieData(board.board_id);
+                setExpandedBoard(board.board_id);
+                break;
+            case 'tablet':
+                event.stopPropagation()
+                setIsPieChartVisible(true);
+                handlePieData(board.board_id);
+                setExpandedBoard(board.board_id);
+                break;
+            case 'desktop':
+                console.log("hover will work")
+                break;
+            default:
+                break;
+        }
+    };
+    const handleHover = (event,board) => {
+        // Perform different actions based on screen size
+        switch (screenSize) {
+            case 'mobile':
+               console.log("click will work")
+                break;
+            case 'tablet':
+                console.log("click will work")
+            case 'desktop':
+                event.stopPropagation()
+                setIsPieChartVisible(true);
+                handlePieData(board.board_id);
+                setExpandedBoard(board.board_id);
+                break;
+            default:
+                break;
+        }
+    };
+
     // const f_data =
     // const workFlowApi = `https://dev-workflowdesigner.gaiansolutions.com/api/wf/64e1fd3d1443eb00018cc231/execute/${boardWorkflowId}?env=TEST`;
 
@@ -97,9 +166,11 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
 
     //  PieData
     function handlePieData(id) {
+        setBoardId_pie(id);
         hoverTimeoutRef.current = setTimeout(() => {
+            console.log(boardId_pie)
             setShowLoader(true);
-            setBoardId_pie(id);
+
             // console.log(id);
 
             if (id) {
@@ -445,17 +516,10 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                                         className={css.favIconChart}
                                         style={{ zIndex: 1000 }}
                                         onClick={(event) => {
-                                            event.stopPropagation()
-                                            setIsPieChartVisible(true);
-                                            handlePieData(board.board_id);
-                                            setExpandedBoard(board.board_id);
+                                            handleClick(event,board)
                                         }}
                                         onMouseEnter={(event) => {
-                                            // event.stopPropagation()
-                                            setIsPieChartVisible(true);
-                                            handlePieData(board.board_id);
-                                            setExpandedBoard(board.board_id);
-                                            console.log("hovered")
+                                           handleHover(event,board)
                                         }}
                                         onMouseLeave={() => {
                                             setShowLoader(false);
@@ -467,7 +531,7 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                                     >
                                         <BsPieChart color="#A367B1" />
                                         <div>
-                                            {boardId_pie === board.board_id && isPieChartVisible ? (
+                                            {(boardId_pie === board.board_id && isPieChartVisible) && (
                                                 <div className={css.piechart}>
                                                     {landingPieData.datasets &&
                                                         landingPieData.datasets.length > 0 ? (
@@ -476,8 +540,6 @@ function LandingPage({ setBoardId, setView, setBoardName }) {
                                                         <div>{showLoader && <Loader />}</div>
                                                     )}
                                                 </div>
-                                            ) : (
-                                                ""
                                             )}
                                         </div>
                                     </span>
