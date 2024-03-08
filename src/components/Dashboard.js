@@ -182,8 +182,10 @@ function Dashboard({ setView }) {
         `${live_base_url}/sprint/${sprint}/subtasks/progress`
       );
       const pie_chart_data = response.data.values;
+      // pie_chart_data.filter((story) => story.assignee == member);
+      console.log(pie_chart_data, "***************************");
       setPieData(pie_chart_data);
-      console.log(pieData, "pieData...............");
+      console.log(pie_chart_data, "pieData...............");
       setApiCount((prev) => prev + 1);
     }
   }
@@ -305,20 +307,20 @@ function Dashboard({ setView }) {
   useEffect(() => {
     setStoryPieData({
       labels: pieData
-        .filter((d) => d.story_id.includes(storyId))
+        .filter((d) => d.story_id.includes(storyId) && d.assignee.includes(member))
         .map((d) => d.status_category_name),
       datasets: [
         {
           label: "Subtask Count",
           data: pieData
-            .filter((d) => d.story_id.includes(storyId))
+            .filter((d) => d.story_id.includes(storyId) && d.assignee.includes(member))
             .map((d) => d.issue_count),
           backgroundColor: [
-            "#4285F4",
+            "#4285F4", // blue
             "#34A853",
-            "#FBBC05",
-            "#EA4335",
-            "#DA0C81",
+            // "#FBBC05",
+            // "#EA4335",
+            // "#DA0C81",
           ],
         },
       ],
@@ -328,15 +330,16 @@ function Dashboard({ setView }) {
     updateOtp();
     updateTimeLogData();
     updateStoryReviewers();
-  }, [storyId]);
+  }, [storyId, member]);
 
   async function filterStoriesByMember(memberName) {
     setMember(memberName);
     console.log("stories..................//////////////////", memberName);
   }
   const clearSelectedMember = () => {
-    setMember("All Members");
-    };
+    // setMember("All Members");
+    window.location.reload()
+  };
 
   return (
     <>
@@ -352,6 +355,7 @@ function Dashboard({ setView }) {
         boardName={boardName}
         totalStoryPoints={totalStoryPoints}
         stories={stories}
+        member={member}
       />
       <main>
         <StoriesPane
@@ -402,7 +406,10 @@ function Dashboard({ setView }) {
                   Clear
                 </button>
               </div>
-              <div className="selecte_member_cont">Member Selected : <span className="selected_member">{member}</span></div>
+              <div className="selecte_member_cont">
+                Member Selected :{" "}
+                <span className="selected_member">{member}</span>
+              </div>
               <Members
                 sprintMembers={sprintMembers}
                 filterStoriesByMember={filterStoriesByMember}
