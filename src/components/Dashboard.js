@@ -13,6 +13,7 @@ import TimeLogInfo from "./Cards/TimeLogInfo";
 import Members from "./Members";
 import "../styles/RightPane.css";
 import Alerts from "./Alerts";
+import StoriesPaneMobileView from "./StoriesPaneMobileView/StoriesPaneMobileView";
 
 const live_base_url = "https://srdp-mobius-apis.onrender.com";
 // const live_base_url = "http://localhost:4000";
@@ -354,6 +355,19 @@ function Dashboard({ setView }) {
         stories={stories}
       />
       <main>
+        {/* <StoriesPaneMobileView
+          stories={stories}
+          setStoryId={setStoryId}
+          storiesLoading={storiesLoading}
+          storyId={storyId}
+          storyAC={storyAC}
+          storyPoints={storyPoints}
+          storyPointsData={storyPointsData}
+          member={member}
+          sprintMembers={sprintMembers}
+          filterStoriesByMember={filterStoriesByMember}
+          clearSelectedMember={clearSelectedMember}
+        /> */}
         <StoriesPane
           stories={stories}
           setStoryId={setStoryId}
@@ -363,7 +377,9 @@ function Dashboard({ setView }) {
           storyPoints={storyPoints}
           storyPointsData={storyPointsData}
           member={member}
-        />
+          sprintMembers={sprintMembers}
+          filterStoriesByMember={filterStoriesByMember}
+          clearSelectedMember={clearSelectedMember} />
         <Alerts />
 
         <section className="right-pane-1">
