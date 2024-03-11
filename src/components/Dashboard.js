@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
@@ -14,11 +14,16 @@ import Members from "./Members";
 import "../styles/RightPane.css";
 import Alerts from "./Alerts";
 import StoriesPaneMobileView from "./StoriesPaneMobileView/StoriesPaneMobileView";
+import NavbarMobileView from "./Navbar/NavbarMobileView";
+import UseAnimations from "react-useanimations";
+import menu2 from 'react-useanimations/lib/menu2';
+import { SrdpContext } from "../Context/SrdpContext";
 
 const live_base_url = "https://srdp-mobius-apis.onrender.com";
 // const live_base_url = "http://localhost:4000";
 
 function Dashboard({ setView }) {
+  const { expandNav, setExpandNav } = useContext(SrdpContext)
   const { boardId, boardName } = useParams();
   // console.log("..............", boardId, boardName, useParams());
   const [project, setProject] = useState("10235");
@@ -344,7 +349,11 @@ function Dashboard({ setView }) {
 
   return (
     <>
-      <Navbar
+      <div className="dashboardName">
+        <UseAnimations animation={menu2} size={35} speed={4} fillColor="white" strokeColor="white" onClick={()=> setExpandNav(!expandNav)}/>
+         {boardName} - SPRINT REVIEW DASHBOARD
+      </div>
+      <NavbarMobileView
         setProject={setProject}
         sprint={sprint}
         setSprint={setSprint}
@@ -358,8 +367,22 @@ function Dashboard({ setView }) {
         stories={stories}
         member={member}
       />
+      {/* <Navbar
+        setProject={setProject}
+        sprint={sprint}
+        setSprint={setSprint}
+        setSprintStart={setSprintStart}
+        setSprintEnd={setSprintEnd}
+        setStoriesLoading={setStoriesLoading}
+        setView={setView}
+        boardId={boardId}
+        boardName={boardName}
+        totalStoryPoints={totalStoryPoints}
+        stories={stories}
+        member={member}
+      /> */}
       <main>
-        {/* <StoriesPaneMobileView
+        <StoriesPaneMobileView
           stories={stories}
           setStoryId={setStoryId}
           storiesLoading={storiesLoading}
@@ -371,8 +394,8 @@ function Dashboard({ setView }) {
           sprintMembers={sprintMembers}
           filterStoriesByMember={filterStoriesByMember}
           clearSelectedMember={clearSelectedMember}
-        /> */}
-        <StoriesPane
+        />
+        {/* <StoriesPane
           stories={stories}
           setStoryId={setStoryId}
           storiesLoading={storiesLoading}
@@ -383,10 +406,10 @@ function Dashboard({ setView }) {
           member={member}
           sprintMembers={sprintMembers}
           filterStoriesByMember={filterStoriesByMember}
-          clearSelectedMember={clearSelectedMember} />
+          clearSelectedMember={clearSelectedMember} /> */}
         <Alerts />
 
-        <section className="right-pane-1">
+        {/* <section className="right-pane-1">
           <div className="horizontal-chart-container h_chart_div">
             <div className="header">Sprint progress</div>
             <div className="horizontal-chart-canvas-container">
@@ -449,7 +472,7 @@ function Dashboard({ setView }) {
               <PeerReviewInfo storyReviewers={storyReviewers} />
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* <section id="right-pane">
           <div className="horizontal-chart-container grid-item grid-item-1">

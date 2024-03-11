@@ -26,11 +26,14 @@ const StoriesPaneMobileView = ({ stories, setStoryId, storiesLoading, storyId, s
                 <div className={css.selectedMemberCont}>
                     Member Selected : <span className={css.selectedMember}>{member}</span>
                 </div>
-                <Members
-                    sprintMembers={sprintMembers}
-                    filterStoriesByMember={filterStoriesByMember}
-                    mmember={member}
-                />
+                <div className={css.tagsContainer}>
+                    <Members
+                        sprintMembers={sprintMembers}
+                        filterStoriesByMember={filterStoriesByMember}
+                        mmember={member}
+                    />
+                </div>
+
             </div>
             <Accordion defaultActiveKey="2" style={{ display: "flex", gap: "2vw", flexDirection: "column" }}>
                 <Accordion.Item eventKey="0">
@@ -270,7 +273,7 @@ const StoriesPaneMobileView = ({ stories, setStoryId, storiesLoading, storyId, s
                                                             backgroundColor:
                                                                 storyId === story.story_id ? "#dbbffd" : "#e6d3fc",
                                                             fontSize: "2vw",
-                                                            padding:"1vw .2vw"
+                                                            padding: "1vw .2vw"
                                                         }}
                                                         className={css.storyStatusLabel}
                                                     >

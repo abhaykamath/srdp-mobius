@@ -50,6 +50,11 @@
         font-weight: 500;
       }
     }
+    .tagsContainer {
+      width: 100%;
+      max-height: 10vh;
+      overflow: scroll;
+    }
   }
   .storyPill {
     position: relative;
@@ -92,7 +97,9 @@
           6.938893903907228e-18rem + 2.7809999999999999vw,
           4.88125rem
         );
-        // color: #341e4d;
+        white-space: nowrap; /* Prevent text from wrapping */
+        overflow: hidden;
+        text-overflow: ellipsis; /* Show ellipsis for overflow text */
       }
     }
     .statusStorypoints {
@@ -112,7 +119,6 @@
         border: 0.1vw solid #844cbf;
         // background-color: #5d3587;
         outline: none;
-        // border: none;
         color: white;
         border-radius: 0.4vh;
         margin-left: clamp(0.0390625rem, 0rem + 1.225vw, 3.90625rem);

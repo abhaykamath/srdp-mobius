@@ -166,9 +166,10 @@
     }
     width: 100%;
     height: 40vh;
-    padding-inline: auto;
+    padding: clamp(0.087875rem, 0rem + 1.106vw, 8.7875rem);
+    padding-left: clamp(0.087875rem, 0rem + 3.806vw, 8.7875rem);
     overflow: scroll;
-    @include mixin.flex-container(row, flex-start, flex-start, 1.5vw);
+    @include mixin.flex-container(row, flex-start, flex-start, 1.3vw);
     flex-wrap: wrap;
     align-content: flex-start;
     margin-top: clamp(0.1171875rem, 1.171875rem + 1.075vw, 11.71875rem);
@@ -302,34 +303,35 @@
     background-color: #dbbffd;
     // margin-top: clamp(0.078125rem, 0rem + 0.25vw, 7.8125rem);
     padding: clamp(0.087875rem, 0rem + 1.106vw, 8.7875rem);
-    padding-left: clamp(0.087875rem, 0rem + 3.806vw, 8.7875rem);
-    @include mixin.flex-container(row, flex-start, center, 1.5vw);
+    padding-left: clamp(0.087875rem, 0rem + 4.306vw, 8.7875rem);
+    @include mixin.flex-container(row, flex-start, center, 1.3vw);
     overflow: scroll;
     @media only screen and (min-width: 1024px) {
       flex-wrap: wrap;
     }
     @media only screen and (max-width: 767px) {
       @include mixin.flex-container(column, flex-start, center, 3vw);
-      height: 20vh;
+      height: 31vh;
       overflow: scroll;
       flex-wrap: none;
     }
     @media screen and (min-width: 768px) and (max-width: 1024px) {
-      @include mixin.flex-container(row, flex-start, center, 1.5vw);
+      @include mixin.flex-container(row, flex-start, center, 1.3vw);
       flex-wrap: wrap;
       overflow: scroll;
     }
     .favCard {
       @media only screen and (max-width: 767px) {
         width: 90%;
-        height: 15vw;
-        @include mixin.flex-container(column, flex-start, flex-start, 1vw);
+        min-height: 15vw;
+        @include mixin.flex-container(column, center, center, 1vw);
         padding: clamp(0.0390625rem, 0rem + 1.925vw, 3.90625rem);
-        margin-right: clamp(0.0390625rem, 0rem + 0.425vw, 3.90625rem);
+        // margin-inline: auto;
+        margin-right: clamp(0.087875rem, 0rem + 3.406vw, 8.7875rem);
       }
       @media screen and (min-width: 768px) and (max-width: 1024px) {
-        width: calc(90% / 3);
-        @include mixin.flex-container(column, flex-start, flex-start, 2vw);
+        width: calc(86% / 3);
+        @include mixin.flex-container(column, center, center, 2vw);
         height: 15vw;
         padding: 1vw 2vw;
       }
@@ -403,4 +405,3 @@
   );
   font-size: clamp(0.1171875rem, 1.171875rem + 0.275vw, 11.71875rem);
 }
-

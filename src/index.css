@@ -21,6 +21,37 @@ body {
   background-color: #354a5f;
 }
 
+.dashboardName {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: .5vw;
+  background-color: #5d3587;
+  width: 100%;
+  padding: clamp(0.0488125rem,
+      6.938893903907228e-18rem + 0.7809999999999999vw,
+      4.88125rem);
+  font-size: clamp(0.068375rem, 0rem + 1.094vw, 6.8375rem);
+  text-align: center;
+  color: white;
+
+}
+
+@media only screen and (max-width: 767px) {
+  .dashboardName {
+    font-size: clamp(0.15625rem, 0rem + 3.5vw, 15.625rem);
+    padding: clamp(0.097625rem,
+        -0.00003156565656563248rem + 1.5625050505050502vw,
+        9.765625rem);
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .dashboardName {
+    font-size: clamp(0.1953125rem, 0rem + 2.125vw, 19.53125rem);
+  }
+}
+
 .custom-navbar {
   box-sizing: border-box;
   background-color: #ec53b0;
@@ -256,5 +287,3 @@ input[type="radio"]:hover {
   display: flex;
   flex-direction: column;
 }
-
-
