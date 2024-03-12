@@ -158,11 +158,13 @@
   .boardsContainer {
     background-color: #dbbffd;
     @media only screen and (max-width: 767px) {
-      //   padding-inline: 1vw;
       height: 50vh;
       padding: clamp(0.0390625rem, 0rem + 2.825vw, 3.90625rem);
-      //   display: grid;
-      //   grid-template-columns: auto auto auto;
+    }
+    @media screen and (min-width: 768px) and (max-width: 1024px) {
+      @include mixin.flex-container(row, center, center, 1.3vw);
+      flex-wrap: wrap;
+      overflow: scroll;
     }
     width: 100%;
     height: 40vh;
@@ -172,7 +174,7 @@
     @include mixin.flex-container(row, flex-start, flex-start, 1.3vw);
     flex-wrap: wrap;
     align-content: flex-start;
-    margin-top: clamp(0.1171875rem, 1.171875rem + 1.075vw, 11.71875rem);
+    // margin-top: clamp(0.1171875rem, 1.171875rem + 1.075vw, 11.71875rem);
     padding: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
     padding-inline: clamp(0.1171875rem, 1.171875rem + 2.875vw, 11.71875rem);
 
@@ -186,8 +188,7 @@
         // margin-right: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
       }
       @media screen and (min-width: 768px) and (max-width: 1024px) {
-        width: calc(90% / 3);
-        @include mixin.flex-container(column, flex-start, flex-start, 2vw);
+        width: calc(95% / 3);
         height: 15vw;
         padding: 1vw 2vw;
       }
@@ -299,7 +300,7 @@
 
   .favContainer {
     width: 100%;
-    height: 30vh;
+    height: 32vh;
     background-color: #dbbffd;
     // margin-top: clamp(0.078125rem, 0rem + 0.25vw, 7.8125rem);
     padding: clamp(0.087875rem, 0rem + 1.106vw, 8.7875rem);
@@ -311,14 +312,20 @@
     }
     @media only screen and (max-width: 767px) {
       @include mixin.flex-container(column, flex-start, center, 3vw);
-      height: 31vh;
+      height: 33vh;
       overflow: scroll;
       flex-wrap: none;
     }
     @media screen and (min-width: 768px) and (max-width: 1024px) {
-      @include mixin.flex-container(row, flex-start, center, 1.3vw);
+      @include mixin.flex-container(row, center, center, 1.3vw);
       flex-wrap: wrap;
       overflow: scroll;
+      padding: 0;
+      padding-top: clamp(
+        0.0488125rem,
+        6.938893903907228e-18rem + 0.7809999999999999vw,
+        4.88125rem
+      );
     }
     .favCard {
       @media only screen and (max-width: 767px) {

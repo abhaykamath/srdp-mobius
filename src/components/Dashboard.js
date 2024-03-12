@@ -59,6 +59,39 @@ function Dashboard({ setView }) {
 
   let statusDone;
 
+  // const [screenSize, setScreenSize] = useState('');
+
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     const width = window.innerWidth;
+  //     let size = '';
+
+  //     if (width < 768) {
+  //       size = 'mobile';
+  //     } else if (width >= 768 && width < 1024) {
+  //       size = 'tablet';
+  //     } else {
+  //       size = 'desktop';
+  //     }
+
+  //     setScreenSize(prev => (
+  //       size
+  //     ));
+  //     console.log(screenSize)
+  //   };
+
+  //   // Initial call to set screen size
+  //   handleResize();
+
+  //   window.addEventListener('resize', handleResize);
+
+  //   return () => {
+  //     window.removeEventListener('resize', handleResize);
+  //   };
+  // }, []);
+
+  // const isMobileView = screenSize < 768 || (screenSize >= 768 && screenSize < 1024);
+
   async function getStories() {
     if (sprint !== "") {
       setStoriesLoading(true);
@@ -350,8 +383,8 @@ function Dashboard({ setView }) {
   return (
     <>
       <div className="dashboardName">
-        <UseAnimations animation={menu2} size={35} speed={4} fillColor="white" strokeColor="white" onClick={()=> setExpandNav(!expandNav)}/>
-         {boardName} - SPRINT REVIEW DASHBOARD
+        <UseAnimations animation={menu2} size={35} speed={4} fillColor="white" strokeColor="white" onClick={() => setExpandNav(!expandNav)} />
+        {boardName} - SPRINT REVIEW DASHBOARD
       </div>
       <NavbarMobileView
         setProject={setProject}
@@ -381,7 +414,7 @@ function Dashboard({ setView }) {
         stories={stories}
         member={member}
       /> */}
-      <main>
+      <main className="mainContainer">
         <StoriesPaneMobileView
           stories={stories}
           setStoryId={setStoryId}
@@ -406,10 +439,11 @@ function Dashboard({ setView }) {
           member={member}
           sprintMembers={sprintMembers}
           filterStoriesByMember={filterStoriesByMember}
-          clearSelectedMember={clearSelectedMember} /> */}
+          clearSelectedMember={clearSelectedMember}
+        /> */}
         <Alerts />
 
-        {/* <section className="right-pane-1">
+        <section className="right-pane-1">
           <div className="horizontal-chart-container h_chart_div">
             <div className="header">Sprint progress</div>
             <div className="horizontal-chart-canvas-container">
@@ -432,7 +466,7 @@ function Dashboard({ setView }) {
               </div>
             </div>
 
-            <div className="sprint-members-container sprint-members-div">
+            {/* <div className="sprint-members-container sprint-members-div">
               <div className="members_header">
                 <div className="header">
                   Members (
@@ -454,7 +488,7 @@ function Dashboard({ setView }) {
                 filterStoriesByMember={filterStoriesByMember}
                 mmember={member}
               />
-            </div>
+            </div> */}
           </div>
 
           <div className="hygine-ontime-timelog-div">
@@ -472,7 +506,7 @@ function Dashboard({ setView }) {
               <PeerReviewInfo storyReviewers={storyReviewers} />
             </div>
           </div>
-        </section> */}
+        </section>
 
         {/* <section id="right-pane">
           <div className="horizontal-chart-container grid-item grid-item-1">

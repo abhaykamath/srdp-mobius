@@ -14,7 +14,14 @@
   /* border: 1px solid #ccc; */
   border-radius: 0.25rem;
   padding: 0.25rem 0.5rem;
-  background-color: #36b37e;
-  color: white;
+  background-color: #dbbffd;
+  color: #7e2791;
+  font-weight: 500;
 }
 
+@media only screen and (max-width: 768px) {
+  .member {
+    font-size: clamp(0.13625rem, 0rem + 2.218vw, 13.625rem);
+    border-radius: 1vw;
+  }
+}

@@ -44,7 +44,7 @@
   }
   .backplate3 {
     width: 100%;
-    height: 90.5vh;
+    height: 93vh;
     //   position: relative;
     background-color: #845bb1;
     position: absolute;
@@ -64,7 +64,7 @@
   }
   .mainPlate {
     width: 100%;
-    height: 90.5vh;
+    height: 93vh;
     //   position: relative;
     background-color: #f2ebfb;
     position: absolute;
@@ -73,11 +73,11 @@
     z-index: 5;
     transform: translateX(-3px);
     transition: ease-in-out 500ms;
-    @include mixin.flex-container(column, space-between, flex-start, 1vw);
+    @include mixin.flex-container(column, space-between, flex-start);
     @media only screen and (min-width: 1024px) {
       width: 100%;
       height: 7vh;
-      // overflow: scroll;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
       @include mixin.flex-container(row, space-between, flex-start);
     }
     @media screen and (min-width: 768px) and (max-width: 1024px) {
@@ -132,7 +132,7 @@
   }
   .backplate3 {
     width: 100%;
-    height: 90.5vh;
+    height: 93vh;
     //   position: relative;
     background-color: #5d3587;
     position: absolute;
@@ -152,8 +152,7 @@
   }
   .mainPlate {
     width: 100%;
-    height: 90.5vh;
-    //   position: relative;
+    height: 93vh;
     background-color: #f2ebfb;
     position: absolute;
     top: 0;
@@ -161,6 +160,7 @@
     z-index: 5;
     transform: translateX(-100%);
     transition: ease-in-out 200ms;
+     @include mixin.flex-container(column, space-between, flex-start);
     @media only screen and (min-width: 1024px) {
       width: 100%;
       height: 7vh;
@@ -187,7 +187,7 @@
 // }
 .navContainer {
   width: 75vw;
-  height: 90.5vh;
+  height: 93vh;
   //   position: relative;
   //   background-color: #f2ebfb;
   @include mixin.flex-container(column, space-between, flex-start, 1vw);
@@ -291,20 +291,20 @@
         font-size: clamp(0.1171875rem, 0rem + 3.475vw, 11.71875rem);
         padding: 1vw 2vw;
         border-radius: 0.6vw;
-        background-color: #dbbffd;
-        color: #a367b1;
+        background-color: #5d3587;
+        color: white;
       }
       @media screen and (min-width: 768px) and (max-width: 1024px) {
         font-size: clamp(0.1755rem, 0rem + 1.608vw, 17.55rem);
         padding: 1vw 2vw;
         height: 100%;
-        background-color: #dbbffd;
-        color: #a367b1;
+        background-color: #5d3587;
+        color: white;
       }
       font-size: clamp(0.078125rem, 0rem + 0.725vw, 7.8125rem);
       width: 50%;
       color: white;
-      background-color: #a367b1;
+      background-color: #5d3587;
       outline: none;
       border: none;
       border: 0.1vw solid #cfabfa;
@@ -313,7 +313,7 @@
       padding: 0.4vw 0.4vw;
       &:hover {
         background-color: #a367b1;
-        color: #dbbffd;
+        color: white;
       }
     }
   }
