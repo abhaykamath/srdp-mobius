@@ -8,133 +8,282 @@
 }
 .leftPane {
   width: 100%;
-  padding: clamp(0.078125rem, 0rem + 1.25vw, 7.8125rem);
+  padding-inline: clamp(0.078125rem, 0rem + 1.25vw, 7.8125rem);
+  @media only screen and (min-width: 1024px) {
+    width: 50%;
+  }
   .sprintMembersContainer {
     width: 100%;
+    @media only screen and (min-width: 1024px) {
+      border-radius: 0.4vw;
+    }
+    width: 100%;
     height: auto;
-    margin-bottom: clamp(
-      0.1078125rem,
-      0rem + 1.7249999999999999vw,
-      10.78125rem
-    );
+    margin-bottom: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
     border-radius: clamp(0.078125rem, 0rem + 1.25vw, 7.8125rem);
     background-color: white;
     padding: clamp(0.05859375rem, 0rem + 1.9375vw, 5.859375rem);
+    @media only screen and (min-width: 1024px) {
+      padding: clamp(
+        0.0488125rem,
+        6.938893903907228e-18rem + 0.7809999999999999vw,
+        4.88125rem
+      );
+    }
     .membersHeader {
       @include mixin.flex-container(row, space-between, flex-start);
       p {
-        font-size: clamp(0.1953125rem, 0rem + 5.125vw, 19.53125rem);
+        font-size: clamp(0.1953125rem, 0rem + 3.525vw, 19.53125rem);
         font-weight: 600;
         color: #5d3587;
-        // #A367B1
+        @media only screen and (min-width: 1024px) {
+          font-size: clamp(0.1171875rem, 0rem + 1.875vw, 11.71875rem);
+        }
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+          font-size: clamp(0.13625rem, 0rem + 2.18vw, 13.625rem);
+        }
       }
       button {
-        font-size: clamp(0.1755rem, 0rem + 3.408vw, 17.55rem);
+        @media only screen and (min-width: 1024px) {
+          font-size: clamp(0.1171875rem, 0rem + 1.375vw, 11.71875rem);
+          border-radius: 0.4vw;
+          padding: 0.2vw 0.8vw;
+        }
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+          font-size: clamp(0.13625rem, 0rem + 2.18vw, 13.625rem);
+        }
+        font-size: clamp(0.1755rem, 0rem + 2.08vw, 17.55rem);
         padding: 0.5vw 2vw;
         background-color: #5d3587;
         outline: none;
         border: none;
         color: white;
-        border-radius: 1vw;
+        border-radius: 0.4vw;
       }
     }
     .selectedMemberCont {
+      @media only screen and (min-width: 1024px) {
+        font-size: clamp(0.068375rem, 0rem + 1.294vw, 6.8375rem);
+      }
+      @media screen and (min-width: 768px) and (max-width: 1024px) {
+        font-size: clamp(0.13625rem, 0rem + 2.18vw, 13.625rem);
+      }
       color: #5d3587;
       font-weight: 600;
+      font-size: clamp(0.05859375rem, 0rem + 3.175vw, 5.859375rem);
       margin-bottom: clamp(0.068375rem, 0rem + 1.094vw, 6.8375rem);
       span {
+        @media only screen and (min-width: 1024px) {
+          border-radius: 0.2vw;
+          padding: 0.2vw 1.1vw;
+          font-size: clamp(0.068375rem, 0rem + 0.894vw, 6.8375rem);
+        }
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+          font-size: clamp(0.13625rem, 0rem + 2.18vw, 13.625rem);
+        }
+        padding: 0.2vw 1.2vw;
+        font-size: clamp(0.05859375rem, 0rem + 2.775vw, 5.859375rem);
         background-color: #a367b1;
         color: white;
-        padding: 0.2vw 3vw;
-        border-radius: 1vw;
+        border-radius: 0.4vw;
         font-weight: 500;
       }
     }
-  }
-  .storyPill {
-    position: relative;
-    min-height: 150px;
-    background-color: #dbbffd;
-    padding: clamp(0.068375rem, 0rem + 2.094vw, 6.8375rem);
-    padding-inline: clamp(0.068375rem, 0rem + 3.094vw, 6.8375rem);
-    border-radius: 1vw;
-    margin-bottom: clamp(0.068375rem, 0rem + 3.094vw, 6.8375rem);
-
-    &:hover {
-    }
-    .storyDetails {
+    .tagsContainer {
       width: 100%;
+      max-height: 10vh;
+      overflow: scroll;
+    }
+  }
+  .storiesContainer {
+    @media only screen and (min-width: 1024px) {
+      width: 100%;
+      height: 57vh;
+      overflow: scroll;
+    }
+  }
+  .storiesList {
+    @media only screen and (min-width: 1024px) {
+      @include mixin.flex-container(row, flex-start, flex-start, 1rem);
+      flex-wrap: wrap;
+      height: 35vh;
+      overflow: scroll;
+      padding: clamp(0.0488125rem, 6.938893903907228e-18rem + 0.7809999999999999vw, 4.88125rem);
+    }
+    @media screen and (min-width: 768px) and (max-width: 1024px) {
+      @include mixin.flex-container(row, flex-start, flex-start, 1rem);
+      flex-wrap: wrap;
+    }
+    width: 100%;
+    height: 100%;
+    .storyPill {
+      position: relative;
+      @media only screen and (min-width: 1024px) {
+        width: 48%;
+        max-height: 18vw;
+        padding: clamp(0.05859375rem, 0rem + 0.9375vw, 5.859375rem);
+        border-radius: 0.4vw;
+        margin-bottom: clamp(0.068375rem, 0rem + 0.294vw, 6.8375rem);
+      }
+      @media screen and (min-width: 768px) and (max-width: 1024px) {
+        width: 48%;
+        max-height: 20vw;
+        padding: clamp(0.05859375rem, 0rem + 0.9375vw, 5.859375rem);
+        border-radius: 0.4vw;
+        margin-bottom: clamp(0.068375rem, 0rem + 0.294vw, 6.8375rem);
+      }
+      min-height: 145px;
+      background-color: #dbbffd;
+      padding: clamp(0.068375rem, 0rem + 2.094vw, 6.8375rem);
+      padding-inline: clamp(0.068375rem, 0rem + 3.094vw, 6.8375rem);
+      border-radius: 1vw;
+      margin-bottom: clamp(0.068375rem, 0rem + 3.094vw, 6.8375rem);
 
-      .storyName {
-        width: 84%;
-        @include mixin.flex-container(row, flex-start, flex-start, 3vw);
-        p {
-          font-size: clamp(0.1953125rem, 0rem + 3.125vw, 19.53125rem);
-          width: 100%;
-          font-weight: 600;
-          padding-left: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
-          //   color: #392467;
-          margin-bottom: clamp(0.068375rem, 0rem + 2.094vw, 6.8375rem);
-          border-bottom: 0.1vw solid white;
-          // font-size: 4vw; /* Set font size relative to viewport width */
+      .storyDetails {
+        width: 100%;
+        .storyName {
+          @media only screen and (min-width: 1024px) {
+            gap: 1vw;
+          }
+          @media screen and (min-width: 768px) and (max-width: 1024px) {
+            gap: 1.5vw;
+            width: 80%;
+          }
+          width: 84%;
+          @include mixin.flex-container(row, flex-start, flex-start, 3vw);
+          p {
+            @media only screen and (min-width: 1024px) {
+              font-size: clamp(0.1953125rem, 0rem + 1.025vw, 19.53125rem);
+              text-align: center;
+              padding: 0;
+              margin-bottom: clamp(0.068375rem, 0rem + 1.094vw, 6.8375rem);
+            }
+            @media screen and (min-width: 768px) and (max-width: 1024px) {
+              font-size: clamp(0.1953125rem, 0rem + 2.025vw, 19.53125rem);
+              text-align: center;
+              padding: 0;
+              margin-bottom: clamp(0.068375rem, 0rem + 1.594vw, 6.8375rem);
+            }
+            font-size: clamp(0.1953125rem, 0rem + 3.725vw, 19.53125rem);
+            width: 100%;
+            font-weight: 600;
+            padding-left: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
+            margin-bottom: clamp(0.068375rem, 0rem + 4.094vw, 6.8375rem);
+            border-bottom: 0.1vw solid white;
+            white-space: nowrap; /* Prevent text from wrapping */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Show ellipsis for overflow text */
+          }
+        }
+        .storyHygiene,
+        .updatedDate,
+        .updatedDate,
+        .assignedTo {
+          @media only screen and (min-width: 1024px) {
+            font-size: clamp(0.1953125rem, 0rem + 0.825vw, 19.53125rem);
+            margin-bottom: clamp(0.068375rem, 0rem + 1.094vw, 6.8375rem);
+          }
+          @media screen and (min-width: 768px) and (max-width: 1024px) {
+            font-size: clamp(0.1953125rem, 0rem + 1.525vw, 19.53125rem);
+            margin-bottom: clamp(0.068375rem, 0rem + 1.094vw, 6.8375rem);
+          }
+          font-size: clamp(0.1755rem, 0rem + 3.408vw, 17.55rem);
+          margin-bottom: clamp(
+            0.0488125rem,
+            6.938893903907228e-18rem + 2.7809999999999999vw,
+            4.88125rem
+          );
           white-space: nowrap; /* Prevent text from wrapping */
           overflow: hidden;
           text-overflow: ellipsis; /* Show ellipsis for overflow text */
         }
       }
-      .storyHygiene,
-      .updatedDate,
-      .updatedDate,
-      .assignedTo {
-        font-size: clamp(0.1755rem, 0rem + 3.408vw, 17.55rem);
-        margin-bottom: clamp(
-          0.0488125rem,
-          6.938893903907228e-18rem + 2.7809999999999999vw,
-          4.88125rem
-        );
-        // color: #341e4d;
-      }
-    }
-    .statusStorypoints {
-      @include mixin.flex-container(column, space-between, center);
-      width: 20%;
-      height: 93%;
-      position: absolute;
-      top: 1.6vw;
-      right: 0vw;
+      .statusStorypoints {
+        @media only screen and (min-width: 1024px) {
+          height: 90%;
+          top: 1vw;
+          right: 0vw;
+        }
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+          height: 90%;
+          top: 1vw;
+          right: 0vw;
+        }
+        @include mixin.flex-container(column, space-between, center);
+        width: 20%;
+        height: 93%;
+        position: absolute;
+        top: 1.6vw;
+        right: 0vw;
 
-      .storyStatusLabel {
-        width: 80%;
-        text-align: center;
-        font-size: clamp(0.1755rem, 0rem + 3.008vw, 17.55rem);
-        font-weight: 600;
-        padding: 0.5vw 1vw;
-        border: 0.1vw solid #844cbf;
-        // background-color: #5d3587;
-        outline: none;
-        // border: none;
-        color: white;
-        border-radius: 0.4vh;
-        margin-left: clamp(0.0390625rem, 0rem + 1.225vw, 3.90625rem);
-      }
-      .storyPointsInStoryPane {
-        font-size: clamp(0.1755rem, 0rem + 3.08vw, 17.55rem);
-        font-weight: 600;
-        margin-bottom: clamp(
-          0.0488125rem,
-          6.938893903907228e-18rem + 2.7809999999999999vw,
-          4.88125rem
-        );
-        // margin-right: clamp(
-        //   0.0488125rem,
-        //   6.938893903907228e-18rem + 0.7809999999999999vw,
-        //   4.88125rem
-        // );
-        color: #341e4d;
-        background-color: #e6d3fc;
-        padding: 0vw 2vw;
-        border-radius: 1vw;
-        // padding: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
+        .storyStatusLabel {
+          @media only screen and (min-width: 1024px) {
+            font-size: clamp(0.1953125rem, 0rem + 0.625vw, 19.53125rem);
+            margin-right: clamp(0.068375rem, 0rem + 1.094vw, 6.8375rem);
+            border-radius: 0.2vw;
+            padding: 0.2vw 0.6vw;
+          }
+          @media screen and (min-width: 768px) and (max-width: 1024px) {
+            font-size: clamp(0.1953125rem, 0rem + 1.525vw, 19.53125rem);
+            margin-right: clamp(0.068375rem, 0rem + 1.094vw, 6.8375rem);
+            border-radius: 0.4vw;
+            padding: 0.1vw 0.2vw;
+          }
+          width: 80%;
+          text-align: center;
+          font-size: clamp(0.1755rem, 0rem + 3.008vw, 17.55rem);
+          font-weight: 600;
+          border: 0.1vw solid #844cbf;
+          // background-color: #5d3587;
+          outline: none;
+          color: white;
+          border-radius: 0.4vh;
+          margin-left: clamp(0.0390625rem, 0rem + 1.225vw, 3.90625rem);
+        }
+        .inProgress {
+          @media screen and (min-width: 768px) and (max-width: 1024px) {
+            font-size: clamp(0.13625rem, 0rem + 2.18vw, 13.625rem);
+            padding: 1vw 1vw !important;
+          }
+          @media screen and (max-width: 768px) {
+            font-size: clamp(0.13625rem, 0rem + 1.9648vw, 13.625rem);
+            padding: 1vw 1vw !important;
+          }
+          font-size: clamp(0.0390625rem, 0rem + 0.525vw, 3.90625rem);
+          padding: 0.2vw !important;
+          font-weight: 600;
+          border: 0.1vw solid #844cbf;
+          // background-color: #5d3587;
+          outline: none;
+          color: white;
+          border-radius: 0.4vh;
+        }
+        .storyPointsInStoryPane {
+          @media only screen and (min-width: 1024px) {
+            font-size: clamp(0.1953125rem, 0rem + 0.725vw, 19.53125rem);
+            border-radius: 0.2vw;
+            padding: 0.1vw 0.8vw;
+            margin-bottom: clamp(0.05859375rem, 0rem + 1.6375vw, 5.859375rem);
+          }
+          @media screen and (min-width: 768px) and (max-width: 1024px) {
+            font-size: clamp(0.1953125rem, 0rem + 1.725vw, 19.53125rem);
+            border-radius: 0.2vw;
+            padding: 0.1vw 0.8vw;
+            margin-bottom: clamp(0.05859375rem, 0rem + 1.6375vw, 5.859375rem);
+          }
+          font-size: clamp(0.13625rem, 0rem + 3.18vw, 13.625rem);
+          font-weight: 600;
+          margin-bottom: clamp(
+            0.0488125rem,
+            6.938893903907228e-18rem + 2.7809999999999999vw,
+            4.88125rem
+          );
+          color: #341e4d;
+          background-color: #e6d3fc;
+          padding: 0vw 3vw;
+          border-radius: 1vw;
+          // padding: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
+        }
       }
     }
   }
