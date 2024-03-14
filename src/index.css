@@ -18,8 +18,7 @@
 } */
 
 body {
-  /* background-color: #354a5f; */
-  background: #dbbffd;
+  background-color: #354a5f;
 }
 
 .dashboardName {
@@ -40,9 +39,19 @@ body {
 
 @media only screen and (min-width: 1024px) {
   .mainContainer {
-    margin-top: 4vw;
+    margin-top: 1vw;
     height: 80vh !important;
     overflow: scroll;
+  }
+
+  #leftPanel {
+    width: 50%;
+    height: 80vh;
+    overflow: scroll;
+  }
+
+  .dashboardName {
+    display: none;
   }
 
   .right-pane-1 {
@@ -59,11 +68,27 @@ body {
 }
 
 @media only screen and (max-width: 767px) {
+  body {
+    background: #dbbffd;
+  }
+
+  .sprint-members-container {
+    display: none;
+  }
+
   .dashboardName {
     font-size: clamp(0.15625rem, 0rem + 3.5vw, 15.625rem);
     padding: clamp(0.097625rem,
         -0.00003156565656563248rem + 1.5625050505050502vw,
         9.765625rem);
+  }
+
+  .nav {
+    display: none;
+  }
+
+  #leftPanel {
+    display: none;
   }
 
   .mainContainer {
@@ -121,8 +146,24 @@ body {
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
+  body {
+    background: #dbbffd;
+  }
+
+  .sprint-members-container {
+    display: none;
+  }
+
   .dashboardName {
     font-size: clamp(0.1953125rem, 0rem + 2.125vw, 19.53125rem);
+  }
+
+  .nav {
+    display: none;
+  }
+
+  #leftPanel {
+    display: none;
   }
 
   .right-pane-1 {
@@ -180,6 +221,10 @@ body {
   }
 }
 
+.nav {
+  width: 100vw;
+}
+
 /* .left_pane{
   width: 100%;
 } */
@@ -192,6 +237,7 @@ body {
   background-color: #d6cca0;
   background-color: #061621;
   height: 10vh;
+  width: 100%;
   padding: 0 1rem;
   display: flex;
   flex-direction: column;

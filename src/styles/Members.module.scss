@@ -1,4 +1,6 @@
-.members-container {
+@import '../mixin.module.scss';
+
+.members_container {
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
@@ -14,9 +16,13 @@
   /* border: 1px solid #ccc; */
   border-radius: 0.25rem;
   padding: 0.25rem 0.5rem;
-  background-color: #dbbffd;
-  color: #7e2791;
+  background-color: $background;
+  color: $onSurfaceSecondary;
   font-weight: 500;
+}
+
+.selected{
+  color: $primary;
 }
 
 @media only screen and (max-width: 768px) {

@@ -1,4 +1,5 @@
 @use "../../mixin.module.scss";
+@import "../../mixin.module.scss";
 .none {
   color: #392467;
   color: #5d3587;
@@ -7,10 +8,13 @@
   color: #dbbffd;
 }
 .leftPane {
+  background-color: $background;
   width: 100%;
   padding-inline: clamp(0.078125rem, 0rem + 1.25vw, 7.8125rem);
+  padding-top: clamp(0.05859375rem, 0rem + 0.9375vw, 5.859375rem);
   @media only screen and (min-width: 1024px) {
     width: 50%;
+    display: none;
   }
   .sprintMembersContainer {
     width: 100%;
@@ -21,7 +25,7 @@
     height: auto;
     margin-bottom: clamp(0.0390625rem, 0rem + 0.625vw, 3.90625rem);
     border-radius: clamp(0.078125rem, 0rem + 1.25vw, 7.8125rem);
-    background-color: white;
+    background-color: $surface;
     padding: clamp(0.05859375rem, 0rem + 1.9375vw, 5.859375rem);
     @media only screen and (min-width: 1024px) {
       padding: clamp(
@@ -35,7 +39,7 @@
       p {
         font-size: clamp(0.1953125rem, 0rem + 3.525vw, 19.53125rem);
         font-weight: 600;
-        color: #5d3587;
+        color: $onSurfacePrimary;
         @media only screen and (min-width: 1024px) {
           font-size: clamp(0.1171875rem, 0rem + 1.875vw, 11.71875rem);
         }
@@ -54,10 +58,10 @@
         }
         font-size: clamp(0.1755rem, 0rem + 2.08vw, 17.55rem);
         padding: 0.5vw 2vw;
-        background-color: #5d3587;
+        background-color: $primary;
         outline: none;
         border: none;
-        color: white;
+        color: $onPrimary;
         border-radius: 0.4vw;
       }
     }
@@ -68,7 +72,7 @@
       @media screen and (min-width: 768px) and (max-width: 1024px) {
         font-size: clamp(0.13625rem, 0rem + 2.18vw, 13.625rem);
       }
-      color: #5d3587;
+      color: $onSurfaceSecondary;
       font-weight: 600;
       font-size: clamp(0.05859375rem, 0rem + 3.175vw, 5.859375rem);
       margin-bottom: clamp(0.068375rem, 0rem + 1.094vw, 6.8375rem);
@@ -83,8 +87,8 @@
         }
         padding: 0.2vw 1.2vw;
         font-size: clamp(0.05859375rem, 0rem + 2.775vw, 5.859375rem);
-        background-color: #a367b1;
-        color: white;
+        background-color: $background;
+        color: $primary;
         border-radius: 0.4vw;
         font-weight: 500;
       }
@@ -108,7 +112,11 @@
       flex-wrap: wrap;
       height: 35vh;
       overflow: scroll;
-      padding: clamp(0.0488125rem, 6.938893903907228e-18rem + 0.7809999999999999vw, 4.88125rem);
+      padding: clamp(
+        0.0488125rem,
+        6.938893903907228e-18rem + 0.7809999999999999vw,
+        4.88125rem
+      );
     }
     @media screen and (min-width: 768px) and (max-width: 1024px) {
       @include mixin.flex-container(row, flex-start, flex-start, 1rem);

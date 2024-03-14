@@ -196,6 +196,7 @@
     height: 7vh;
     // overflow: scroll;
     @include mixin.flex-container(row, space-between, flex-start);
+    display: none;
   }
   @media screen and (min-width: 768px) and (max-width: 1024px) {
     width: 50vw;
@@ -287,7 +288,7 @@
     background-color: #f2ebfb;
 
     .btn {
-      @media only screen and (max-width: 767px) {
+      @media only screen and (max-width: 768px) {
         font-size: clamp(0.1171875rem, 0rem + 3.475vw, 11.71875rem);
         padding: 1vw 2vw;
         border-radius: 0.6vw;

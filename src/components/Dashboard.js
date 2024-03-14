@@ -400,20 +400,22 @@ function Dashboard({ setView }) {
         stories={stories}
         member={member}
       />
-      {/* <Navbar
-        setProject={setProject}
-        sprint={sprint}
-        setSprint={setSprint}
-        setSprintStart={setSprintStart}
-        setSprintEnd={setSprintEnd}
-        setStoriesLoading={setStoriesLoading}
-        setView={setView}
-        boardId={boardId}
-        boardName={boardName}
-        totalStoryPoints={totalStoryPoints}
-        stories={stories}
-        member={member}
-      /> */}
+      <div className="nav">
+        <Navbar
+          setProject={setProject}
+          sprint={sprint}
+          setSprint={setSprint}
+          setSprintStart={setSprintStart}
+          setSprintEnd={setSprintEnd}
+          setStoriesLoading={setStoriesLoading}
+          setView={setView}
+          boardId={boardId}
+          boardName={boardName}
+          totalStoryPoints={totalStoryPoints}
+          stories={stories}
+          member={member}
+        />
+      </div>
       <main className="mainContainer">
         <StoriesPaneMobileView
           stories={stories}
@@ -428,19 +430,22 @@ function Dashboard({ setView }) {
           filterStoriesByMember={filterStoriesByMember}
           clearSelectedMember={clearSelectedMember}
         />
-        {/* <StoriesPane
-          stories={stories}
-          setStoryId={setStoryId}
-          storiesLoading={storiesLoading}
-          storyId={storyId}
-          storyAC={storyAC}
-          storyPoints={storyPoints}
-          storyPointsData={storyPointsData}
-          member={member}
-          sprintMembers={sprintMembers}
-          filterStoriesByMember={filterStoriesByMember}
-          clearSelectedMember={clearSelectedMember}
-        /> */}
+        <div id="leftPanel">
+          <StoriesPane
+            stories={stories}
+            setStoryId={setStoryId}
+            storiesLoading={storiesLoading}
+            storyId={storyId}
+            storyAC={storyAC}
+            storyPoints={storyPoints}
+            storyPointsData={storyPointsData}
+            member={member}
+            sprintMembers={sprintMembers}
+            filterStoriesByMember={filterStoriesByMember}
+            clearSelectedMember={clearSelectedMember}
+          />
+        </div>
+
         <Alerts />
 
         <section className="right-pane-1">
@@ -466,7 +471,7 @@ function Dashboard({ setView }) {
               </div>
             </div>
 
-            {/* <div className="sprint-members-container sprint-members-div">
+            <div className="sprint-members-container sprint-members-div">
               <div className="members_header">
                 <div className="header">
                   Members (
@@ -488,7 +493,7 @@ function Dashboard({ setView }) {
                 filterStoriesByMember={filterStoriesByMember}
                 mmember={member}
               />
-            </div> */}
+            </div>
           </div>
 
           <div className="hygine-ontime-timelog-div">

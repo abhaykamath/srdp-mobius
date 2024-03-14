@@ -46,9 +46,8 @@ function StoriesPane({
                 const hours = dateObject.getHours();
                 const minutes = dateObject.getMinutes();
                 const seconds = dateObject.getSeconds();
-                const formattedDate = `${day < 10 ? "0" + day : day}-${
-                  month < 10 ? "0" + month : month
-                }-${year}`;
+                const formattedDate = `${day < 10 ? "0" + day : day}-${month < 10 ? "0" + month : month
+                  }-${year}`;
                 const currentDate = new Date();
                 const current_year = currentDate.getFullYear();
                 const current_month = String(
@@ -69,9 +68,8 @@ function StoriesPane({
                       backgroundColor:
                         storyId === story.story_id ? "#36b37e" : "white",
                       color: storyId === story.story_id ? "white" : "black",
-                      animation: `fadeInAndSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) ${
-                        0.5 + index * 0.1
-                      }s 1 forwards`,
+                      animation: `fadeInAndSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) ${0.5 + index * 0.1
+                        }s 1 forwards`,
                     }}
                     onClick={(e) => {
                       setStoryId(story.story_id.toString());
@@ -179,9 +177,8 @@ function StoriesPane({
                 const year = dateObject.getFullYear();
                 const month = dateObject.getMonth() + 1;
                 const day = dateObject.getDate();
-                const formattedDate = `${day < 10 ? "0" + day : day}-${
-                  month < 10 ? "0" + month : month
-                }-${year}`;
+                const formattedDate = `${day < 10 ? "0" + day : day}-${month < 10 ? "0" + month : month
+                  }-${year}`;
 
                 const currentDate = new Date();
                 const current_year = currentDate.getFullYear();
@@ -207,9 +204,8 @@ function StoriesPane({
                       backgroundColor:
                         storyId === story.story_id ? "#36b37e" : "white",
                       color: storyId === story.story_id ? "white" : "black",
-                      animation: `fadeInAndSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) ${
-                        0.5 + index * 0.1
-                      }s 1 forwards`,
+                      animation: `fadeInAndSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) ${0.5 + index * 0.1
+                        }s 1 forwards`,
                     }}
                     onClick={(e) => {
                       setStoryId(story.story_id.toString());
@@ -309,9 +305,8 @@ function StoriesPane({
                 const year = dateObject.getFullYear();
                 const month = dateObject.getMonth() + 1;
                 const day = dateObject.getDate();
-                const formattedDate = `${day < 10 ? "0" + day : day}-${
-                  month < 10 ? "0" + month : month
-                }-${year}`;
+                const formattedDate = `${day < 10 ? "0" + day : day}-${month < 10 ? "0" + month : month
+                  }-${year}`;
 
                 return (
                   <div
@@ -321,9 +316,8 @@ function StoriesPane({
                       backgroundColor:
                         storyId === story.story_id ? "#36b37e" : "white",
                       color: storyId === story.story_id ? "white" : "black",
-                      animation: `fadeInAndSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) ${
-                        0.5 + index * 0.1
-                      }s 1 forwards`,
+                      animation: `fadeInAndSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) ${0.5 + index * 0.1
+                        }s 1 forwards`,
                     }}
                     onClick={(e) => {
                       setStoryId(story.story_id.toString());

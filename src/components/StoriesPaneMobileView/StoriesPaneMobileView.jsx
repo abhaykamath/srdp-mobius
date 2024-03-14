@@ -3,7 +3,7 @@ import css from './StoriesPaneMobileView.module.scss'
 import Loader from "../Loader";
 import Accordion from 'react-bootstrap/Accordion';
 import Members from '../Members';
-import '../../styles/Members.css'
+import '../../styles/Members.module.scss'
 // import '../../styles/RightPane.css'
 const StoriesPaneMobileView = ({ stories, setStoryId, storiesLoading, storyId, storyPoints, member, storyPointsData, sprintMembers, filterStoriesByMember, clearSelectedMember }) => {
 
@@ -24,7 +24,8 @@ const StoriesPaneMobileView = ({ stories, setStoryId, storiesLoading, storyId, s
                     </button>
                 </div>
                 <div className={css.selectedMemberCont}>
-                    Member Selected : <span className={css.selectedMember}>{member}</span>
+                    Member Selected :
+                    {/* <span className={css.selectedMember}>{member}</span> */}
                 </div>
                 <div className={css.tagsContainer}>
                     <Members
@@ -36,7 +37,7 @@ const StoriesPaneMobileView = ({ stories, setStoryId, storiesLoading, storyId, s
 
             </div>
             <div className={css.storiesContainer}>
-                <Accordion defaultActiveKey="2" style={{ display: "flex", gap: "1vw", flexDirection: "column" }}>
+                <Accordion defaultActiveKey="2" style={{ display: "flex", gap: "1vw", flexDirection: "column", background:"#1e1e1e" }}>
                     <Accordion.Item eventKey="0">
                         <Accordion.Header> <p style={{ color: "#392467", fontWeight: "600", margin: "0" }}> To Do ({stories.filter((story) => story.status_name === "To Do").length})</p></Accordion.Header>
                         <Accordion.Body style={{ height: "37vh", overflow: "scroll" }}>
